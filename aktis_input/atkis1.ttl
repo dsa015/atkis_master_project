@@ -1,0 +1,403 @@
+@prefix : <http://example.org/ontologies/atkis#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix obda: <https://w3id.org/obda/vocabulary#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://example.org/ontologies/atkis#> .
+
+<http://example.org/ontologies/atkis#> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://example.org/ontologies/atkis#existsIn
+:existsIn rdf:type owl:ObjectProperty .
+
+
+###  http://example.org/ontologies/atkis#hasArea
+:hasArea rdf:type owl:ObjectProperty .
+
+
+###  http://example.org/ontologies/atkis#hasRoad
+:hasRoad rdf:type owl:ObjectProperty .
+
+
+###  http://example.org/ontologies/atkis#hasTraffic
+:hasTraffic rdf:type owl:ObjectProperty .
+
+
+###  http://example.org/ontologies/atkis#hatDirektUnderpass
+:hatDirektUnderpass rdf:type owl:ObjectProperty .
+
+
+###  http://example.org/ontologies/atkis#intersectsWith
+:intersectsWith rdf:type owl:ObjectProperty ;
+                rdfs:comment "land, water, location that intersects within another location" .
+
+
+###  http://example.org/ontologies/atkis#isBuildingType
+:isBuildingType rdf:type owl:ObjectProperty .
+
+
+###  http://example.org/ontologies/atkis#isLocatedIn
+:isLocatedIn rdf:type owl:ObjectProperty ;
+             rdfs:comment "Is Located In"@en .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://example.org/ontologies/atkis#area
+:area rdf:type owl:DatatypeProperty ;
+      rdfs:subPropertyOf owl:topDataProperty ;
+      rdfs:domain :Area ;
+      rdfs:range xsd:string .
+
+
+###  http://example.org/ontologies/atkis#beginn
+:beginn rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf owl:topDataProperty ;
+        rdfs:comment "Lifetime interval begins" .
+
+
+###  http://example.org/ontologies/atkis#bemerkung
+:bemerkung rdf:type owl:DatatypeProperty ;
+           rdfs:comment "remark or comment" .
+
+
+###  http://example.org/ontologies/atkis#bez
+:bez rdf:type owl:DatatypeProperty ;
+     rdfs:subPropertyOf owl:topDataProperty ;
+     rdfs:comment "Designation" .
+
+
+###  http://example.org/ontologies/atkis#bound
+:bound rdf:type owl:DatatypeProperty ;
+       rdfs:subPropertyOf :geometry .
+
+
+###  http://example.org/ontologies/atkis#brf
+:brf rdf:type owl:DatatypeProperty ;
+     rdfs:comment "Width of roadway" .
+
+
+###  http://example.org/ontologies/atkis#buildingPolygon
+:buildingPolygon rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf owl:topDataProperty ;
+                 rdfs:comment "multipolygon border for buildings (sports, museums etc)" .
+
+
+###  http://example.org/ontologies/atkis#bvb
+:bvb rdf:type owl:DatatypeProperty ;
+     rdfs:subPropertyOf owl:topDataProperty ;
+     rdfs:comment "Special traffic importance" .
+
+
+###  http://example.org/ontologies/atkis#district
+:district rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf owl:topDataProperty ;
+          rdfs:domain :Administrative ;
+          rdfs:range xsd:string .
+
+
+###  http://example.org/ontologies/atkis#ende
+:ende rdf:type owl:DatatypeProperty ;
+      rdfs:comment "Lifetime interval ends" .
+
+
+###  http://example.org/ontologies/atkis#fsz
+:fsz rdf:type owl:DatatypeProperty ;
+     rdfs:subPropertyOf owl:topDataProperty ;
+     rdfs:comment "Number of lanes" .
+
+
+###  http://example.org/ontologies/atkis#ftr
+:ftr rdf:type owl:DatatypeProperty ;
+     rdfs:comment "Lane seperation" .
+
+
+###  http://example.org/ontologies/atkis#geometry
+:geometry rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf owl:topDataProperty ;
+          rdfs:domain :Building ,
+                      :Settlement .
+
+
+###  http://example.org/ontologies/atkis#hdu_x
+:hdu_x rdf:type owl:DatatypeProperty ;
+       rdfs:subPropertyOf owl:topDataProperty ;
+       rdfs:comment "Has direct under pass" .
+
+
+###  http://example.org/ontologies/atkis#idb
+:idb rdf:type owl:DatatypeProperty ;
+     rdfs:subPropertyOf owl:topDataProperty ;
+     rdfs:comment "International importance" .
+
+
+###  http://example.org/ontologies/atkis#land
+:land rdf:type owl:DatatypeProperty ;
+      rdfs:subPropertyOf owl:topDataProperty ;
+      rdfs:comment "Country code" .
+
+
+###  http://example.org/ontologies/atkis#lat
+:lat rdf:type owl:DatatypeProperty ;
+     rdfs:subPropertyOf :geometry .
+
+
+###  http://example.org/ontologies/atkis#location
+:location rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf owl:topDataProperty ;
+          rdfs:range xsd:string .
+
+
+###  http://example.org/ontologies/atkis#long
+:long rdf:type owl:DatatypeProperty ;
+      rdfs:subPropertyOf :geometry .
+
+
+###  http://example.org/ontologies/atkis#modellart
+:modellart rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf owl:topDataProperty ;
+           rdfs:comment "Model type identifier" .
+
+
+###  http://example.org/ontologies/atkis#nam
+:nam rdf:type owl:DatatypeProperty .
+
+
+###  http://example.org/ontologies/atkis#name
+:name rdf:type owl:DatatypeProperty ;
+      rdfs:subPropertyOf owl:topDataProperty .
+
+
+###  http://example.org/ontologies/atkis#objart
+:objart rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf owl:topDataProperty ;
+        rdfs:comment "Object type" .
+
+
+###  http://example.org/ontologies/atkis#objart_txt
+:objart_txt rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf owl:topDataProperty ;
+            rdfs:domain :Settlement ;
+            rdfs:comment "Object type text" .
+
+
+###  http://example.org/ontologies/atkis#objart_z
+:objart_z rdf:type owl:DatatypeProperty ;
+          rdfs:comment "Object types without spatial references (ZUSO)" .
+
+
+###  http://example.org/ontologies/atkis#objectId
+:objectId rdf:type owl:DatatypeProperty ;
+          rdfs:domain :Area ,
+                      :Settlement ,
+                      :Traffic ,
+                      :WaterBody .
+
+
+###  http://example.org/ontologies/atkis#objecttxt
+:objecttxt rdf:type owl:DatatypeProperty ;
+           rdfs:domain :SpecialFacility ;
+           rdfs:range xsd:string .
+
+
+###  http://example.org/ontologies/atkis#objid
+:objid rdf:type owl:DatatypeProperty ;
+       rdfs:subPropertyOf owl:topDataProperty ;
+       rdfs:comment "Unique Object identifier" .
+
+
+###  http://example.org/ontologies/atkis#objid_z
+:objid_z rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf owl:topDataProperty ;
+         rdfs:comment "Unique identifier for feature types without spatial reference (ZUSO)" .
+
+
+###  http://example.org/ontologies/atkis#point
+:point rdf:type owl:DatatypeProperty .
+
+
+###  http://example.org/ontologies/atkis#polygon
+:polygon rdf:type owl:DatatypeProperty ;
+         rdfs:comment "multipolygon for settlement border" .
+
+
+###  http://example.org/ontologies/atkis#rgs
+:rgs rdf:type owl:DatatypeProperty ;
+     rdfs:domain :Settlement .
+
+
+###  http://example.org/ontologies/atkis#sie04Linestring
+:sie04Linestring rdf:type owl:DatatypeProperty .
+
+
+###  http://example.org/ontologies/atkis#sie04Point
+:sie04Point rdf:type owl:DatatypeProperty .
+
+
+###  http://example.org/ontologies/atkis#sie04_polygon
+:sie04_polygon rdf:type owl:DatatypeProperty .
+
+
+###  http://example.org/ontologies/atkis#sie05_p
+:sie05_p rdf:type owl:DatatypeProperty .
+
+
+###  http://example.org/ontologies/atkis#wdm
+:wdm rdf:type owl:DatatypeProperty ;
+     rdfs:subPropertyOf owl:topDataProperty ;
+     rdfs:comment "Dedication" .
+
+
+###  http://example.org/ontologies/atkis#znm
+:znm rdf:type owl:DatatypeProperty ;
+     rdfs:subPropertyOf owl:topDataProperty ;
+     rdfs:comment "Middle name" .
+
+
+###  http://example.org/ontologies/atkis#zus
+:zus rdf:type owl:DatatypeProperty ;
+     rdfs:subPropertyOf owl:topDataProperty ;
+     rdfs:comment "Condition" .
+
+
+###  http://www.w3.org/1999/02/22-rdf-syntax-ns#geometry
+rdf:geometry rdf:type owl:DatatypeProperty .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://example.org/ontologies/atkis#Administrative
+:Administrative rdf:type owl:Class ;
+                rdfs:subClassOf :Area .
+
+
+###  http://example.org/ontologies/atkis#Agricultural
+:Agricultural rdf:type owl:Class ;
+              rdfs:subClassOf :Vegetation .
+
+
+###  http://example.org/ontologies/atkis#AirTraffic
+:AirTraffic rdf:type owl:Class ;
+            rdfs:subClassOf :Traffic .
+
+
+###  http://example.org/ontologies/atkis#Area
+:Area rdf:type owl:Class ;
+      rdfs:comment "Areas are the German states. Total number og 16 states exist in Germany"@en .
+
+
+###  http://example.org/ontologies/atkis#Building
+:Building rdf:type owl:Class ;
+          rdfs:subClassOf :Settlement .
+
+
+###  http://example.org/ontologies/atkis#Forestry
+:Forestry rdf:type owl:Class ;
+          rdfs:subClassOf :Vegetation .
+
+
+###  http://example.org/ontologies/atkis#Geographical
+:Geographical rdf:type owl:Class ;
+              rdfs:subClassOf :Area .
+
+
+###  http://example.org/ontologies/atkis#Location
+:Location rdf:type owl:Class ;
+          rdfs:subClassOf :Settlement .
+
+
+###  http://example.org/ontologies/atkis#MeasurementData
+:MeasurementData rdf:type owl:Class ;
+                 rdfs:subClassOf :Relief .
+
+
+###  http://example.org/ontologies/atkis#Paths
+:Paths rdf:type owl:Class ;
+       rdfs:subClassOf :Traffic .
+
+
+###  http://example.org/ontologies/atkis#Protected
+:Protected rdf:type owl:Class ;
+           rdfs:subClassOf :Area .
+
+
+###  http://example.org/ontologies/atkis#RailwayTraffic
+:RailwayTraffic rdf:type owl:Class ;
+                rdfs:subClassOf :Traffic .
+
+
+###  http://example.org/ontologies/atkis#Relation
+:Relation rdf:type owl:Class ;
+          rdfs:subClassOf :VerticalRelation .
+
+
+###  http://example.org/ontologies/atkis#Relief
+:Relief rdf:type owl:Class ;
+        rdfs:comment "Mountain elevation, clips" .
+
+
+###  http://example.org/ontologies/atkis#ReliefForm
+:ReliefForm rdf:type owl:Class ;
+            rdfs:subClassOf :Relief .
+
+
+###  http://example.org/ontologies/atkis#RoadTraffic
+:RoadTraffic rdf:type owl:Class ;
+             rdfs:subClassOf :Traffic .
+
+
+###  http://example.org/ontologies/atkis#Settlement
+:Settlement rdf:type owl:Class ;
+            rdfs:comment "Settlements are towns." .
+
+
+###  http://example.org/ontologies/atkis#ShippingTraffic
+:ShippingTraffic rdf:type owl:Class ;
+                 rdfs:subClassOf :Traffic .
+
+
+###  http://example.org/ontologies/atkis#SpatialObject
+:SpatialObject rdf:type owl:Class .
+
+
+###  http://example.org/ontologies/atkis#SpecialFacility
+:SpecialFacility rdf:type owl:Class ;
+                 rdfs:subClassOf :Location .
+
+
+###  http://example.org/ontologies/atkis#Traffic
+:Traffic rdf:type owl:Class ;
+         rdfs:comment "Ranging from pathways, air, shipping, railway traffic and transporting facilities" .
+
+
+###  http://example.org/ontologies/atkis#Vegetation
+:Vegetation rdf:type owl:Class ;
+            rdfs:comment "agricultural areas" .
+
+
+###  http://example.org/ontologies/atkis#VerticalRelation
+:VerticalRelation rdf:type owl:Class ;
+                  rdfs:comment "what feature types has a vertical relation" .
+
+
+###  http://example.org/ontologies/atkis#WaterBody
+:WaterBody rdf:type owl:Class .
+
+
+###  http://example.org/ontologies/atkis#WaterLineAxis
+:WaterLineAxis rdf:type owl:Class ;
+               rdfs:subClassOf :WaterBody .
+
+
+###  Generated by the OWL API (version 4.5.25.2023-02-15T19:15:49Z) https://github.com/owlcs/owlapi
