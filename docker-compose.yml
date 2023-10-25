@@ -1,0 +1,16 @@
+version: "3.4"
+
+services:
+  db:
+    build:
+      context: .
+      dockerfile: dockerfile
+    volumes:
+      - ./backup:/docker-entrypoint-initdb.d/backup
+    ports:
+      - "7777:5432"
+    environment:
+      #creates a db, not using existing stuff
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: atkis_db
