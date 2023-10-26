@@ -59,23 +59,6 @@ select ?area ?name ?geo {
 ?area a :Area ; :name ?name ; :geometry ?geo . 
 }
 """
-[[tabGroups.tabs]]
-
-name="Special Facilties name and what type they are"
-query="""
-PREFIX : <http://example.org/ontologies/atkis#>
-PREFIX geo: <http://www.opengis.net/ont/geosparql#>
-PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX xml: <http://www.w3.org/XML/1998/namespace>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX obda: <https://w3id.org/obda/vocabulary#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-
-SELECT ?sf ?name ?type {
-?sf a :SpecialFacility ; :name ?name ; :objecttxt ?type .
-}
-"""
 
 [[tabGroups]]
 
