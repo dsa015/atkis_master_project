@@ -23,12 +23,12 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
-DROP DATABASE atkis_db;
+--DROP DATABASE atkis_db;
 --
 -- Name: atkis_db; Type: DATABASE; Schema: -; Owner: postgres
 --
 
-CREATE DATABASE atkis_db WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = icu LOCALE = 'en_US.UTF-8' ICU_LOCALE = 'en-US';
+-- CREATE DATABASE atkis_db WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = icu LOCALE = 'en_US.UTF-8' ICU_LOCALE = 'en-US';
 
 
 ALTER DATABASE atkis_db OWNER TO postgres;
@@ -51,7 +51,6 @@ SET row_security = off;
 --
 
 CREATE EXTENSION IF NOT EXISTS postgis WITH SCHEMA public;
-
 
 --
 -- Name: EXTENSION postgis; Type: COMMENT; Schema: -; Owner: 
@@ -147,6 +146,15 @@ CREATE TABLE public.area_xy (
     boundary public.geometry
 );
 
+CREATE TABLE public.testTable (
+    id integer NOT NULL
+);
+
+INSERT INTO public.testTable (id) VALUES (
+    69
+);
+
+ALTER TABLE public.testTable OWNER TO postgres;
 
 ALTER TABLE public.area_xy OWNER TO postgres;
 
@@ -2186,7 +2194,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public."GN250_b" (id, geom, nnid, datum, oba, oba_wert, name, sprache, genus, name2, sprache2, genus2, zusatz, ags, ars, hoehe, hoehe_ger, ewz, ewz_ger, gewk, gemteil, virtuell, gemeinde, verwgem, kreis, regbezirk, bundesland, staat, rechts, hoch, box) FROM stdin;
 \.
-\copy public."GN250_b" (id, geom, nnid, datum, oba, oba_wert, name, sprache, genus, name2, sprache2, genus2, zusatz, ags, ars, hoehe, hoehe_ger, ewz, ewz_ger, gewk, gemteil, virtuell, gemeinde, verwgem, kreis, regbezirk, bundesland, staat, rechts, hoch, box) FROM 'docker-entrypoint-initdb.d/backup/4943.dat';
+\copy public."GN250_b" (id, geom, nnid, datum, oba, oba_wert, name, sprache, genus, name2, sprache2, genus2, zusatz, ags, ars, hoehe, hoehe_ger, ewz, ewz_ger, gewk, gemteil, virtuell, gemeinde, verwgem, kreis, regbezirk, bundesland, staat, rechts, hoch, box) FROM 'docker-entrypoint-initdb.d/4943.dat';
 
 --
 -- Data for Name: area_xy; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2194,7 +2202,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.area_xy (bez_lan, longitude, latitude, boundary) FROM stdin;
 \.
-\copy public.area_xy (bez_lan, longitude, latitude, boundary) FROM 'docker-entrypoint-initdb.d/backup/4944.dat';
+\copy public.area_xy (bez_lan, longitude, latitude, boundary) FROM 'docker-entrypoint-initdb.d/4944.dat';
 
 --
 -- Data for Name: area_xy2; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2202,7 +2210,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.area_xy2 (bez_lan, longitude, latitude, boundary) FROM stdin;
 \.
-\copy public.area_xy2 (bez_lan, longitude, latitude, boundary) FROM 'docker-entrypoint-initdb.d/backup/4945.dat';
+\copy public.area_xy2 (bez_lan, longitude, latitude, boundary) FROM 'docker-entrypoint-initdb.d/4945.dat';
 
 --
 -- Data for Name: building_in_settlement; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2210,7 +2218,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.building_in_settlement (id, building, gid, settlement, point, polygon) FROM stdin;
 \.
-\copy public.building_in_settlement (id, building, gid, settlement, point, polygon) FROM 'docker-entrypoint-initdb.d/backup/4941.dat';
+\copy public.building_in_settlement (id, building, gid, settlement, point, polygon) FROM 'docker-entrypoint-initdb.d/4941.dat';
 
 --
 -- Data for Name: geb01_f; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2218,7 +2226,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.geb01_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, adm, bez_nat, bez_lan, bez_rbz, bez_krs, bez_vwg, bez_gem, rgs, sch, bemerkung, geom) FROM stdin;
 \.
-\copy public.geb01_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, adm, bez_nat, bez_lan, bez_rbz, bez_krs, bez_vwg, bez_gem, rgs, sch, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/backup/4870.dat';
+\copy public.geb01_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, adm, bez_nat, bez_lan, bez_rbz, bez_krs, bez_vwg, bez_gem, rgs, sch, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/4870.dat';
 
 --
 -- Data for Name: geb01_l; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2226,7 +2234,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.geb01_l (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, agz, zus, bemerkung, geom) FROM stdin;
 \.
-\copy public.geb01_l (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, agz, zus, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/backup/4872.dat';
+\copy public.geb01_l (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, agz, zus, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/4872.dat';
 
 --
 -- Data for Name: geb02_f; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2234,7 +2242,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.geb02_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, ltp, nam, rgs, bemerkung, geom) FROM stdin;
 \.
-\copy public.geb02_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, ltp, nam, rgs, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/backup/4874.dat';
+\copy public.geb02_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, ltp, nam, rgs, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/4874.dat';
 
 --
 -- Data for Name: geb03_f; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2242,7 +2250,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.geb03_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, objart_z, objid_z, adf, bez, nam, sgn, zon, bemerkung, geom) FROM stdin;
 \.
-\copy public.geb03_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, objart_z, objid_z, adf, bez, nam, sgn, zon, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/backup/4876.dat';
+\copy public.geb03_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, objart_z, objid_z, adf, bez, nam, sgn, zon, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/4876.dat';
 
 --
 -- Data for Name: gew01_f; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2250,7 +2258,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.gew01_f (id, geom, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, objart_z, objid_z, fkt, gwk, hyd, nam, rgs, sfk, skz, wdm, wsg, znm, zus, bemerkung) FROM stdin;
 \.
-\copy public.gew01_f (id, geom, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, objart_z, objid_z, fkt, gwk, hyd, nam, rgs, sfk, skz, wdm, wsg, znm, zus, bemerkung) FROM 'docker-entrypoint-initdb.d/backup/4940.dat';
+\copy public.gew01_f (id, geom, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, objart_z, objid_z, fkt, gwk, hyd, nam, rgs, sfk, skz, wdm, wsg, znm, zus, bemerkung) FROM 'docker-entrypoint-initdb.d/4940.dat';
 
 --
 -- Data for Name: gew01_l; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2258,7 +2266,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.gew01_l (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, objart_z, objid_z, brg, fkt, flr, gwk, hyd, nam, rgs, sfk, wdm, znm, zus, bemerkung, geom) FROM stdin;
 \.
-\copy public.gew01_l (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, objart_z, objid_z, brg, fkt, flr, gwk, hyd, nam, rgs, sfk, wdm, znm, zus, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/backup/4878.dat';
+\copy public.gew01_l (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, objart_z, objid_z, brg, fkt, flr, gwk, hyd, nam, rgs, sfk, wdm, znm, zus, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/4878.dat';
 
 --
 -- Data for Name: gew02_f; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2266,7 +2274,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.gew02_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, art, nam, rgs, znm, bemerkung, geom) FROM stdin;
 \.
-\copy public.gew02_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, art, nam, rgs, znm, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/backup/4880.dat';
+\copy public.gew02_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, art, nam, rgs, znm, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/4880.dat';
 
 --
 -- Data for Name: gew02_p; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2274,7 +2282,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.gew02_p (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, art, nam, rgs, znm, bemerkung, geom) FROM stdin;
 \.
-\copy public.gew02_p (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, art, nam, rgs, znm, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/backup/4882.dat';
+\copy public.gew02_p (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, art, nam, rgs, znm, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/4882.dat';
 
 --
 -- Data for Name: gew03_l; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2282,7 +2290,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.gew03_l (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, aga, flr, gwk, nam, rgs, sfk, znm, bemerkung, geom) FROM stdin;
 \.
-\copy public.gew03_l (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, aga, flr, gwk, nam, rgs, sfk, znm, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/backup/4884.dat';
+\copy public.gew03_l (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, aga, flr, gwk, nam, rgs, sfk, znm, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/4884.dat';
 
 --
 -- Data for Name: hdu01_b; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2290,7 +2298,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.hdu01_b (gid, land, objart_1, objid_1, ebene_1, objart_2, objid_2, ebene_2, geom) FROM stdin;
 \.
-\copy public.hdu01_b (gid, land, objart_1, objid_1, ebene_1, objart_2, objid_2, ebene_2, geom) FROM 'docker-entrypoint-initdb.d/backup/4886.dat';
+\copy public.hdu01_b (gid, land, objart_1, objid_1, ebene_1, objart_2, objid_2, ebene_2, geom) FROM 'docker-entrypoint-initdb.d/4886.dat';
 
 --
 -- Data for Name: rel01_l; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2298,7 +2306,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.rel01_l (id, geom, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, objart_z, objid_z, art, fkt, hhl, hho, nam, bemerkung) FROM stdin;
 \.
-\copy public.rel01_l (id, geom, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, objart_z, objid_z, art, fkt, hhl, hho, nam, bemerkung) FROM 'docker-entrypoint-initdb.d/backup/4938.dat';
+\copy public.rel01_l (id, geom, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, objart_z, objid_z, art, fkt, hhl, hho, nam, bemerkung) FROM 'docker-entrypoint-initdb.d/4938.dat';
 
 --
 -- Data for Name: rel01_p; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2306,7 +2314,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.rel01_p (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, nam, znm, bemerkung, geom) FROM stdin;
 \.
-\copy public.rel01_p (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, nam, znm, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/backup/4888.dat';
+\copy public.rel01_p (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, nam, znm, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/4888.dat';
 
 --
 -- Data for Name: rel02_p; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2314,7 +2322,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.rel02_p (id, geom, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, art, hoehe, bemerkung) FROM stdin;
 \.
-\copy public.rel02_p (id, geom, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, art, hoehe, bemerkung) FROM 'docker-entrypoint-initdb.d/backup/4936.dat';
+\copy public.rel02_p (id, geom, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, art, hoehe, bemerkung) FROM 'docker-entrypoint-initdb.d/4936.dat';
 
 --
 -- Data for Name: sie01_f; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2322,7 +2330,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.sie01_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, nam, rgs, bemerkung, geom) FROM stdin;
 \.
-\copy public.sie01_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, nam, rgs, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/backup/4890.dat';
+\copy public.sie01_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, nam, rgs, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/4890.dat';
 
 --
 -- Data for Name: sie01_p; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2330,7 +2338,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.sie01_p (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, nam, rgs, bemerkung, geom) FROM stdin;
 \.
-\copy public.sie01_p (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, nam, rgs, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/backup/4892.dat';
+\copy public.sie01_p (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, nam, rgs, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/4892.dat';
 
 --
 -- Data for Name: sie02_f; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2338,7 +2346,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.sie02_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, agt, fkt, nam, rgs, zus, bemerkung, geom) FROM stdin;
 \.
-\copy public.sie02_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, agt, fkt, nam, rgs, zus, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/backup/4894.dat';
+\copy public.sie02_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, agt, fkt, nam, rgs, zus, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/4894.dat';
 
 --
 -- Data for Name: sie03_f; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2346,7 +2354,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.sie03_f (id, geom, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, bwf, hho, nam, zus, bemerkung) FROM stdin;
 \.
-\copy public.sie03_f (id, geom, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, bwf, hho, nam, zus, bemerkung) FROM 'docker-entrypoint-initdb.d/backup/4934.dat';
+\copy public.sie03_f (id, geom, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, bwf, hho, nam, zus, bemerkung) FROM 'docker-entrypoint-initdb.d/4934.dat';
 
 --
 -- Data for Name: sie03_l; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2354,7 +2362,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.sie03_l (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, bwf, bemerkung, geom) FROM stdin;
 \.
-\copy public.sie03_l (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, bwf, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/backup/4896.dat';
+\copy public.sie03_l (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, bwf, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/4896.dat';
 
 --
 -- Data for Name: sie03_p; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2362,7 +2370,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.sie03_p (id, geom, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, atp, bwf, hho, nam, spo, zus, bemerkung) FROM stdin;
 \.
-\copy public.sie03_p (id, geom, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, atp, bwf, hho, nam, spo, zus, bemerkung) FROM 'docker-entrypoint-initdb.d/backup/4932.dat';
+\copy public.sie03_p (id, geom, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, atp, bwf, hho, nam, spo, zus, bemerkung) FROM 'docker-entrypoint-initdb.d/4932.dat';
 
 --
 -- Data for Name: sie04_f; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2370,7 +2378,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.sie04_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, nam, bemerkung, geom) FROM stdin;
 \.
-\copy public.sie04_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, nam, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/backup/4898.dat';
+\copy public.sie04_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, nam, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/4898.dat';
 
 --
 -- Data for Name: sie04_l; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2378,7 +2386,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.sie04_l (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, kon, nam, zus, bemerkung, geom) FROM stdin;
 \.
-\copy public.sie04_l (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, kon, nam, zus, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/backup/4900.dat';
+\copy public.sie04_l (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, kon, nam, zus, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/4900.dat';
 
 --
 -- Data for Name: sie04_p; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2386,7 +2394,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.sie04_p (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, kon, nam, zus, bemerkung, geom) FROM stdin;
 \.
-\copy public.sie04_p (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, kon, nam, zus, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/backup/4902.dat';
+\copy public.sie04_p (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, kon, nam, zus, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/4902.dat';
 
 --
 -- Data for Name: sie05_p; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2394,7 +2402,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.sie05_p (id, geom, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, bwf, gfk, hho, nam, znm, zus, bemerkung) FROM stdin;
 \.
-\copy public.sie05_p (id, geom, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, bwf, gfk, hho, nam, znm, zus, bemerkung) FROM 'docker-entrypoint-initdb.d/backup/4930.dat';
+\copy public.sie05_p (id, geom, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, bwf, gfk, hho, nam, znm, zus, bemerkung) FROM 'docker-entrypoint-initdb.d/4930.dat';
 
 --
 -- Data for Name: spatial_ref_sys; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2402,7 +2410,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.spatial_ref_sys (srid, auth_name, auth_srid, srtext, proj4text) FROM stdin;
 \.
-\copy public.spatial_ref_sys (srid, auth_name, auth_srid, srtext, proj4text) FROM 'docker-entrypoint-initdb.d/backup/4548.dat';
+\copy public.spatial_ref_sys (srid, auth_name, auth_srid, srtext, proj4text) FROM 'docker-entrypoint-initdb.d/4548.dat';
 
 --
 -- Data for Name: veg01_f; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2410,7 +2418,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.veg01_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, nam, veg, bemerkung, geom) FROM stdin;
 \.
-\copy public.veg01_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, nam, veg, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/backup/4904.dat';
+\copy public.veg01_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, nam, veg, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/4904.dat';
 
 --
 -- Data for Name: veg02_f; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2418,7 +2426,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.veg02_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, nam, rgs, zus, bemerkung, geom) FROM stdin;
 \.
-\copy public.veg02_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, nam, rgs, zus, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/backup/4906.dat';
+\copy public.veg02_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, nam, rgs, zus, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/4906.dat';
 
 --
 -- Data for Name: veg03_f; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2426,7 +2434,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.veg03_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, fkt, nam, ofm, bemerkung, geom) FROM stdin;
 \.
-\copy public.veg03_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, fkt, nam, ofm, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/backup/4908.dat';
+\copy public.veg03_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, fkt, nam, ofm, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/4908.dat';
 
 --
 -- Data for Name: veg04_f; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2434,7 +2442,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.veg04_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, bws, nam, zus, bemerkung, geom) FROM stdin;
 \.
-\copy public.veg04_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, bws, nam, zus, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/backup/4910.dat';
+\copy public.veg04_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, bws, nam, zus, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/4910.dat';
 
 --
 -- Data for Name: ver01_l; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2442,7 +2450,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.ver01_l (id, geom, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, objart_z, objid_z, bez, brf, bvb, fsz, ftr, ibd, wdm, znm, zus, bemerkung) FROM stdin;
 \.
-\copy public.ver01_l (id, geom, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, objart_z, objid_z, bez, brf, bvb, fsz, ftr, ibd, wdm, znm, zus, bemerkung) FROM 'docker-entrypoint-initdb.d/backup/4924.dat';
+\copy public.ver01_l (id, geom, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, objart_z, objid_z, bez, brf, bvb, fsz, ftr, ibd, wdm, znm, zus, bemerkung) FROM 'docker-entrypoint-initdb.d/4924.dat';
 
 --
 -- Data for Name: ver02_l; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2450,7 +2458,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.ver02_l (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, fkt, nam, znm, bemerkung, geom) FROM stdin;
 \.
-\copy public.ver02_l (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, fkt, nam, znm, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/backup/4912.dat';
+\copy public.ver02_l (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, fkt, nam, znm, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/4912.dat';
 
 --
 -- Data for Name: ver03_f; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2458,7 +2466,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.ver03_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, bemerkung, geom) FROM stdin;
 \.
-\copy public.ver03_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/backup/4914.dat';
+\copy public.ver03_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/4914.dat';
 
 --
 -- Data for Name: ver03_l; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2466,7 +2474,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.ver03_l (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, bkt, elk, gls, nam, nrb, spw, vkd, znm, zus, bemerkung, geom) FROM stdin;
 \.
-\copy public.ver03_l (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, bkt, elk, gls, nam, nrb, spw, vkd, znm, zus, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/backup/4916.dat';
+\copy public.ver03_l (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, bkt, elk, gls, nam, nrb, spw, vkd, znm, zus, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/4916.dat';
 
 --
 -- Data for Name: ver04_f; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2474,7 +2482,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.ver04_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, art, bez, nam, ntz, znm, zus, bemerkung, geom) FROM stdin;
 \.
-\copy public.ver04_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, art, bez, nam, ntz, znm, zus, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/backup/4918.dat';
+\copy public.ver04_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, art, bez, nam, ntz, znm, zus, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/4918.dat';
 
 --
 -- Data for Name: ver05_l; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2482,7 +2490,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.ver05_l (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, art, nam, bemerkung, geom) FROM stdin;
 \.
-\copy public.ver05_l (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, art, nam, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/backup/4920.dat';
+\copy public.ver05_l (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, art, nam, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/4920.dat';
 
 --
 -- Data for Name: ver06_f; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2490,7 +2498,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.ver06_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, bwf, nam, rgs, zus, bemerkung, geom) FROM stdin;
 \.
-\copy public.ver06_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, bwf, nam, rgs, zus, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/backup/4922.dat';
+\copy public.ver06_f (gid, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, bwf, nam, rgs, zus, bemerkung, geom) FROM 'docker-entrypoint-initdb.d/4922.dat';
 
 --
 -- Data for Name: ver06_l; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2498,7 +2506,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.ver06_l (id, geom, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, art, bez, bro, bwf, nam, rgs, ofm, znm, zus, bemerkung) FROM stdin;
 \.
-\copy public.ver06_l (id, geom, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, art, bez, bro, bwf, nam, rgs, ofm, znm, zus, bemerkung) FROM 'docker-entrypoint-initdb.d/backup/4926.dat';
+\copy public.ver06_l (id, geom, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, art, bez, bro, bwf, nam, rgs, ofm, znm, zus, bemerkung) FROM 'docker-entrypoint-initdb.d/4926.dat';
 
 --
 -- Data for Name: ver06_p; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2506,7 +2514,7 @@ ALTER TABLE ONLY public.ver06_p ALTER COLUMN id SET DEFAULT nextval('public.ver0
 
 \copy public.ver06_p (id, geom, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, art, bez, bfk, bkt, bro, bwf, nam, ofm, rgs, vkd, znm, zus, bemerkung) FROM stdin;
 \.
-\copy public.ver06_p (id, geom, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, art, bez, bfk, bkt, bro, bwf, nam, ofm, rgs, vkd, znm, zus, bemerkung) FROM 'docker-entrypoint-initdb.d/backup/4928.dat';
+\copy public.ver06_p (id, geom, land, modellart, objart, objart_txt, objid, hdu_x, beginn, ende, art, bez, bfk, bkt, bro, bwf, nam, ofm, rgs, vkd, znm, zus, bemerkung) FROM 'docker-entrypoint-initdb.d/4928.dat';
 
 --
 -- Name: GN250_b_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres

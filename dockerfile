@@ -1,8 +1,6 @@
-FROM postgres:16
+FROM postgis/postgis:16-3.4
 
-RUN apt-get update && \
-    apt-get install -y postgis
-#-----------------------------------
-COPY *.sql /docker-entrypoint-initdb.d/dbfiles/
-COPY *.dat /docker-entrypoint-initdb.d/dbfiles/
+COPY *.sql /docker-entrypoint-initdb.d/
+COPY *.dat /docker-entrypoint-initdb.d/
 USER postgres
+
