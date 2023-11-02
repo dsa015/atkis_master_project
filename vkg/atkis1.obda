@@ -10,7 +10,6 @@ rdfs:		http://www.w3.org/2000/01/rdf-schema#
 
 [MappingDeclaration] @collection [[
 mappingId	settlement
-target		:Settlement/{gid} a :Settlement ; :location {nam} . 
-source		select * from sie01_f
+target		:Settlement/{gid} a :Settlement ; :name {nam} . 
+source		SELECT gid, nam FROM "sie01_f"
 ]]
-
