@@ -26,7 +26,7 @@ mappingId	area
 target		:Area/{gid} a :Area ; :name {nam} ; :geometry {wkt} . 
 source		select *,st_astext(geom) as wkt from "sie01_f"
 
-mappingId	trafffic
+mappingId	traffic
 target		:Traffic/{id} a :Traffic ; geo:asWKT {wkt} ; rdfs:label {bez} . 
 source		select id, bez, st_astext(geom) as wkt from "ver01_l"
 
@@ -82,22 +82,6 @@ mappingId	sie05 p
 target		:Settlement/sie05/p/{id} a :Settlement ; :name {nam}^^xsd:string ; :sie05_p {wkt}^^geo:wktLiteral . 
 source		select id, nam, st_astext(geom) as wkt from "sie05_p"
 
-mappingId	ver02 linesting
-target		:Traffic/ver02/{gid} a :Traffic ; :geometry {wkt}^^geo:wktLiteral ; :name {nam} . 
-source		select *, st_astext(geom) as wkt from "ver02_l"
-
-mappingId	ver03
-target		:Traffic/ver03/{gid} a :Traffic ; geo:hasGeometry :Traffic/ver03/f/{gid} . 
-source		select gid from "ver03_f"
-
-mappingId	ver04
-target		:Traffic/ver04/{gid} a :Traffic ; geo:hasGeometry :Traffic/ver04/f/{gid} . 
-source		select * from "ver04_f"
-
-mappingId	ver04 polygons (air traffic)
-target		:Traffic/ver04/f/{gid} a :Traffic ; geo:asWKT {wkt} ; rdfs:label {nam} . 
-source		select gid, st_astext(geom) as wkt, nam from "ver04_f"
-
 mappingId	sie01
 target		:Settlement/sie01/{gid} a :Settlement ; geo:hasGeometry :Settlement/sie01/f/{gid} . 
 source		select gid from "sie01_f"
@@ -106,8 +90,20 @@ mappingId	sie01 geometry
 target		:Settlement/sie01/f/{gid} a :Settlement ; geo:asWKT {wkt} ; rdfs:label {nam} . 
 source		select gid, st_astext(geom) as wkt, nam from "sie01_f"
 
+mappingId	ver02 linestring
+target		:Traffic/ver02/{gid} a :Traffic ; :geometry {wkt}^^geo:wktLiteral ; :name {nam} . 
+source		select *, st_astext(geom) as wkt from "ver02_l"
+
+mappingId	ver02 paths connect
+target		:Traffic/ver02/{gid} a :Traffic ; geo:hasGeometry :Traffic/ver02/{gid} . 
+source		select gid from "ver02_l"
+
+mappingId	ver03
+target		:Traffic/AirTraffic/{gid} a :AirTraffic ; geo:hasGeometry :Traffic/AirTraffic/f/{gid} . 
+source		select gid from "ver03_f"
+
 mappingId	ver03 polygons
-target		:Traffic/ver03/f/{gid} a geo:geometry ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Traffic/AirTraffic/f/{gid} a :AirTraffic ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, st_astext(geom) as wkt from "ver03_f"
 
 mappingId	ver03 linestrings (paths)
@@ -118,7 +114,11 @@ mappingId	ver03_l
 target		:Traffic/ver03/{gid} a :Traffic ; geo:hasGeometry :Traffic/ver03/l/{gid} . 
 source		select gid from "ver03_l"
 
-mappingId	ver02 paths connect
-target		:Traffic/ver02/{gid} a :Traffic ; geo:hasGeometry :Traffic/ver02/{gid} . 
-source		select gid from "ver02_l"
+mappingId	ver04
+target		:Traffic/ver04/{gid} a :Traffic ; geo:hasGeometry :Traffic/ver04/f/{gid} . 
+source		select gid from "ver04_f"
+
+mappingId	ver04 polygons (air traffic)
+target		:Traffic/ver04/f/{gid} a :Traffic ; geo:asWKT {wkt} ; rdfs:label {nam} . 
+source		select gid, st_astext(geom) as wkt, nam from "ver04_f"
 ]]
