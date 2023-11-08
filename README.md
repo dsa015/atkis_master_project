@@ -12,4 +12,4 @@ My master thesis/project about the ATKIS dataset
 
 # Ontop container
 
-- getting errors for now...
+- on port 8080:8080, SPARQL endpoint
