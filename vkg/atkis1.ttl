@@ -51,6 +51,14 @@
 ###  http://www.opengis.net/ont/geosparql#hasGeometry
 geo:hasGeometry rdf:type owl:ObjectProperty .
 
+geo:hasPolygonGeometry rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf geo:hasGeometry .
+
+geo:hasLinestringGeometry rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf geo:hasGeometry .
+
+geo:hasPointGeometry rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf geo:hasGeometry .
 
 #################################################################
 #    Data properties
@@ -385,6 +393,9 @@ rdfs:label rdf:type owl:DatatypeProperty .
 :ShippingTraffic rdf:type owl:Class ;
                  rdfs:subClassOf :Traffic .
 
+###  http://example.org/ontologies/atkis#Transport_b_f
+:Transport_b_f rdf:type owl:Class ;
+     rdfs:subClassOf :Traffic .
 
 ###  http://example.org/ontologies/atkis#SpecialFacility
 :SpecialFacility rdf:type owl:Class ;
