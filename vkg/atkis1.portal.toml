@@ -330,3 +330,122 @@ select ?s ?n ?wkt where {
 ?s a :Settlement ; :name ?n ; :sie05_p ?wkt .
 }
 """
+
+[[tabGroups]]
+name="ver: Traffic"
+
+[[tabGroups.tabs]]
+name="ver01-geometry"
+
+query="""
+PREFIX : <http://example.org/ontologies/atkis#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX obda: <https://w3id.org/obda/vocabulary#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select * where {
+?a a :RoadTraffic ; geo:hasGeometry ?b .
+?b a geo:geometry ; geo:asWKT ?wkt .
+}
+"""
+
+[[tabGroups.tabs]]
+name="ver02-geometry"
+query="""
+PREFIX : <http://example.org/ontologies/atkis#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX obda: <https://w3id.org/obda/vocabulary#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select * WHERE {
+?a a :Paths ; geo:hasGeometry ?b .
+?b a geo:geometry ; geo:asWKT ?wkt .
+}
+"""
+
+[[tabGroups.tabs]]
+name="ver03-geometry"
+query="""
+PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX : <http://example.org/ontologies/atkis#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX obda: <https://w3id.org/obda/vocabulary#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?polygon ?linestring WHERE {
+?a a :RailwayTraffic  ; geo:hasLinestringGeometry ?c .
+?b a geo:geometry ; geo:asWKT ?polygon .
+?c a geo:geometry ; geo:asWKT ?linestring .
+}
+"""
+
+[[tabGroups.tabs]]
+name="ver04-geometry"
+query="""
+PREFIX : <http://example.org/ontologies/atkis#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX obda: <https://w3id.org/obda/vocabulary#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?s ?wkt ?name WHERE {
+?s a :AirTraffic ; geo:hasGeometry ?g .
+?g a geo:geometry ; geo:asWKT ?wkt .
+}
+"""
+
+[[tabGroups.tabs]]
+name="ver05-geometry"
+query="""
+PREFIX : <http://example.org/ontologies/atkis#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX obda: <https://w3id.org/obda/vocabulary#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT * WHERE {
+?a a :ShippingTraffic ; geo:hasGeometry ?s .
+?s a geo:geometry ; geo:asWKT ?wkt ; rdfs:label ?name .
+}
+"""
+
+[[tabGroups.tabs]]
+name="ver06-geometries"
+query="""
+PREFIX : <http://example.org/ontologies/atkis#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX obda: <https://w3id.org/obda/vocabulary#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?polygon ?linestring ?point WHERE {
+?a a :Transport_b_f ; geo:hasPointGeometry ?b ; geo:hasLinestringGeometry ?c ; geo:hasPointGeometry ?d .
+?b a geo:geometry ; geo:asWKT ?polygon .
+?c a geo:geometry ; geo:asWKT ?linestring .
+?d a geo:geometry ; geo:asWKT ?point .
+}
+"""
+
