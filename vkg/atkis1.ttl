@@ -425,6 +425,9 @@ rdfs:label rdf:type owl:DatatypeProperty .
 :WaterLineAxis rdf:type owl:Class ;
                rdfs:subClassOf :WaterBody .
 
+### http://example.org/ontologies/atkis#WaterBodyChar
+:WaterBodyChar rdf:type owl:Class ;
+               rdfs:subClassOf :WaterBody .
 
 ###  http://www.opengis.net/ont/geosparql#geometry
 geo:geometry rdf:type owl:Class .
