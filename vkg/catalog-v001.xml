@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <uri id="Imports Wizard Entry" name="http://www.opengis.net/ont/sf/1.1" uri="https://opengeospatial.github.io/ogc-geosparql/geosparql11/sf_geometries.ttl"/>
+    <uri id="Imports Wizard Entry" name="http://www.opengis.net/ont/gml" uri="http://schemas.opengis.net/gml/3.2.1/gml_32_geometries.rdf"/>
+    <uri id="Imports Wizard Entry" name="http://www.opengis.net/ont/gml" uri="file:/Users/dilu/Downloads/gml.owl"/>
+    <uri id="Imports Wizard Entry" name="http://www.w3.org/2000/01/rdf-schema#" uri="https://www.w3.org/2000/01/rdf-schema#"/>
+    <uri id="Imports Wizard Entry" name="http://www.opengis.net/ont/geosparql/1.1" uri="file:/Users/dilu/Downloads/Untitled-1.ttl"/>
+    <uri id="Imports Wizard Entry" name="http://www.opengis.net/ont/geosparql/1.1" uri="file:/Users/dilu/Downloads/Untitled-1.ttl"/>
+    <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base=""/>
+</catalog>
