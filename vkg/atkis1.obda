@@ -1,4 +1,5 @@
 [PrefixDeclaration]
+:		http://example.org/ontologies/atkis#
 sf:		http://www.opengis.net/ont/sf#
 geo:		http://www.opengis.net/ont/geosparql#
 owl:		http://www.w3.org/2002/07/owl#
@@ -11,7 +12,7 @@ rdfs:		http://www.w3.org/2000/01/rdf-schema#
 
 [MappingDeclaration] @collection [[
 mappingId	specialFacilitiesWithinSettlement
-target		<http://example.org/ontologies/atkis#SpecialFacilitiy/{b}> a <http://example.org/ontologies/atkis#SpecialFacility> ; <http://example.org/ontologies/atkis#name> {specialfacility} ; <http://example.org/ontologies/atkis#hasArea> <http://example.org/ontologies/atkis#Settlement/{c}> ; <http://example.org/ontologies/atkis#location> {area} . 
+target		:SpecialFacilitiy/{b} a :SpecialFacility ; :name {specialfacility} ; :hasArea :Settlement/{c} ; :location {area} . 
 source		SELECT s.gid as b, s.nam AS specialfacility, a.gid as c, a.nam as area,
 			st_astext(s.geom) as point, st_astext(a.geom) as polygon
 			FROM "sie04_f" s
@@ -19,251 +20,251 @@ source		SELECT s.gid as b, s.nam AS specialfacility, a.gid as c, a.nam as area,
 			ON ST_Intersects(s.geom, a.geom);
 
 mappingId	settlement
-target		<http://example.org/ontologies/atkis#Settlement/{gid}> a <http://example.org/ontologies/atkis#Settlement> ; <http://example.org/ontologies/atkis#location> {nam} ; <http://example.org/ontologies/atkis#geometry> {wkt}^^geo:wktLiteral ; <http://example.org/ontologies/atkis#rgs> {rgs} ; <http://example.org/ontologies/atkis#objectId> {objid} . 
+target		:Settlement/{gid} a :Settlement ; :location {nam} ; :geometry {wkt}^^geo:wktLiteral ; :rgs {rgs} ; :objectId {objid} . 
 source		select *, st_astext(geom) as wkt from "sie01_f"
 
 mappingId	area
-target		<http://example.org/ontologies/atkis#Area/{gid}> a <http://example.org/ontologies/atkis#Area> ; <http://example.org/ontologies/atkis#name> {nam} ; <http://example.org/ontologies/atkis#geometry> {wkt} . 
+target		:Area/{gid} a :Area ; :name {nam} ; :geometry {wkt} . 
 source		select *,st_astext(geom) as wkt from "sie01_f"
 
 mappingId	long lat of area
-target		<http://example.org/ontologies/atkis#Area/{bez_lan}> a <http://example.org/ontologies/atkis#Area> ; <http://example.org/ontologies/atkis#name> {bez_lan} ; wgs:long {longitude} ; wgs:lat {latitude} ; <http://example.org/ontologies/atkis#bound> {boundary}^^geo:wktLiteral . 
+target		:Area/{bez_lan} a :Area ; :name {bez_lan} ; wgs:long {longitude} ; wgs:lat {latitude} ; :bound {boundary}^^geo:wktLiteral . 
 source		select * from "area_xy2"
 
 mappingId	relief
-target		<http://example.org/ontologies/atkis#Relief/{id}> a <http://example.org/ontologies/atkis#Relief> . 
+target		:Relief/{id} a :Relief . 
 source		select * from "rel01_l"
 
 mappingId	vegetation
-target		<http://example.org/ontologies/atkis#Vegetation/{gid}> a <http://example.org/ontologies/atkis#Vegetation> ; <http://example.org/ontologies/atkis#name> {nam} ; <http://example.org/ontologies/atkis#intersectsWith> <http://example.org/ontologies/atkis#Area/{gid}> . 
+target		:Vegetation/{gid} a :Vegetation ; :name {nam} ; :intersectsWith :Area/{gid} . 
 source		select *, st_astext(geom) as polygon from "veg01_f"
 
 mappingId	vertical relation
-target		<http://example.org/ontologies/atkis#Ver/{gid}> a <http://example.org/ontologies/atkis#VerticalRelation> . 
+target		:Ver/{gid} a :VerticalRelation . 
 source		select * from "hdu01_b"
 
 mappingId	water bodies
-target		<http://example.org/ontologies/atkis#WaterBody/{id}> a <http://example.org/ontologies/atkis#WaterBody> . 
+target		:WaterBody/{id} a :WaterBody . 
 source		select * from "gew01_f"
 
 mappingId	sie01 points
-target		<http://example.org/ontologies/atkis#Settlement/point/{gid}> a <http://example.org/ontologies/atkis#Settlement> ; <http://example.org/ontologies/atkis#name> {nam}^^xsd:string . 
+target		:Settlement/point/{gid} a :Settlement ; :name {nam}^^xsd:string . 
 source		select gid, nam, st_astext(geom) as wkt from "sie01_p"
 
 mappingId	sie01 polygons
-target		<http://example.org/ontologies/atkis#Settlement/polygon/{gid}> a <http://example.org/ontologies/atkis#Settlement> ; <http://example.org/ontologies/atkis#name> {nam}^^xsd:string . 
+target		:Settlement/polygon/{gid} a :Settlement ; :name {nam}^^xsd:string . 
 source		select gid, nam, st_astext(geom) as wkt from "sie01_f"
 
 mappingId	sie02 areas dom.buildings
-target		<http://example.org/ontologies/atkis#Building/polygon/{gid}> a <http://example.org/ontologies/atkis#Building> ; <http://example.org/ontologies/atkis#name> {nam}^^xsd:string ; <http://example.org/ontologies/atkis#buildingPolygon> {wkt}^^geo:wktLiteral . 
+target		:Building/polygon/{gid} a :Building ; :name {nam}^^xsd:string ; :buildingPolygon {wkt}^^geo:wktLiteral . 
 source		select gid, nam, st_astext(geom) as wkt from "sie02_f"
 
 mappingId	sie03 buildings for sport, historical stuff or indrustry
-target		<http://example.org/ontologies/atkis#Settlement/sie03/{id}> a <http://example.org/ontologies/atkis#Settlement> ; <http://example.org/ontologies/atkis#name> {nam} ; <http://example.org/ontologies/atkis#objart_txt> {objart_txt} ; rdf:geometry {wkt} . 
+target		:Settlement/sie03/{id} a :Settlement ; :name {nam} ; :objart_txt {objart_txt} ; rdf:geometry {wkt} . 
 source		select id, nam, objart_txt, st_astext(geom) as wkt from "sie03_p"
 
 mappingId	sie04_f
-target		<http://example.org/ontologies/atkis#Settlement/sie04/f/{gid}> a <http://example.org/ontologies/atkis#Settlement> ; <http://example.org/ontologies/atkis#name> {nam} ; <http://example.org/ontologies/atkis#sie04_polygon> {wkt} . 
+target		:Settlement/sie04/f/{gid} a :Settlement ; :name {nam} ; :sie04_polygon {wkt} . 
 source		select gid, nam, st_astext(geom) as wkt from "sie04_f"
 
 mappingId	sie04_l
-target		<http://example.org/ontologies/atkis#Settlement/sie04/l/{gid}> a <http://example.org/ontologies/atkis#Settlement> ; <http://example.org/ontologies/atkis#name> {nam}^^xsd:string ; <http://example.org/ontologies/atkis#sie04Linestring> {wkt}^^geo:wktLiteral . 
+target		:Settlement/sie04/l/{gid} a :Settlement ; :name {nam}^^xsd:string ; :sie04Linestring {wkt}^^geo:wktLiteral . 
 source		select gid, nam, st_astext(geom) as wkt from "sie04_l"
 
 mappingId	sie04_p
-target		<http://example.org/ontologies/atkis#Settlement/sie04/p/{gid}> a <http://example.org/ontologies/atkis#Settlement> ; <http://example.org/ontologies/atkis#name> {nam}^^xsd:string ; <http://example.org/ontologies/atkis#sie04Point> {wkt}^^geo:wktLiteral . 
+target		:Settlement/sie04/p/{gid} a :Settlement ; :name {nam}^^xsd:string ; :sie04Point {wkt}^^geo:wktLiteral . 
 source		select gid, nam, st_astext(geom) as wkt from "sie04_p"
 
 mappingId	sie05 p
-target		<http://example.org/ontologies/atkis#Settlement/sie05/p/{id}> a <http://example.org/ontologies/atkis#Settlement> ; <http://example.org/ontologies/atkis#name> {nam}^^xsd:string ; <http://example.org/ontologies/atkis#sie05_p> {wkt}^^geo:wktLiteral . 
+target		:Settlement/sie05/p/{id} a :Settlement ; :name {nam}^^xsd:string ; :sie05_p {wkt}^^geo:wktLiteral . 
 source		select id, nam, st_astext(geom) as wkt from "sie05_p"
 
 mappingId	sie01
-target		<http://example.org/ontologies/atkis#Settlement/sie01/{gid}> a <http://example.org/ontologies/atkis#Settlement> ; geo:hasGeometry <http://example.org/ontologies/atkis#Settlement/sie01/f/{gid}> . 
+target		:Settlement/sie01/{gid} a :Settlement ; geo:hasGeometry :Settlement/sie01/f/{gid} . 
 source		select gid from "sie01_f"
 
 mappingId	sie01 geometry
-target		<http://example.org/ontologies/atkis#Settlement/sie01/f/{gid}> a <http://example.org/ontologies/atkis#Settlement> ; geo:asWKT {wkt} ; rdfs:label {nam} . 
+target		:Settlement/sie01/f/{gid} a :Settlement ; geo:asWKT {wkt} ; rdfs:label {nam} . 
 source		select gid, st_astext(geom) as wkt, nam from "sie01_f"
 
 mappingId	traffic
-target		<http://example.org/ontologies/atkis#Traffic/{id}> a <http://example.org/ontologies/atkis#Traffic> ; geo:asWKT {wkt} ; rdfs:label {bez} . 
+target		:Traffic/{id} a :Traffic ; geo:asWKT {wkt} ; rdfs:label {bez} . 
 source		select id, bez, st_astext(geom) as wkt from "ver01_l"
 
 mappingId	ver01 road traffic
-target		<http://example.org/ontologies/atkis#RoadTraffic/{id}> a <http://example.org/ontologies/atkis#RoadTraffic> ; geo:hasGeometry <http://example.org/ontologies/atkis#RoadTraffic/l/{id}> . 
+target		:RoadTraffic/{id} a :RoadTraffic ; geo:hasGeometry :RoadTraffic/l/{id} . 
 source		select id from ver01_l
 
 mappingId	ver01 linestring
-target		<http://example.org/ontologies/atkis#RoadTraffic/l/{id}> a geo:Geometry ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:RoadTraffic/l/{id} a geo:Geometry ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select id, st_astext(geom) as wkt from ver01_l
 
 mappingId	ver02 paths
-target		<http://example.org/ontologies/atkis#Paths/{gid}> a <http://example.org/ontologies/atkis#Paths> ; geo:hasGeometry <http://example.org/ontologies/atkis#Paths/l/{gid}> . 
+target		:Paths/{gid} a :Paths ; geo:hasGeometry :Paths/l/{gid} . 
 source		select gid from "ver02_l"
 
 mappingId	ver02 linestrings
-target		<http://example.org/ontologies/atkis#Paths/l/{gid}> geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Paths/l/{gid} geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, st_astext(geom) as wkt from ver02_l
 
 mappingId	ver03
-target		<http://example.org/ontologies/atkis#RailwayTraffic/{gid}> a <http://example.org/ontologies/atkis#RailwayTraffic> ; geo:hasPolygonGeometry <http://example.org/ontologies/atkis#RailwayTraffic/f/{gid}> ; geo:hasLinestringGeometry <http://example.org/ontologies/atkis#RailwayTraffic/l/{gid}> . 
+target		:RailwayTraffic/{gid} a :RailwayTraffic ; geo:hasPolygonGeometry :RailwayTraffic/f/{gid} ; geo:hasLinestringGeometry :RailwayTraffic/l/{gid} . 
 source		select gid from ver03_f
 
 mappingId	ver03 polygons
-target		<http://example.org/ontologies/atkis#RailwayTraffic/f/{gid}> geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:RailwayTraffic/f/{gid} geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, st_astext(geom) as wkt from "ver03_f"
 
 mappingId	ver03 linestrings
-target		<http://example.org/ontologies/atkis#RailwayTraffic/l/{gid}> geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:RailwayTraffic/l/{gid} geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, st_astext(geom) as wkt    from "ver03_l"
 
 mappingId	ver04
-target		<http://example.org/ontologies/atkis#AirTraffic/{gid}> a <http://example.org/ontologies/atkis#AirTraffic> ; geo:hasPolygonGeometry <http://example.org/ontologies/atkis#AirTraffic/f/{gid}> . 
+target		:AirTraffic/{gid} a :AirTraffic ; geo:hasPolygonGeometry :AirTraffic/f/{gid} . 
 source		select gid from "ver04_f"
 
 mappingId	ver04 polygons (air traffic)
-target		<http://example.org/ontologies/atkis#AirTraffic/f/{gid}> geo:asWKT {wkt} ; rdfs:label {nam} . 
+target		:AirTraffic/f/{gid} geo:asWKT {wkt} ; rdfs:label {nam} . 
 source		select gid, st_astext(geom) as wkt, nam from "ver04_f"
 
 mappingId	ver05 shipping traffic
-target		<http://example.org/ontologies/atkis#ShippingTraffic/{gid}> a <http://example.org/ontologies/atkis#ShippingTraffic> ; geo:hasGeometry <http://example.org/ontologies/atkis#ShippingTraffic/l/{gid}> . 
+target		:ShippingTraffic/{gid} a :ShippingTraffic ; geo:hasGeometry :ShippingTraffic/l/{gid} . 
 source		select gid from "ver05_l"
 
 mappingId	ver05 polygons
-target		<http://example.org/ontologies/atkis#ShippingTraffic/l/{gid}> geo:asWKT {wkt}^^geo:wktLiteral ; rdfs:label {nam} . 
+target		:ShippingTraffic/l/{gid} geo:asWKT {wkt}^^geo:wktLiteral ; rdfs:label {nam} . 
 source		select gid, st_astext(geom) as wkt, nam from "ver05_l"
 
 mappingId	ver06 transport buildings and facilities
-target		<http://example.org/ontologies/atkis#Transport_b_f/{gid}> a <http://example.org/ontologies/atkis#Transport_b_f> ; geo:hasPolygonGeometry <http://example.org/ontologies/atkis#Transport_b_f/f/{gid}> ; geo:hasLinestringGeometry <http://example.org/ontologies/atkis#Transport_b_f/l/{gid}> ; geo:hasPointGeometry <http://example.org/ontologies/atkis#Transport_b_f/p/{gid}> . 
+target		:Transport_b_f/{gid} a :Transport_b_f ; geo:hasPolygonGeometry :Transport_b_f/f/{gid} ; geo:hasLinestringGeometry :Transport_b_f/l/{gid} ; geo:hasPointGeometry :Transport_b_f/p/{gid} . 
 source		select gid from "ver06_f"
 
 mappingId	ver06 polygon
-target		<http://example.org/ontologies/atkis#Transport_b_f/f/{gid}> geo:asWKT {wkt}^^geo:wktLiteral ; rdfs:label {nam}^^xsd:string . 
+target		:Transport_b_f/f/{gid} geo:asWKT {wkt}^^geo:wktLiteral ; rdfs:label {nam}^^xsd:string . 
 source		select gid, st_astext(geom) as wkt, nam from "ver06_f"
 
 mappingId	ver06 linestrings
-target		<http://example.org/ontologies/atkis#Transport_b_f/l/{id}> geo:asWKT {wkt}^^geo:wktLiteral ; rdfs:label {nam}^^xsd:string . 
+target		:Transport_b_f/l/{id} geo:asWKT {wkt}^^geo:wktLiteral ; rdfs:label {nam}^^xsd:string . 
 source		select id, st_astext(geom) as wkt, nam from "ver06_l"
 
 mappingId	ver06 points
-target		<http://example.org/ontologies/atkis#Transport_b_f/p/{id}> geo:asWKT {wkt}^^geo:wktLiteral ; rdfs:label {nam}^^xsd:string . 
+target		:Transport_b_f/p/{id} geo:asWKT {wkt}^^geo:wktLiteral ; rdfs:label {nam}^^xsd:string . 
 source		select id, st_astext(geom) as wkt, nam from "ver06_p"
 
 mappingId	veg01 vegetation
-target		<http://example.org/ontologies/atkis#Agricultural/{gid}> a <http://example.org/ontologies/atkis#Agricultural> ; geo:hasGeometry <http://example.org/ontologies/atkis#Agricultural/f/{gid}> . 
+target		:Agricultural/{gid} a :Agricultural ; geo:hasGeometry :Agricultural/f/{gid} . 
 source		select gid from "veg01_f"
 
 mappingId	veg01 polygons
-target		<http://example.org/ontologies/atkis#Agricultural/f/{gid}> geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Agricultural/f/{gid} geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, st_astext(geom) as wkt from "veg01_f"
 
 mappingId	veg02 Forestry use
-target		<http://example.org/ontologies/atkis#Forestry/{gid}> a <http://example.org/ontologies/atkis#Forestry> ; geo:hasGeometry <http://example.org/ontologies/atkis#Forestry/f/{gid}> . 
+target		:Forestry/{gid} a :Forestry ; geo:hasGeometry :Forestry/f/{gid} . 
 source		select gid from "veg02_f"
 
 mappingId	veg02 polygons
-target		<http://example.org/ontologies/atkis#Forestry/f/{gid}> geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Forestry/f/{gid} geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, st_astext(geom) as wkt from "veg02_f"
 
 mappingId	veg03 vegetation
-target		<http://example.org/ontologies/atkis#Vegetation/{gid}> a <http://example.org/ontologies/atkis#Vegetation> ; geo:hasGeometry <http://example.org/ontologies/atkis#Vegetation/f/{gid}> . 
+target		:Vegetation/{gid} a :Vegetation ; geo:hasGeometry :Vegetation/f/{gid} . 
 source		select gid from "veg03_f"
 
 mappingId	veg03 polygons
-target		<http://example.org/ontologies/atkis#Vegetation/f/{gid}> geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Vegetation/f/{gid} geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, st_astext(geom) as wkt from "veg03_f"
 
 mappingId	veg04 vegetation_characteristics
-target		<http://example.org/ontologies/atkis#VegChar/{gid}> a <http://example.org/ontologies/atkis#VegChar> ; geo:hasGeometry <http://example.org/ontologies/atkis#VegChar/f/{gid}> . 
+target		:VegChar/{gid} a :VegChar ; geo:hasGeometry :VegChar/f/{gid} . 
 source		select gid from "veg04_f"
 
 mappingId	veg04 polygons
-target		<http://example.org/ontologies/atkis#VegChar/f/{gid}> geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:VegChar/f/{gid} geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, st_astext(geom) as wkt from "veg04_f"
 
 mappingId	gew01 waterbodies
-target		<http://example.org/ontologies/atkis#WaterBody/{id}> a <http://example.org/ontologies/atkis#WaterBody> ; geo:hasPolygonGeometry <http://example.org/ontologies/atkis#WaterBody/f/{id}> ; geo:hasLinestringGeometry <http://example.org/ontologies/atkis#WaterBody/l/{gid}> . 
+target		:WaterBody/{id} a :WaterBody ; geo:hasPolygonGeometry :WaterBody/f/{id} ; geo:hasLinestringGeometry :WaterBody/l/{gid} . 
 source		select gew01_f.id, gew01_l.gid from "gew01_f", "gew01_l"
 
 mappingId	gew01 polygons
-target		<http://example.org/ontologies/atkis#WaterBody/f/{id}> geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:WaterBody/f/{id} geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select id, st_astext(geom) as wkt from "gew01_f"
 
 mappingId	gew01 linestring
-target		<http://example.org/ontologies/atkis#WaterBody/l/{gid}> geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:WaterBody/l/{gid} geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, st_astext(geom) as wkt from "gew01_l"
 
 mappingId	gew02 waterbody_characteristics
-target		<http://example.org/ontologies/atkis#WaterBodyChar/{gid}> a <http://example.org/ontologies/atkis#WaterBodyChar> ; geo:hasPolygonGeometry <http://example.org/ontologies/atkis#WaterBodyChar/f/{gid}> ; geo:hasPointGeometry <http://example.org/ontologies/atkis#WaterBodyChar/p/{gid2}> . 
+target		:WaterBodyChar/{gid} a :WaterBodyChar ; geo:hasPolygonGeometry :WaterBodyChar/f/{gid} ; geo:hasPointGeometry :WaterBodyChar/p/{gid2} . 
 source		select gew02_f.gid, gew02_p.gid as gid2 from "gew02_f", "gew02_p"
 
 mappingId	gew02 polygons
-target		<http://example.org/ontologies/atkis#WaterBodyChar/f/{gid}> geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:WaterBodyChar/f/{gid} geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, st_astext(geom) as wkt from "gew02_f"
 
 mappingId	gew02 point
-target		<http://example.org/ontologies/atkis#WaterBodyChar/p/{gid}> geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:WaterBodyChar/p/{gid} geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, st_astext(geom) as wkt from "gew02_p"
 
 mappingId	gew03 waterline_axis
-target		<http://example.org/ontologies/atkis#WaterLineAxis/{gid}> a <http://example.org/ontologies/atkis#WaterLineAxis> ; geo:hasGeometry <http://example.org/ontologies/atkis#WaterLineAxis/l/{gid}> . 
+target		:WaterLineAxis/{gid} a :WaterLineAxis ; geo:hasGeometry :WaterLineAxis/l/{gid} . 
 source		select gid from "gew03_l"
 
 mappingId	gew03 linestring
-target		<http://example.org/ontologies/atkis#WaterLineAxis/l/{gid}> geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:WaterLineAxis/l/{gid} geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, st_astext(geom) as wkt from "gew03_l"
 
 mappingId	geb01 Administrative areas
-target		<http://example.org/ontologies/atkis#Administrative/{gid}> a <http://example.org/ontologies/atkis#Administrative> ; geo:hasPolygonGeometry <http://example.org/ontologies/atkis#Administrative/f/{gid}> ; geo:hasLinestringGeometry <http://example.org/ontologies/atkis#Administrative/l/{gid2}> . 
+target		:Administrative/{gid} a :Administrative ; geo:hasPolygonGeometry :Administrative/f/{gid} ; geo:hasLinestringGeometry :Administrative/l/{gid2} . 
 source		select geb01_f.gid, geb01_l.gid as gid2 from "geb01_f", "geb01_l"
 
 mappingId	geb01 polygon
-target		<http://example.org/ontologies/atkis#Administrative/f/{gid}> geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Administrative/f/{gid} geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, st_astext(geom) as wkt from "geb01_f"
 
 mappingId	geb01 linestring
-target		<http://example.org/ontologies/atkis#Administrative/l/{gid}> geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Administrative/l/{gid} geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, st_astext(geom) as wkt from "geb01_l"
 
 mappingId	geb02 geoprahical areas
-target		<http://example.org/ontologies/atkis#Geographical/{gid}> a <http://example.org/ontologies/atkis#Geographical> ; geo:hasPolygonGeometry <http://example.org/ontologies/atkis#Geographical/f/{gid}> . 
+target		:Geographical/{gid} a :Geographical ; geo:hasPolygonGeometry :Geographical/f/{gid} . 
 source		select gid from "geb02_f"
 
 mappingId	geb02 polygon
-target		<http://example.org/ontologies/atkis#Geographical/f/{gid}> geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Geographical/f/{gid} geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, st_astext(geom) as wkt from "geb02_f"
 
 mappingId	geb03 protected areas
-target		<http://example.org/ontologies/atkis#Protected/{gid}> a <http://example.org/ontologies/atkis#Protected> ; geo:hasPolygonGeometry <http://example.org/ontologies/atkis#Protected/f/{gid}> . 
+target		:Protected/{gid} a :Protected ; geo:hasPolygonGeometry :Protected/f/{gid} . 
 source		select gid from "geb03_f"
 
 mappingId	geb03 polygon
-target		<http://example.org/ontologies/atkis#Protected/f/{gid}> geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Protected/f/{gid} geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, st_astext(geom) as wkt from "geb03_f"
 
 mappingId	rel01 relief forms linestring
-target		<http://example.org/ontologies/atkis#Relief/{id}> a <http://example.org/ontologies/atkis#Relief> ; geo:hasLinestringGeometry <http://example.org/ontologies/atkis#Protected/l/{id}> . 
+target		:Relief/{id} a :Relief ; geo:hasLinestringGeometry :Protected/l/{id} . 
 source		select id from "rel01_l"
 
 mappingId	rel01 linestring
-target		<http://example.org/ontologies/atkis#Relief/l/{id}> geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Relief/l/{id} geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select id, st_astext(geom) as wkt from "rel01_l"
 
 mappingId	rel01 relief forms points
-target		<http://example.org/ontologies/atkis#Relief/{gid}> a <http://example.org/ontologies/atkis#Relief> ; geo:hasPointGeometry <http://example.org/ontologies/atkis#Relief/p/{gid}> . 
+target		:Relief/{gid} a :Relief ; geo:hasPointGeometry :Relief/p/{gid} . 
 source		select gid from "rel01_p"
 
 mappingId	rel01 points
-target		<http://example.org/ontologies/atkis#Relief/p/{gid}> geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Relief/p/{gid} geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, st_astext(geom) as wkt from "rel01_p"
 
 mappingId	rel02 measurement data
-target		<http://example.org/ontologies/atkis#MeasurementData/{id}> a <http://example.org/ontologies/atkis#Relief> ; geo:hasGeometry <http://example.org/ontologies/atkis#MeasurementData/p/{id}> . 
+target		:MeasurementData/{id} a :Relief ; geo:hasGeometry :MeasurementData/p/{id} . 
 source		select id from "rel02_p"
 
 mappingId	rel02 points
-target		<http://example.org/ontologies/atkis#MeasurementData/p/{id}> geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:MeasurementData/p/{id} geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select id, st_astext(geom) as wkt from "rel02_p"
 ]]
 
