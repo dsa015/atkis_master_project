@@ -139,7 +139,8 @@ wgs:location rdf:type owl:ObjectProperty .
 ###  http://example.org/ontologies/atkis#bez
 :bez rdf:type owl:DatatypeProperty ;
      rdfs:subPropertyOf owl:topDataProperty ;
-     rdfs:comment "Designation" .
+     rdfs:comment "Designation" ,
+                  "Traffic code, highway code. Example E6" .
 
 
 ###  http://example.org/ontologies/atkis#bound
