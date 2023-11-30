@@ -328,3 +328,35 @@ SELECT * WHERE {
 
 }
 ]]
+
+[QueryGroup="newMappingQueries"] @collection [[
+[QueryItem="Administrative polygon"]
+PREFIX : <http://example.org/ontologies/atkis#>
+PREFIX sf: <http://www.opengis.net/ont/sf#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX gml: <http://www.opengis.net/ont/gml#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX obda: <https://w3id.org/obda/vocabulary#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX geoname: <https://www.geonames.org/ontology/ontology_v3.3.rdf>
+
+#:Administrative/l/{gid} a :Administrative ; geo:hasDefaultGeometry :Administrative/geo/l/{gid} . :Administrative/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT #{wkt}^^geo:wktLiteral . 
+
+
+
+SELECT ?gid ?bez_lan ?wkt
+WHERE {
+  ?f a :Administrative ;
+     rdfs:label ?bez_lan ;
+     geo:hasDefaultGeometry ?geo .
+  
+  ?geo a geo:Geometry , sf:Polygon ;
+       geo:asWKT ?wkt .
+  
+  BIND(STRAFTER(str(?geo), "/f/") AS ?gid)
+}
+]]
