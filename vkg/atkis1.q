@@ -344,10 +344,6 @@ PREFIX obda: <https://w3id.org/obda/vocabulary#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX geoname: <https://www.geonames.org/ontology/ontology_v3.3.rdf>
 
-#:Administrative/l/{gid} a :Administrative ; geo:hasDefaultGeometry :Administrative/geo/l/{gid} . :Administrative/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT #{wkt}^^geo:wktLiteral . 
-
-
-
 SELECT ?gid ?bez_lan ?wkt
 WHERE {
   ?f a :Administrative ;
