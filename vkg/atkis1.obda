@@ -2,6 +2,7 @@
 :		http://example.org/ontologies/atkis#
 sf:		http://www.opengis.net/ont/sf#
 geo:		http://www.opengis.net/ont/geosparql#
+gml:		http://www.opengis.net/ont/gml#
 owl:		http://www.w3.org/2002/07/owl#
 rdf:		http://www.w3.org/1999/02/22-rdf-syntax-ns#
 wgs:		http://www.w3.org/2003/01/geo/wgs84_pos#
@@ -11,20 +12,20 @@ obda:		https://w3id.org/obda/vocabulary#
 rdfs:		http://www.w3.org/2000/01/rdf-schema#
 
 [MappingDeclaration] @collection [[
-mappingId	Area for polygon (f), administrative areas
+mappingId	Area for polygon (f), administrative areas (example from Xiao)
 target		:Area/Administrative/f/{gid} a :Area ; rdfs:label {bez_lan} ; geo:hasDefaultGeometry :Area/geo/f/{gid} . :Area/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, bez_lan, st_astext(geom) as wkt from "geb01_f"
 
 mappingId	Area for linestring_l, geographical areas
-target		:Area/l/{gid} a :Area ; geo:hasDefaultGeometry :Area/geo/l/{gid} . :Area/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Administrative/l/{gid} a :Administrative ; geo:hasDefaultGeometry :Administrative/geo/l/{gid} . :Administrative/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, st_astext(geom) as wkt from "geb01_l"
 
 mappingId	administrative polygon ?
-target		:Administrative/f/{gid} a :Administrative ; rdfs:label {bez_lan} ; geo:hasDefaultGeometry :Area/geo/f/{gid} . :Area/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Administrative/f/{gid} a :Administrative ; rdfs:label {bez_lan} ; geo:hasDefaultGeometry :Administrative/geo/f/{gid} . :Administrative/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, bez_lan, st_astext(geom) as wkt from "geb01_f"
 
 mappingId	Area, geographical areas polygon (f)
-target		:Geographical/f/{gid} a :Geographical ; rdfs:label {nam} ; geo:hasDefaultGeometry :Geographical/geo/f/{gid} . :Geograpgical/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Geographical/f/{gid} a :Geographical ; rdfs:label {nam} ; geo:hasDefaultGeometry :Geographical/geo/f/{gid} . :Geographical/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, st_astext(geom) as wkt from "geb02_f"
 
 mappingId	Protected areas polygons_f
@@ -72,23 +73,23 @@ target		:Settlement/f/{gid} a :Settlement ; rdfs:label {nam} ; geo:hasDefaultGeo
 source		select gid, nam, st_astext(geom) as wkt from "sie01_f"
 
 mappingId	Settlement, named location point_p
-target		:Settlement/p/{gid} a :Settlement ; rdfs:label {nam} ; geo:hasDefaultGeometry :Settlement/geo/p/{gid} . :Settlement/geo/p/{gid} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Location/p/{gid} a :Settlement ; rdfs:label {nam} ; geo:hasDefaultGeometry :Location/geo/p/{gid} . :Location/geo/p/{gid} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, st_astext(geom) as wkt from "sie01_p"
 
-mappingId	Building, polygon_f
-target		:Area/Building/f/{gid} a :Settlement ; rdfs:label {nam} ; geo:hasDefaultGeometry :Building/geo/f/{gid} . :Building/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+mappingId	areas dominated by buildings, polygon f
+target		:Areas_d_b/f/{gid} a :Areas_d_b ; rdfs:label {nam} ; geo:hasDefaultGeometry :Areas_d_b/geo/f/{gid} . :Areas_d_b/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, st_astext(geom) as wkt from "sie02_f"
 
 mappingId	Building/facilityes polygon_f
-target		:Building/f/{id} a :Building ; rdfs:label {nam} ; geo:hasDefaultGeometry :Building/geo/f/{id} . :Building/geo/f/{id} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:BuildingFacility/f/{id} a :BuildingFacility ; rdfs:label {nam} ; geo:hasDefaultGeometry :BuildingFacility/geo/f/{id} . :BuildingFacility/geo/f/{id} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select id, nam, st_astext(geom) as wkt from "sie03_f"
 
 mappingId	Building/facilityes linestring_l
-target		:Building/l/{gid} a :Building ; geo:hasDefaultGeometry :Building/geo/l/{gid} . :Building/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:BuildingFacility/l/{gid} a :BuildingFacility ; geo:hasDefaultGeometry :BuildingFacility/geo/l/{gid} . :BuildingFacility/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, st_astext(geom) as wkt from "sie03_l"
 
 mappingId	Building/facilityes point_p
-target		:Building/p/{id} a :Building ; rdfs:label {nam} ; geo:hasDefaultGeometry :Building/geo/p/{id} . :Building/geo/p/{id} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:BuildingFacility/p/{id} a :BuildingFacility ; rdfs:label {nam} ; geo:hasDefaultGeometry :BuildingFacility/geo/p/{id} . :BuildingFacility/geo/p/{id} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select id, nam ,st_astext(geom) as wkt from "sie03_p"
 
 mappingId	SpecialFacility polygon_f

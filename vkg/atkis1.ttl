@@ -1,6 +1,7 @@
 @prefix : <http://example.org/ontologies/atkis#> .
 @prefix sf: <http://www.opengis.net/ont/sf#> .
 @prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix gml: <http://www.opengis.net/ont/gml#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
@@ -12,8 +13,9 @@
 
 <http://example.org/ontologies/atkis#> rdf:type owl:Ontology ;
                                         owl:imports <http://www.opengis.net/ont/gml> ,
-                                                    <http://www.opengis.net/ont/geosparql/1.1> ,
-                                                    <http://www.opengis.net/ont/sf/1.1> ,
+                                                    <http://www.opengis.net/ont/geosparql> ,
+                                                    <http://www.opengis.net/ont/sf> ,
+                                                    <http://www.w3.org/2003/01/geo/wgs84_pos#>,
                                                     rdfs: .
 
 #################################################################
@@ -370,9 +372,19 @@ rdfs:label rdf:type owl:DatatypeProperty .
       rdfs:comment "Areas are the German states. Total number og 16 states exist in Germany"@en .
 
 
+###  http://example.org/ontologies/atkis#Areas_d_b
+:Areas_d_b rdf:type owl:Class ;
+           rdfs:subClassOf :Settlement .
+
+
 ###  http://example.org/ontologies/atkis#Building
 :Building rdf:type owl:Class ;
           rdfs:subClassOf :Settlement .
+
+
+###  http://example.org/ontologies/atkis#BuildingFacility
+:BuildingFacility rdf:type owl:Class ;
+                  rdfs:subClassOf :Settlement .
 
 
 ###  http://example.org/ontologies/atkis#Forestry
