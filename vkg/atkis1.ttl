@@ -294,21 +294,6 @@ wgs:location rdf:type owl:ObjectProperty .
      rdfs:domain :Settlement .
 
 
-###  http://example.org/ontologies/atkis#sie04Linestring
-:sie04Linestring rdf:type owl:DatatypeProperty ;
-                 rdfs:subPropertyOf :sie04:hasGeometry .
-
-
-###  http://example.org/ontologies/atkis#sie04Point
-:sie04Point rdf:type owl:DatatypeProperty ;
-            rdfs:subPropertyOf :sie04:hasGeometry .
-
-
-###  http://example.org/ontologies/atkis#sie04_polygon
-:sie04_polygon rdf:type owl:DatatypeProperty ;
-               rdfs:subPropertyOf :sie04:hasGeometry .
-
-
 ###  http://example.org/ontologies/atkis#sie05_p
 :sie05_p rdf:type owl:DatatypeProperty .
 
@@ -329,10 +314,6 @@ wgs:location rdf:type owl:ObjectProperty .
 :zus rdf:type owl:DatatypeProperty ;
      rdfs:subPropertyOf owl:topDataProperty ;
      rdfs:comment "Condition" .
-
-
-###  http://example.org/ontologies/atkis#sie04:hasGeometry
-:sie04:hasGeometry rdf:type owl:DatatypeProperty .
 
 
 ###  http://www.opengis.net/ont/geosparql#asWKT
@@ -386,6 +367,16 @@ rdfs:label rdf:type owl:DatatypeProperty .
                   rdfs:subClassOf :Settlement .
 
 
+###  http://example.org/ontologies/atkis#Cemetary
+:Cemetary rdf:type owl:Class ;
+          rdfs:subClassOf :Municipality .
+
+
+###  http://example.org/ontologies/atkis#CommercialSpace
+:CommercialSpace rdf:type owl:Class ;
+                 rdfs:subClassOf :Municipality .
+
+
 ###  http://example.org/ontologies/atkis#Forestry
 :Forestry rdf:type owl:Class ;
           rdfs:subClassOf :Vegetation .
@@ -410,6 +401,15 @@ rdfs:label rdf:type owl:DatatypeProperty .
                  rdfs:subClassOf :Relief .
 
 
+###  http://example.org/ontologies/atkis#MiningIndustry
+:MiningIndustry rdf:type owl:Class ;
+                rdfs:subClassOf :Municipality .
+
+
+###  http://example.org/ontologies/atkis#Municipality
+:Municipality rdf:type owl:Class .
+
+
 ###  http://example.org/ontologies/atkis#Paths
 :Paths rdf:type owl:Class ;
        rdfs:subClassOf :Traffic .
@@ -423,6 +423,11 @@ rdfs:label rdf:type owl:DatatypeProperty .
 ###  http://example.org/ontologies/atkis#RailwayTraffic
 :RailwayTraffic rdf:type owl:Class ;
                 rdfs:subClassOf :Traffic .
+
+
+###  http://example.org/ontologies/atkis#RecreationalFacility
+:RecreationalFacility rdf:type owl:Class ;
+                      rdfs:subClassOf :Municipality .
 
 
 ###  http://example.org/ontologies/atkis#Relation
