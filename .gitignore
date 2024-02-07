@@ -1,2 +1,5 @@
 #ignore ds_store file
 .DS_STORE
+
+#ignore dataset files for now
+/backup

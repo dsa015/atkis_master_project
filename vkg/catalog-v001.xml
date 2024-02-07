@@ -2,9 +2,9 @@
 <catalog prefer="public"
     xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
     <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
-        <uri id="Automatically generated entry, Timestamp=1701342108758" name="http://www.opengis.net/ont/geosparql" uri="ontologies/geosparql.ttl"/>
-        <uri id="Automatically generated entry, Timestamp=1701342108758" name="http://www.opengis.net/ont/gml" uri="ontologies/gml.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1701342108758" name="http://www.opengis.net/ont/sf" uri="ontologies/sf.ttl"/>
-        <uri id="Automatically generated entry, Timestamp=1701342108758" name="http://www.opengis.net/ont/sf" uri="ontologies/wgs84.rdf"/>
+        <uri id="Automatically generated entry, Timestamp=1702207170485" name="http://www.opengis.net/ont/geosparql" uri="ontologies/geosparql.ttl"/>
+        <uri id="Automatically generated entry, Timestamp=1702207170485" name="http://www.opengis.net/ont/gml" uri="ontologies/gml.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1702207170485" name="http://www.opengis.net/ont/sf" uri="ontologies/sf.ttl"/>
+        <uri id="Automatically generated entry, Timestamp=1702207170485" name="http://www.w3.org/2003/01/geo/wgs84_pos" uri="ontologies/wgs84.rdf"/>
     </group>
 </catalog>

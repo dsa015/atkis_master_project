@@ -13,8 +13,8 @@ rdfs:		http://www.w3.org/2000/01/rdf-schema#
 
 [MappingDeclaration] @collection [[
 mappingId	Area for polygon (f), administrative areas (example from Xiao)
-target		:Area/Administrative/f/{gid} a :Area ; rdfs:label {bez_lan} ; geo:hasDefaultGeometry :Area/geo/f/{gid} . :Area/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select gid, bez_lan, st_astext(geom) as wkt from "geb01_f"
+target		:Area/Administrative/f/{gid} a :Area ; rdfs:label {bez_lan} ; :land {land} ; geo:hasDefaultGeometry :Area/geo/f/{gid} . :Area/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+source		select gid, land, bez_lan, st_astext(geom) as wkt from "geb01_f"
 
 mappingId	Area for linestring_l, geographical areas
 target		:Administrative/l/{gid} a :Administrative ; geo:hasDefaultGeometry :Administrative/geo/l/{gid} . :Administrative/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
@@ -159,5 +159,21 @@ source		select id, nam, bez ,st_astext(geom) as wkt from "ver06_l"
 mappingId	Transport_b_f point_p
 target		:Transport_b_f/p/{id} a :Transport_b_f ; rdfs:label {nam} ; :bez {bez} ; geo:hasDefaultGeometry :Transport_b_f/geo/p/{id} . :Transport_b_f/geo/p/{id} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select id, nam, bez, st_astext(geom) as wkt from "ver06_p"
+
+mappingId	Transport_b_f polygon and point?
+target		:Transport_b_f/f/{gid} a :Transport_b_f ; rdfs:label {f_name} , {p_name} ; :hasTraffic :Transport_b_f/p/{id} . 
+source		SELECT ver06_f.gid AS gid, ver06_f.nam AS f_name, ver06_p.id AS id, ver06_p.nam AS p_name FROM "ver06_f" INNER JOIN "ver06_p" ON ver06_f.gid = ver06_p.id;
+
+mappingId	obj settlement, see spatially within obj areas (admin districts)
+target		:GN250/{id} a :GN250 ; rdfs:label {kreis}^^xsd:string ; :area {bundesland}^^xsd:string ; geo:sfWithin :Settlement/f/{gid} . 
+source		select * from "GN250_b"
+			INNER JOIN sie01_f
+			ON "GN250_b".name = sie01_f.nam
+
+mappingId	a
+target		:Settlenet/{gid_a} a :Settlement ; :rgs {nam1} ; geo:sfWithin :Areas_d_b/{gid_b} . :Areas_d_b/{gid_b} a :Areas_d_b ; :hdu_x {nam2} . 
+source		SELECT a.gid AS gid_a, a.nam AS nam2, b.gid AS gid_b, b.nam AS nam1
+			FROM sie01_f a
+			JOIN sie02_f b ON a.gid = b.gid
 ]]
 
