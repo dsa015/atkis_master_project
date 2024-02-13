@@ -236,13 +236,8 @@ wgs:location rdf:type owl:ObjectProperty .
            rdfs:comment "Model type identifier" .
 
 
-###  http://example.org/ontologies/atkis#nam
-:nam rdf:type owl:DatatypeProperty .
-
-
-###  http://example.org/ontologies/atkis#name
-:name rdf:type owl:DatatypeProperty ;
-      rdfs:subPropertyOf owl:topDataProperty .
+###  http://example.org/ontologies/atkis#municipality
+:municipality rdf:type owl:DatatypeProperty .
 
 
 ###  http://example.org/ontologies/atkis#objart
@@ -287,6 +282,10 @@ wgs:location rdf:type owl:ObjectProperty .
 :objid_z rdf:type owl:DatatypeProperty ;
          rdfs:subPropertyOf owl:topDataProperty ;
          rdfs:comment "Unique identifier for feature types without spatial reference (ZUSO)" .
+
+
+###  http://example.org/ontologies/atkis#place
+:place rdf:type owl:DatatypeProperty .
 
 
 ###  http://example.org/ontologies/atkis#rgs
@@ -400,11 +399,6 @@ rdfs:label rdf:type owl:DatatypeProperty .
               rdfs:subClassOf :Area .
 
 
-###  http://example.org/ontologies/atkis#Location
-:Location rdf:type owl:Class ;
-          rdfs:subClassOf :Settlement .
-
-
 ###  http://example.org/ontologies/atkis#MeasurementData
 :MeasurementData rdf:type owl:Class ;
                  rdfs:subClassOf :Relief .
@@ -457,7 +451,7 @@ rdfs:label rdf:type owl:DatatypeProperty .
 
 ###  http://example.org/ontologies/atkis#SpecialFacility
 :SpecialFacility rdf:type owl:Class ;
-                 rdfs:subClassOf :Location .
+                 rdfs:subClassOf :Settlement .
 
 
 ###  http://example.org/ontologies/atkis#Traffic

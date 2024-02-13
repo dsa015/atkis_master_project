@@ -73,7 +73,7 @@ target		:Settlement/f/{gid} a :Settlement ; rdfs:label {nam} ; geo:hasDefaultGeo
 source		select gid, nam, st_astext(geom) as wkt from "sie01_f"
 
 mappingId	Settlement, named location point_p
-target		:Location/p/{gid} a :Settlement ; rdfs:label {nam} ; geo:hasDefaultGeometry :Location/geo/p/{gid} . :Location/geo/p/{gid} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Settlement/p/{gid} a :Settlement ; rdfs:label {nam} ; geo:hasDefaultGeometry :Settlement/geo/p/{gid} . :Settlement/geo/p/{gid} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, st_astext(geom) as wkt from "sie01_p"
 
 mappingId	areas dominated by buildings, polygon f
@@ -106,7 +106,7 @@ source		select gid, nam ,st_astext(geom) as wkt from "sie04_p"
 
 mappingId	Building point_p
 target		:Building/p/{id} a :Building ; rdfs:label {nam} ; geo:hasDefaultGeometry :Building/geo/p/{id} . :Building/geo/p/{id} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select id, nam ,st_astext(geom) as wkt from "sie05_p"
+source		select id, nam ,st_astext(st_transform(geom, 4326)) as wkt from "sie05_p"
 
 mappingId	Agricultural polygon_f
 target		:Agricultural/f/{gid} a :Agricultural ; rdfs:label {nam} ; geo:hasDefaultGeometry :Agricultural/geo/f/{gid} . :Agricultural/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
@@ -170,10 +170,24 @@ source		select * from "GN250_b"
 			INNER JOIN sie01_f
 			ON "GN250_b".name = sie01_f.nam
 
-mappingId	a
-target		:Settlenet/{gid_a} a :Settlement ; :rgs {nam1} ; geo:sfWithin :Areas_d_b/{gid_b} . :Areas_d_b/{gid_b} a :Areas_d_b ; :hdu_x {nam2} . 
-source		SELECT a.gid AS gid_a, a.nam AS nam2, b.gid AS gid_b, b.nam AS nam1
-			FROM sie01_f a
-			JOIN sie02_f b ON a.gid = b.gid
+mappingId	areas_d_b inside settlements
+target		:Settlement/f/{gid1} a :Settlement ; :municipality {nam} ; :objid_z {geom1} ; geo:ehInside :Areas_d_b/f/{gid2} . :Areas_d_b/f/{gid2} a :Areas_d_b ; :place {nam2} ; :objart_z {geom2} . 
+source		SELECT h.nam, st_astext(h.geom) as geom1, h.gid as gid1, m.nam as nam2, st_astext(m.geom) as geom2, m.gid as gid2
+			FROM sie01_f h, sie02_f m
+			WHERE st_contains(h.geom, m.geom)
+
+mappingId	building facility in municipality
+target		:Settlement/buildingFacility{id} a :BuildingFacility ; rdfs:label {n} ; geo:ehInside :Settlement/location/{gid} . :Settlement/location/{gid} a :Settlement ; :municipality {municipality} . 
+source		select a.gid, a.nam as municipality, b.id, b.nam as n from
+			sie01_f a join sie03_f b on st_within(b.geom, a.geom)
+
+mappingId	special facility within a municipality
+target		:Settlement/SpecialFacility/{gid} a :SpecialFacility ; :hdu_x {n} ; geo:ehInside :Settlement/f/{gid2} . :Settlement/f/{gid2} a :Settlement ; :objid {municipality} . 
+source		select a.gid as gid2, a.nam as municipality, b.gid, b.nam as n from
+			sie01_f a join sie04_f b on st_within(b.geom, a.geom)
+
+mappingId	MAPID-472f6a7c568f4008b2aa1470059f5b30
+target		:Settlement/{gid} a :Settlement ; :existsIn :Area/{gid} . 
+source		select * from sie01_f
 ]]
 

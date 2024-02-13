@@ -328,7 +328,6 @@ SELECT * WHERE {
 
 }
 ]]
-
 [QueryGroup="newMappingQueries"] @collection [[
 [QueryItem="Administrative polygon"]
 PREFIX : <http://example.org/ontologies/atkis#>
@@ -355,6 +354,7 @@ WHERE {
   
   BIND(STRAFTER(str(?geo), "/f/") AS ?gid)
 }
+limit 5
 [QueryItem="Administrative dist Linestring"]
 PREFIX : <http://example.org/ontologies/atkis#>
 PREFIX sf: <http://www.opengis.net/ont/sf#>
@@ -371,36 +371,16 @@ PREFIX geoname: <https://www.geonames.org/ontology/ontology_v3.3.rdf>
 
 #:Administrative/l/{gid} a :Administrative ; geo:hasDefaultGeometry :Administrative/geo/l/{gid} . :Administrative/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT #{wkt}^^geo:wktLiteral . 
 
-SELECT ?gid ?bez_lan ?wkt
-WHERE {
+SELECT * WHERE {
   ?f a :Administrative ;
-     rdfs:label ?bez_lan ;
      geo:hasDefaultGeometry ?geo .
   
-  ?geo a geo:Geometry , sf:LineString ;
+  ?geo a geo:Geometry, sf:LineString ;
        geo:asWKT ?wkt .
   
   BIND(STRAFTER(str(?geo), "/l/") AS ?gid)
 }
-[QueryItem="sss"]
-PREFIX : <http://example.org/ontologies/atkis#>
-PREFIX sf: <http://www.opengis.net/ont/sf#>
-PREFIX geo: <http://www.opengis.net/ont/geosparql#>
-PREFIX gml: <http://www.opengis.net/ont/gml#>
-PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
-PREFIX xml: <http://www.w3.org/XML/1998/namespace>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX obda: <https://w3id.org/obda/vocabulary#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-
-#Get all triples from theme Administrative
-
-SELECT ?s ?p ?wkt WHERE {
-?s a :Administrative ; rdfs:label ?p ; geo:hasDefaultGeometry ?o .
-?o a geo:Geometry, sf:Polygon ; geo:asWKT ?wkt .
-}
+limit 50
 [QueryItem="get municipalities, their county and state they are in"]
 PREFIX : <http://example.org/ontologies/atkis#>
 PREFIX sf: <http://www.opengis.net/ont/sf#>
@@ -414,11 +394,15 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX obda: <https://w3id.org/obda/vocabulary#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
+#this is using the GN250 dataset refered in dlm docs
+
 SELECT ?s ?state ?county ?o ?settlement WHERE {
 ?s a :GN250 ; rdfs:label ?county ; :area ?state ; geo:sfWithin ?o.
 ?o a :Settlement ; rdfs:label ?settlement . 
 }
-[QueryItem="-ipweæoi-"]
+]]
+[QueryGroup="Settlement"] @collection [[
+[QueryItem="leisuire, place within municipality"]
 PREFIX : <http://example.org/ontologies/atkis#>
 PREFIX sf: <http://www.opengis.net/ont/sf#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
@@ -431,9 +415,145 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX obda: <https://w3id.org/obda/vocabulary#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-#join sie01 and sie02 level based on gid, but they have no relation...
-select ?s ?p ?b ?a where {
-?s a :Settlement ; :rgs ?b ; geo:sfWithin ?p .
-?p a :Areas_d_b ; :hdu_x ?a .
+select * where {
+?s a :Settlement ; :municipality ?n ; :objid_z ?g1 ; geo:ehInside ?p .
+?p a :Areas_d_b ; :place ?n2 ; :objart_z ?g2 .
+filter (?n != ?n2)
+#filter (?n = 'Rust')
 }
+limit 1
+[QueryItem="municipality"]
+PREFIX : <http://example.org/ontologies/atkis#>
+PREFIX sf: <http://www.opengis.net/ont/sf#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX gml: <http://www.opengis.net/ont/gml#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX obda: <https://w3id.org/obda/vocabulary#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select * where {
+?s a :Settlement ; rdfs:label ?p ; geo:hasDefaultGeometry ?o .
+?o a geo:Geometry, sf:Polygon ; geo:asWKT ?geo .
+ BIND(STRAFTER(str(?o), "/f/") AS ?gid)
+}
+limit 10
+[QueryItem="leisure place"]
+PREFIX : <http://example.org/ontologies/atkis#>
+PREFIX sf: <http://www.opengis.net/ont/sf#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX gml: <http://www.opengis.net/ont/gml#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX obda: <https://w3id.org/obda/vocabulary#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select * where {
+?s a :Areas_d_b ; rdfs:label ?n ; geo:hasDefaultGeometry ?o .
+?o a geo:Geometry, sf:Polygon ; geo:asWKT ?geo .
+}
+[QueryItem="buildings, facilities, treatment plants"]
+PREFIX : <http://example.org/ontologies/atkis#>
+PREFIX sf: <http://www.opengis.net/ont/sf#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX gml: <http://www.opengis.net/ont/gml#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX obda: <https://w3id.org/obda/vocabulary#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select * where {
+?s a :BuildingFacility ; rdfs:label ?n ; geo:ehInside ?o .
+?o a :Settlement ; :municipality ?n2 .
+}
+limit 100
+[QueryItem="special facilityes within a municipality"]
+PREFIX : <http://example.org/ontologies/atkis#>
+PREFIX sf: <http://www.opengis.net/ont/sf#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX gml: <http://www.opengis.net/ont/gml#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX obda: <https://w3id.org/obda/vocabulary#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select * where {
+?s a :SpecialFacility ;  :hdu_x ?n ; geo:ehInside ?o .
+?o a :Settlement ; :objid ?n2 .
+}
+limit 10
+[QueryItem="describe class settlemnt"]
+PREFIX : <http://example.org/ontologies/atkis#>
+PREFIX sf: <http://www.opengis.net/ont/sf#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX gml: <http://www.opengis.net/ont/gml#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX obda: <https://w3id.org/obda/vocabulary#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+#DESCRIBE ?s where {
+#?s a :Settlement .
+#}
+Describe <http://example.org/ontologies/atkis#Building/p/2>
+[QueryItem="test query high level"]
+PREFIX : <http://example.org/ontologies/atkis#>
+PREFIX sf: <http://www.opengis.net/ont/sf#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX gml: <http://www.opengis.net/ont/gml#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX obda: <https://w3id.org/obda/vocabulary#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>
+
+SELECT ?label ?geometryWKT WHERE {
+
+}
+[QueryItem="tes2"]
+PREFIX : <http://example.org/ontologies/atkis#>
+PREFIX sf: <http://www.opengis.net/ont/sf#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX gml: <http://www.opengis.net/ont/gml#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX obda: <https://w3id.org/obda/vocabulary#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>
+
+SELECT ?s ?buildingLabel ?buildingWKT (geof:distance(?buildingWKT, ?pointWKT, uom:metre) AS ?d)
+WHERE {
+  ?s a :Building ;
+     rdfs:label ?buildingLabel ;
+     geo:hasDefaultGeometry ?buildingGeometry .
+
+  ?buildingGeometry a geo:Geometry, sf:Point ;
+     geo:asWKT ?buildingWKT .
+
+  BIND("POINT(9.210529390002849 50.20924802624827)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> AS ?pointWKT)
+}
+LIMIT 1
 ]]
