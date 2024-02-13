@@ -511,7 +511,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 #?s a :Settlement .
 #}
 Describe <http://example.org/ontologies/atkis#Building/p/2>
-[QueryItem="test query high level"]
+[QueryItem="municipality contained in state"]
 PREFIX : <http://example.org/ontologies/atkis#>
 PREFIX sf: <http://www.opengis.net/ont/sf#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
@@ -526,9 +526,12 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
 PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>
 
-SELECT ?label ?geometryWKT WHERE {
-
+SELECT * Where {
+?s a :Settlement ; :objid ?n ; :existsIn ?p .
+?p a :Area ; :objid_z ?n2 .
+#filter (?n = 'Rust')
 }
+limit 100
 [QueryItem="tes2"]
 PREFIX : <http://example.org/ontologies/atkis#>
 PREFIX sf: <http://www.opengis.net/ont/sf#>

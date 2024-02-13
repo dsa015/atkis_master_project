@@ -186,8 +186,9 @@ target		:Settlement/SpecialFacility/{gid} a :SpecialFacility ; :hdu_x {n} ; geo:
 source		select a.gid as gid2, a.nam as municipality, b.gid, b.nam as n from
 			sie01_f a join sie04_f b on st_within(b.geom, a.geom)
 
-mappingId	MAPID-472f6a7c568f4008b2aa1470059f5b30
-target		:Settlement/{gid} a :Settlement ; :existsIn :Area/{gid} . 
-source		select * from sie01_f
+mappingId	settlement f inside admin areaas
+target		:Settlement/{nam} a :Settlement ; :objid {nam} ; :existsIn :Area/{bez_lan} . :Area/{bez_lan} a :Area ; :objid_z {bez_lan} . 
+source		select * from sie01_f_in_geb01_f
+			where bez_lan is not null
 ]]
 

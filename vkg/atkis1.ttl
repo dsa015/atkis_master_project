@@ -12,9 +12,9 @@
 @base <http://example.org/ontologies/atkis#> .
 
 <http://example.org/ontologies/atkis#> rdf:type owl:Ontology ;
-                                        owl:imports <http://www.opengis.net/ont/geosparql> ,
-                                                    <http://www.opengis.net/ont/gml> ,
-                                                    <http://www.opengis.net/ont/sf> ,
+                                        owl:imports <http://www.opengis.net/ont/gml> ,
+                                                    <http://www.opengis.net/ont/geosparql/1.1> ,
+                                                    <http://www.opengis.net/ont/sf/1.1> ,
                                                     rdfs: .
 
 #################################################################

@@ -1,6 +1,6 @@
 # baseURI: http://www.opengis.net/ont/geosparql
 
-BASE<http://www.opengis.net/ont/geosparql>
+BASE <http://www.opengis.net/ont/geosparql>
 
 PREFIX : <http://www.opengis.net/ont/geosparql#>
 PREFIX dcterms: <http://purl.org/dc/terms/>
