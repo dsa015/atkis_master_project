@@ -145,8 +145,7 @@ wgs:location rdf:type owl:ObjectProperty .
 
 
 ###  http://example.org/ontologies/atkis#bound
-:bound rdf:type owl:DatatypeProperty ;
-       rdfs:subPropertyOf :geometry .
+:bound rdf:type owl:DatatypeProperty .
 
 
 ###  http://example.org/ontologies/atkis#brf
@@ -178,6 +177,10 @@ wgs:location rdf:type owl:ObjectProperty .
       rdfs:comment "Lifetime interval ends" .
 
 
+###  http://example.org/ontologies/atkis#fkt
+:fkt rdf:type owl:DatatypeProperty .
+
+
 ###  http://example.org/ontologies/atkis#fsz
 :fsz rdf:type owl:DatatypeProperty ;
      rdfs:subPropertyOf owl:topDataProperty ;
@@ -189,11 +192,10 @@ wgs:location rdf:type owl:ObjectProperty .
      rdfs:comment "Lane seperation" .
 
 
-###  http://example.org/ontologies/atkis#geometry
-:geometry rdf:type owl:DatatypeProperty ;
-          rdfs:subPropertyOf owl:topDataProperty ;
-          rdfs:domain :Building ,
-                      :Settlement .
+###  http://example.org/ontologies/atkis#gfk
+:gfk rdf:type owl:DatatypeProperty ;
+     rdfs:comment """categorisation of buildings defined by gfk values.
+e.g. gfk 2072 = youth hostel"""@en .
 
 
 ###  http://example.org/ontologies/atkis#hdu_x
@@ -215,8 +217,7 @@ wgs:location rdf:type owl:ObjectProperty .
 
 
 ###  http://example.org/ontologies/atkis#lat
-:lat rdf:type owl:DatatypeProperty ;
-     rdfs:subPropertyOf :geometry .
+:lat rdf:type owl:DatatypeProperty .
 
 
 ###  http://example.org/ontologies/atkis#location
@@ -226,8 +227,7 @@ wgs:location rdf:type owl:ObjectProperty .
 
 
 ###  http://example.org/ontologies/atkis#long
-:long rdf:type owl:DatatypeProperty ;
-      rdfs:subPropertyOf :geometry .
+:long rdf:type owl:DatatypeProperty .
 
 
 ###  http://example.org/ontologies/atkis#modellart
@@ -263,7 +263,7 @@ wgs:location rdf:type owl:ObjectProperty .
           rdfs:domain :Area ,
                       :Settlement ,
                       :Traffic ,
-                      :WaterBody .
+                      :Watt .
 
 
 ###  http://example.org/ontologies/atkis#objecttxt
@@ -293,25 +293,6 @@ wgs:location rdf:type owl:ObjectProperty .
      rdfs:domain :Settlement .
 
 
-###  http://example.org/ontologies/atkis#sie04Linestring
-:sie04Linestring rdf:type owl:DatatypeProperty ;
-                 rdfs:subPropertyOf :sie04:hasGeometry .
-
-
-###  http://example.org/ontologies/atkis#sie04Point
-:sie04Point rdf:type owl:DatatypeProperty ;
-            rdfs:subPropertyOf :sie04:hasGeometry .
-
-
-###  http://example.org/ontologies/atkis#sie04_polygon
-:sie04_polygon rdf:type owl:DatatypeProperty ;
-               rdfs:subPropertyOf :sie04:hasGeometry .
-
-
-###  http://example.org/ontologies/atkis#sie05_p
-:sie05_p rdf:type owl:DatatypeProperty .
-
-
 ###  http://example.org/ontologies/atkis#wdm
 :wdm rdf:type owl:DatatypeProperty ;
      rdfs:subPropertyOf owl:topDataProperty ;
@@ -328,10 +309,6 @@ wgs:location rdf:type owl:ObjectProperty .
 :zus rdf:type owl:DatatypeProperty ;
      rdfs:subPropertyOf owl:topDataProperty ;
      rdfs:comment "Condition" .
-
-
-###  http://example.org/ontologies/atkis#sie04:hasGeometry
-:sie04:hasGeometry rdf:type owl:DatatypeProperty .
 
 
 ###  http://www.opengis.net/ont/geosparql#asWKT
@@ -397,6 +374,11 @@ rdfs:label rdf:type owl:DatatypeProperty .
 ###  http://example.org/ontologies/atkis#Geographical
 :Geographical rdf:type owl:Class ;
               rdfs:subClassOf :Area .
+
+
+###  http://example.org/ontologies/atkis#Location
+:Location rdf:type owl:Class ;
+          rdfs:subClassOf :Settlement .
 
 
 ###  http://example.org/ontologies/atkis#MeasurementData
@@ -474,23 +456,33 @@ rdfs:label rdf:type owl:DatatypeProperty .
             rdfs:comment "agricultural areas" .
 
 
+###  http://example.org/ontologies/atkis#VegetationArea
+:VegetationArea rdf:type owl:Class ;
+                rdfs:subClassOf :Vegetation .
+
+
 ###  http://example.org/ontologies/atkis#VerticalRelation
 :VerticalRelation rdf:type owl:Class ;
                   rdfs:comment "what feature types has a vertical relation" .
 
 
-###  http://example.org/ontologies/atkis#WaterBody
-:WaterBody rdf:type owl:Class .
-
-
 ###  http://example.org/ontologies/atkis#WaterBodyChar
 :WaterBodyChar rdf:type owl:Class ;
-               rdfs:subClassOf :WaterBody .
+               rdfs:subClassOf :Watt .
+
+
+###  http://example.org/ontologies/atkis#WaterBodyCourse
+:WaterBodyCourse rdf:type owl:Class ;
+                 rdfs:subClassOf :Watt .
 
 
 ###  http://example.org/ontologies/atkis#WaterLineAxis
 :WaterLineAxis rdf:type owl:Class ;
-               rdfs:subClassOf :WaterBody .
+               rdfs:subClassOf :Watt .
+
+
+###  http://example.org/ontologies/atkis#Watt
+:Watt rdf:type owl:Class .
 
 
 ###  http://www.opengis.net/ont/geosparql#geometry
