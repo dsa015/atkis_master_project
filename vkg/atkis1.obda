@@ -10,6 +10,7 @@ xml:		http://www.w3.org/XML/1998/namespace
 xsd:		http://www.w3.org/2001/XMLSchema#
 obda:		https://w3id.org/obda/vocabulary#
 rdfs:		http://www.w3.org/2000/01/rdf-schema#
+schema:		http://schema.org/
 
 [MappingDeclaration] @collection [[
 mappingId	Area for linestring_l, geographical areas
@@ -17,7 +18,7 @@ target		:Administrative/l/{gid} a :Administrative ; geo:hasDefaultGeometry :Admi
 source		select gid, st_astext(geom) as wkt from "geb01_l"
 
 mappingId	administrative polygon ?
-target		:Administrative/f/{gid} a :Administrative ; rdfs:label {bez_lan} ; geo:hasDefaultGeometry :Administrative/geo/f/{gid} . :Administrative/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Administrative/f/{gid} a :Administrative ; rdfs:label {bez_lan}@de ; geo:hasDefaultGeometry :Administrative/geo/f/{gid} . :Administrative/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, bez_lan, st_astext(geom) as wkt from "geb01_f"
 
 mappingId	Area, geographical areas polygon (f)
@@ -29,11 +30,11 @@ target		:Protected/f/{gid} a :Protected ; rdfs:label {nam} ; geo:hasDefaultGeome
 source		select gid, nam, st_astext(geom) as wkt from "geb03_f"
 
 mappingId	WaterBody polygon_f
-target		:WaterBodyCourse/f/{id} a :WaterBodyCourse ; rdfs:label {nam} ; :objart_txt {objart_txt} ; geo:hasDefaultGeometry :WaterBody/geo/f/{id} . :WaterBody/geo/f/{id} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:WaterBodyCourse/f/{id} a :WaterBodyCourse ; rdfs:label {nam} ; :objart_txt {objart_txt} ; geo:hasDefaultGeometry :WaterBodyCourse/geo/f/{id} . :WaterBodyCourse/geo/f/{id} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select id, nam, objart_txt, st_astext(st_transform(geom,4326)) as wkt from "gew01_f"
 
 mappingId	WaterBody linestrings_l
-target		:WaterBodyCourse/l/{gid} a :WaterBodyCourse ; rdfs:label {nam} ; geo:hasDefaultGeometry :WaterBody/geo/l/{gid} . :WaterBody/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:WaterBodyCourse/l/{gid} a :WaterBodyCourse ; rdfs:label {nam} ; geo:hasDefaultGeometry :WaterBodyCourse/geo/l/{gid} . :WaterBodyCourse/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, st_astext(st_transform(geom,4326)) as wkt from "gew01_l"
 
 mappingId	WaterBodyChar polygon_f
@@ -106,7 +107,7 @@ source		select id, nam, bwf, gfk ,st_astext(st_transform(geom, 4326)) as wkt fro
 
 mappingId	Agricultural polygon_f
 target		:Agricultural/f/{gid} a :Agricultural ; rdfs:label {nam} ; geo:hasDefaultGeometry :Agricultural/geo/f/{gid} . :Agricultural/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select gid, nam ,st_astext(geom) as wkt from "veg01_f"
+source		select gid, nam ,st_astext(st_transform(geom,4326)) as wkt from "veg01_f"
 
 mappingId	Forestry polygon_f
 target		:Forestry/f/{gid} a :Forestry ; rdfs:label {nam} ; geo:hasDefaultGeometry :Forestry/geo/f/{gid} . :Forestry/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
@@ -114,7 +115,7 @@ source		select gid, nam ,st_astext(geom) as wkt from "veg02_f"
 
 mappingId	VegetationArea polygon_f
 target		:VegetationArea/f/{gid} a :VegetationArea ; rdfs:label {nam} ; geo:hasDefaultGeometry :Vegetation/geo/f/{gid} . :Vegetation/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select gid, nam ,st_astext(geom) as wkt from "veg03_f"
+source		select gid, nam ,st_astext(st_transform(geom, 4326)) as wkt from "veg03_f"
 
 mappingId	vegetation_characteristics polygon_f
 target		:VegChar/f/{gid} a :VegChar ; rdfs:label {nam} ; geo:hasDefaultGeometry :VegChar/geo/f/{gid} . :VegChar/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
@@ -201,5 +202,10 @@ source		select gid, st_length(geom) as length from "gew01_l"
 mappingId	roadtraffic across sie
 target		:RoadTraffic/l/{id} geo:sfCrosses :Location/f/{gid} . 
 source		select a.id, b.gid from ver01_l a join sie01_f b on st_intersects(a.geom, b.geom)
+
+mappingId	waterbody through vegetation
+target		:Agricultural/f/{gid2} a :Agricultural ; geo:sfContains :WaterBodyCourse/l/{gid1} . 
+source		select a.gid as gid1, b.gid as gid2 from gew01_l a
+			join veg01_f b on st_contains(b.geom, a.geom)
 ]]
 

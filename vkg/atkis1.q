@@ -130,13 +130,15 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX obda: <https://w3id.org/obda/vocabulary#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
+# fkt identifier for type of building (sportsbar, adventure park, golfcourse etc). it is an optional value
 select * where {
-?s a :Location ; rdfs:label ?n ; geo:asWKT ?g1 ; geo:ehInside ?p .
-?p a :Areas_d_b ; rdfs:label ?n2 ; geo:asWKT ?g2 .
+?s a :Location ; rdfs:label ?n ; geo:hasDefaultGeometry/geo:asWKT ?bfgeo ; geo:sfContains ?p .
+?p a :Areas_d_b ; rdfs:label ?n2 ; geo:hasDefaultGeometry/geo:asWKT ?bfgeo2 .
+OPTIONAL {?p :fkt ?fkt .}
 #filter (?n != ?n2)
 #filter (?n = 'Rust')
 }
-limit 10
+#limit 10
 [QueryItem="municipality"]
 PREFIX : <http://example.org/ontologies/atkis#>
 PREFIX sf: <http://www.opengis.net/ont/sf#>
@@ -387,38 +389,12 @@ select *  {
     BIND("red" as ?bfgeoColor)
   
   ?a a :Building ; rdfs:label ?ageoLabel ; geo:hasDefaultGeometry/geo:asWKT ?ageo .
-  filter(geof:distance(?bfgeo,?ageo, uom:metre) < 300)
+  filter(geof:distance(?bfgeo, ?ageo, uom:metre) < 300)
   
   BIND(geof:buffer(?bfgeo, 300, uom:metre) AS ?bufferedgeom)
   BIND("red" as ?bufferedgeomColor)
 }
 ]]
-[QueryItem="water"]
-PREFIX go: <http://purl.org/obo/owl/GO#>
-PREFIX : <http://example.org/ontologies/atkis#>
-PREFIX sf: <http://www.opengis.net/ont/sf#>
-PREFIX geo: <http://www.opengis.net/ont/geosparql#>
-PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
-PREFIX gml: <http://www.opengis.net/ont/gml#>
-PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
-PREFIX xml: <http://www.w3.org/XML/1998/namespace>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX obda: <https://w3id.org/obda/vocabulary#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-
-
-# see which river passes through city
-# the river starts from Nederland, but ATKIS has data only about Germany
-SELECT * WHERE {
-#?a a :WaterBodyCourse ; rdfs:label ?waterLabel ; geo:hasDefaultGeometry ?g .   
-#?g a sf:LineString ; geo:asWKT ?water .
-  ?g geo:hasMetricLength ?length .
-# BIND("red" as ?waterColor)
-#FILTER(?waterLabel = "Rhein") 
-#  BIND(geof:length(?water) AS ?length)
-}
 [QueryItem="traffiuc"]
 PREFIX : <http://example.org/ontologies/atkis#>
 PREFIX sf: <http://www.opengis.net/ont/sf#>
@@ -458,12 +434,81 @@ PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
 # see which river passes through city
 # the river starts from Nederland, but ATKIS has data only about Germany
 SELECT * WHERE {
-?a a :WaterBodyCourse ; rdfs:label ?waterLabel ; geo:hasDefaultGeometry ?g ; geo:sfIntersects ?loc .
+?a a :WaterBodyCourse ; rdfs:label ?waterLabel ; geo:hasDefaultGeometry ?g ; geo:sfIntersects ?loc .	
 ?g a sf:Polygon ; geo:asWKT ?water .
  BIND("red" as ?waterColor)
 ?loc a :Location ; rdfs:label ?locationLabel ; geo:hasDefaultGeometry ?locgeo .
 ?locgeo a geo:Geometry, sf:Polygon ; geo:asWKT ?location .
   BIND("blue" as ?locationColor)
-#FILTER(?waterLabel = "Rhein")
+FILTER(?waterLabel = "Rhein")
 }
-limit 1
+#limit 1
+[QueryGroup="water"] @collection [[
+[QueryItem="water count fragment"]
+PREFIX go: <http://purl.org/obo/owl/GO#>
+PREFIX : <http://example.org/ontologies/atkis#>
+PREFIX sf: <http://www.opengis.net/ont/sf#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX gml: <http://www.opengis.net/ont/gml#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX obda: <https://w3id.org/obda/vocabulary#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?waterLabel (SUM(?length) as ?totalLength) WHERE {
+?a a :WaterBodyCourse ; rdfs:label ?waterLabel  ; geo:hasDefaultGeometry ?g .   
+?g a sf:LineString ; geo:asWKT ?water ; geo:hasMetricLength ?length
+
+#specify river here
+FILTER(?waterLabel = "Wehra")
+}
+group by ?waterLabel
+[QueryItem="water fragments count"]
+PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>
+PREFIX go: <http://purl.org/obo/owl/GO#>
+PREFIX : <http://example.org/ontologies/atkis#>
+PREFIX sf: <http://www.opengis.net/ont/sf#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX gml: <http://www.opengis.net/ont/gml#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX obda: <https://w3id.org/obda/vocabulary#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?waterLabel (COUNT(?length) AS ?count) WHERE {
+?a a :WaterBodyCourse ; rdfs:label ?waterLabel ; geo:hasDefaultGeometry ?g .   
+?g a sf:LineString ; geo:asWKT ?water .  ?g geo:hasMetricLength ?length .
+
+# total count of geom feature of specified river, 
+#FILTER(?waterLabel = "Mühlbach")
+}
+GROUP BY ?waterLabel
+# can comment out to get all river fragment
+#ORDER BY DESC (?count)
+[QueryItem="waterbody through veg"]
+PREFIX : <http://example.org/ontologies/atkis#>
+PREFIX sf: <http://www.opengis.net/ont/sf#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX gml: <http://www.opengis.net/ont/gml#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX obda: <https://w3id.org/obda/vocabulary#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <http://schema.org/>
+
+SELECT * WHERE {
+?a a :VegetationArea ; rdfs:label ?veg ; geo:hasDefaultGeometry/geo:asWKT ?veggeo ; geo:sfContains ?b .
+?b a :WaterBodyCourse ; rdfs:label ?water ; geo:hasDefaultGeometry/geo:asWKT ?wategeo .
+}
+]]
