@@ -126,8 +126,8 @@ target		:RoadTraffic/l/{id} a :RoadTraffic ; rdfs:label {bez} ; :znm {znm} ; geo
 source		select id, bez, znm, st_astext(st_transform(geom,4326)) as wkt from "ver01_l"
 
 mappingId	Road paths linestring_l
-target		:Paths/l/{gid} a :Paths ; rdfs:label {nam} ; geo:hasDefaultGeometry :Paths/geo/l/{gid} . :Paths/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select gid, nam ,st_astext(geom) as wkt from "ver02_l"
+target		:Paths/l/{gid} a :Paths ; rdfs:label {nam} ; geo:hasMetricLength {length}^^xsd:double ; geo:hasDefaultGeometry :Paths/geo/l/{gid} . :Paths/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
+source		select gid, nam ,st_astext(st_transform(geom, 4326)) as wkt, st_length(geom) as length from "ver02_l"
 
 mappingId	RailwayTraffic polygon_f
 target		:RailwayTraffic/f/{gid} a :Paths ; geo:hasDefaultGeometry :RailwayTraffic/geo/f/{gid} . :RailwayTraffic/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
@@ -143,7 +143,7 @@ source		select gid, nam, bez ,st_astext(geom) as wkt from "ver04_f"
 
 mappingId	ShippingTraffic linestring_l
 target		:ShippingTraffic/l/{gid} a :ShippingTraffic ; rdfs:label {nam} ; geo:hasDefaultGeometry :ShippingTraffic/geo/l/{gid} . :ShippingTraffic/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select gid, nam, st_astext(geom) as wkt from "ver05_l"
+source		select gid, nam, st_astext(st_transform(geom, 4326)) as wkt from "ver05_l"
 
 mappingId	Transport_b_f polygon_f
 target		:Transport_b_f/f/{gid} a :Transport_b_f ; rdfs:label {nam} ; geo:hasDefaultGeometry :Transport_b_f/geo/f/{gid} . :Transport_b_f/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
@@ -207,5 +207,10 @@ mappingId	waterbody through vegetation
 target		:Agricultural/f/{gid2} a :Agricultural ; geo:sfContains :WaterBodyCourse/l/{gid1} . 
 source		select a.gid as gid1, b.gid as gid2 from gew01_l a
 			join veg01_f b on st_contains(b.geom, a.geom)
+
+mappingId	traffic connected to areas
+target		:Paths/l/{gid1} geo:sfContains :Location/f/{gid2} . 
+source		select a.gid as gid1, b.gid as gid2 from ver02_l a
+			join sie01_f b on st_contains(b.geom, a.geom)
 ]]
 
