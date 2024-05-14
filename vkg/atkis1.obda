@@ -71,10 +71,10 @@ source		select gid, nam, st_astext(st_transform(geom, 4326)) as wkt from "sie01_
 
 mappingId	Settlement, named location point_p
 target		:Location/p/{gid} a :Location ; rdfs:label {nam} ; geo:hasDefaultGeometry :Location/geo/p/{gid} . :Location/geo/p/{gid} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select gid, nam, st_astext(geom) as wkt from "sie01_p"
+source		select gid, nam, st_astext(st_transform(geom,4326)) as wkt from "sie01_p"
 
 mappingId	areas dominated by buildings, polygon f
-target		:Areas_d_b/f/{gid} a :Areas_d_b ; :objart {objart} ; rdfs:label {nam} ; :fkt {fkt} ; geo:hasDefaultGeometry :Areas_d_b/geo/f/{gid} . :Areas_d_b/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Areas_d_b/f/{gid} a :AreaDominatedByBuilding ; :objart {objart} ; rdfs:label {nam} ; :fkt {fkt} ; geo:hasDefaultGeometry :Areas_d_b/geo/f/{gid} . :Areas_d_b/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, fkt, objart, st_astext(st_transform(geom,4326)) as wkt from "sie02_f"
 
 mappingId	Building/facilityes polygon_f
@@ -126,11 +126,11 @@ target		:RoadTraffic/l/{id} a :RoadTraffic ; rdfs:label {bez} ; :znm {znm} ; geo
 source		select id, bez, znm, st_astext(st_transform(geom,4326)) as wkt from "ver01_l"
 
 mappingId	Road paths linestring_l
-target		:Paths/l/{gid} a :Paths ; rdfs:label {nam} ; geo:hasMetricLength {length}^^xsd:double ; geo:hasDefaultGeometry :Paths/geo/l/{gid} . :Paths/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Paths/l/{gid} a :Path ; rdfs:label {nam} ; geo:hasMetricLength {length}^^xsd:double ; geo:hasDefaultGeometry :Paths/geo/l/{gid} . :Paths/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam ,st_astext(st_transform(geom, 4326)) as wkt, st_length(geom) as length from "ver02_l"
 
 mappingId	RailwayTraffic polygon_f
-target		:RailwayTraffic/f/{gid} a :Paths ; geo:hasDefaultGeometry :RailwayTraffic/geo/f/{gid} . :RailwayTraffic/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:RailwayTraffic/f/{gid} a :Path ; geo:hasDefaultGeometry :RailwayTraffic/geo/f/{gid} . :RailwayTraffic/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid ,st_astext(geom) as wkt from "ver03_f"
 
 mappingId	RailwayTraffic linestring_l
@@ -146,19 +146,19 @@ target		:ShippingTraffic/l/{gid} a :ShippingTraffic ; rdfs:label {nam} ; geo:has
 source		select gid, nam, st_astext(st_transform(geom, 4326)) as wkt from "ver05_l"
 
 mappingId	Transport_b_f polygon_f
-target		:Transport_b_f/f/{gid} a :Transport_b_f ; rdfs:label {nam} ; geo:hasDefaultGeometry :Transport_b_f/geo/f/{gid} . :Transport_b_f/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Transport_b_f/f/{gid} a :TransportBuildingAndFacility ; rdfs:label {nam} ; geo:hasDefaultGeometry :Transport_b_f/geo/f/{gid} . :Transport_b_f/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, st_astext(geom) as wkt from "ver06_f"
 
 mappingId	Transport_b_f linestring_l
-target		:Transport_b_f/l/{id} a :Transport_b_f ; rdfs:label {nam} ; :bez {bez} ; geo:hasDefaultGeometry :Transport_b_f/geo/l/{id} . :Transport_b_f/geo/l/{id} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Transport_b_f/l/{id} a :TransportBuildingAndFacility ; rdfs:label {nam} ; :bez {bez} ; geo:hasDefaultGeometry :Transport_b_f/geo/l/{id} . :Transport_b_f/geo/l/{id} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select id, nam, bez ,st_astext(geom) as wkt from "ver06_l"
 
 mappingId	Transport_b_f point_p
-target		:Transport_b_f/p/{id} a :Transport_b_f ; rdfs:label {nam} ; :bez {bez} ; geo:hasDefaultGeometry :Transport_b_f/geo/p/{id} . :Transport_b_f/geo/p/{id} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Transport_b_f/p/{id} a :TransportBuildingAndFacility ; rdfs:label {nam} ; :bez {bez} ; geo:hasDefaultGeometry :Transport_b_f/geo/p/{id} . :Transport_b_f/geo/p/{id} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select id, nam, bez, st_astext(geom) as wkt from "ver06_p"
 
 mappingId	Transport_b_f polygon and point?
-target		:Transport_b_f/f/{gid} a :Transport_b_f ; rdfs:label {f_name} , {p_name} ; :hasTraffic :Transport_b_f/p/{id} . 
+target		:Transport_b_f/f/{gid} a :TransportBuildingAndFacility ; rdfs:label {f_name} , {p_name} ; :hasTraffic :Transport_b_f/p/{id} . 
 source		SELECT ver06_f.gid AS gid, ver06_f.nam AS f_name, ver06_p.id AS id, ver06_p.nam AS p_name FROM "ver06_f" INNER JOIN "ver06_p" ON ver06_f.gid = ver06_p.id;
 
 mappingId	obj settlement, see spatially within obj areas (admin districts)

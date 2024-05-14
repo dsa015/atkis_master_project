@@ -1,31 +1,3 @@
-[QueryItem="Settlement name and their rgs name"]
-PREFIX : <http://example.org/ontologies/atkis#>
-PREFIX geo: <http://www.opengis.net/ont/geosparql#>
-PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX xml: <http://www.w3.org/XML/1998/namespace>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX obda: <https://w3id.org/obda/vocabulary#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-
-SELECT ?settlement ?name ?rgs{
-?settlement a :Settlement ;
-:location ?name ;
-:rgs ?rgs .
-}
-[QueryItem="long lat area"]
-PREFIX : <http://example.org/ontologies/atkis#>
-PREFIX geo: <http://www.opengis.net/ont/geosparql#>
-PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX xml: <http://www.w3.org/XML/1998/namespace>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX obda: <https://w3id.org/obda/vocabulary#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-
-SELECT ?area ?long ?lat ?om WHERE {
-?sf a :Area ; :name ?area ; :long ?long ; :lat ?lat ; :bound ?om .
-}
 [QueryItem="ss"]
 PREFIX : <http://example.org/ontologies/atkis#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
@@ -415,34 +387,6 @@ select * where {
   BIND("grey" as ?locgeoColor)
 filter(?locname = "Hechingen")
 }
-[QueryItem="waterbody coursese through city"]
-PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>
-PREFIX go: <http://purl.org/obo/owl/GO#>
-PREFIX : <http://example.org/ontologies/atkis#>
-PREFIX sf: <http://www.opengis.net/ont/sf#>
-PREFIX geo: <http://www.opengis.net/ont/geosparql#>
-PREFIX gml: <http://www.opengis.net/ont/gml#>
-PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
-PREFIX xml: <http://www.w3.org/XML/1998/namespace>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX obda: <https://w3id.org/obda/vocabulary#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
-
-# see which river passes through city
-# the river starts from Nederland, but ATKIS has data only about Germany
-SELECT * WHERE {
-?a a :WaterBodyCourse ; rdfs:label ?waterLabel ; geo:hasDefaultGeometry ?g ; geo:sfIntersects ?loc .	
-?g a sf:Polygon ; geo:asWKT ?water .
- BIND("red" as ?waterColor)
-?loc a :Location ; rdfs:label ?locationLabel ; geo:hasDefaultGeometry ?locgeo .
-?locgeo a geo:Geometry, sf:Polygon ; geo:asWKT ?location .
-  BIND("blue" as ?locationColor)
-FILTER(?waterLabel = "Rhein")
-}
-#limit 1
 [QueryGroup="water"] @collection [[
 [QueryItem="water count fragment"]
 PREFIX go: <http://purl.org/obo/owl/GO#>
@@ -511,6 +455,34 @@ SELECT * WHERE {
 ?a a :VegetationArea ; rdfs:label ?veg ; geo:hasDefaultGeometry/geo:asWKT ?veggeo ; geo:sfContains ?b .
 ?b a :WaterBodyCourse ; rdfs:label ?water ; geo:hasDefaultGeometry/geo:asWKT ?wategeo .
 }
+[QueryItem="waterbody course through city"]
+PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>
+PREFIX go: <http://purl.org/obo/owl/GO#>
+PREFIX : <http://example.org/ontologies/atkis#>
+PREFIX sf: <http://www.opengis.net/ont/sf#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX gml: <http://www.opengis.net/ont/gml#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX obda: <https://w3id.org/obda/vocabulary#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+
+# see which river passes through city
+# the river starts from Nederland, but ATKIS has data only about Germany
+SELECT * WHERE {
+?a a :WaterBodyCourse ; rdfs:label ?waterLabel ; geo:hasDefaultGeometry ?g ; geo:sfIntersects ?loc .	
+?g a sf:Polygon ; geo:asWKT ?water .
+ BIND("red" as ?waterColor)
+?loc a :Location ; rdfs:label ?locationLabel ; geo:hasDefaultGeometry ?locgeo .
+?locgeo a geo:Geometry, sf:Polygon ; geo:asWKT ?location .
+  BIND("blue" as ?locationColor)
+FILTER(?waterLabel = "Rhein")
+}
+#limit 1
 ]]
 [QueryItem="traffically connected areas"]
 PREFIX : <http://example.org/ontologies/atkis#>

@@ -264,8 +264,7 @@ e.g. gfk 2072 = youth hostel"""@en .
 :objectId rdf:type owl:DatatypeProperty ;
           rdfs:domain :Area ,
                       :Settlement ,
-                      :Traffic ,
-                      :buildings_near_a_historical_building .
+                      :Traffic .
 
 
 ###  http://example.org/ontologies/atkis#objecttxt
@@ -349,9 +348,9 @@ rdfs:label rdf:type owl:DatatypeProperty .
       rdfs:comment "Areas are the German states. Total number og 16 states exist in Germany"@en .
 
 
-###  http://example.org/ontologies/atkis#Areas_d_b
-:Areas_d_b rdf:type owl:Class ;
-           rdfs:subClassOf :Settlement .
+###  http://example.org/ontologies/atkis#AreaDominatedByBuilding
+:AreaDominatedByBuilding rdf:type owl:Class ;
+                         rdfs:subClassOf :Settlement .
 
 
 ###  http://example.org/ontologies/atkis#Building
@@ -388,9 +387,9 @@ rdfs:label rdf:type owl:DatatypeProperty .
                  rdfs:subClassOf :Relief .
 
 
-###  http://example.org/ontologies/atkis#Paths
-:Paths rdf:type owl:Class ;
-       rdfs:subClassOf :Traffic .
+###  http://example.org/ontologies/atkis#Path
+:Path rdf:type owl:Class ;
+      rdfs:subClassOf :Traffic .
 
 
 ###  http://example.org/ontologies/atkis#Protected
@@ -443,9 +442,9 @@ rdfs:label rdf:type owl:DatatypeProperty .
          rdfs:comment "Ranging from pathways, air, shipping, railway traffic and transporting facilities" .
 
 
-###  http://example.org/ontologies/atkis#Transport_b_f
-:Transport_b_f rdf:type owl:Class ;
-               rdfs:subClassOf :Traffic .
+###  http://example.org/ontologies/atkis#TransportBuildingAndFacility
+:TransportBuildingAndFacility rdf:type owl:Class ;
+                              rdfs:subClassOf :Traffic .
 
 
 ###  http://example.org/ontologies/atkis#VegChar
@@ -468,20 +467,23 @@ rdfs:label rdf:type owl:DatatypeProperty .
                   rdfs:comment "what feature types has a vertical relation" .
 
 
+###  http://example.org/ontologies/atkis#WaterBody
+:WaterBody rdf:type owl:Class .
+
+
 ###  http://example.org/ontologies/atkis#WaterBodyChar
-:WaterBodyChar rdf:type owl:Class .
+:WaterBodyChar rdf:type owl:Class ;
+               rdfs:subClassOf :WaterBody .
 
 
 ###  http://example.org/ontologies/atkis#WaterBodyCourse
-:WaterBodyCourse rdf:type owl:Class .
+:WaterBodyCourse rdf:type owl:Class ;
+                 rdfs:subClassOf :WaterBody .
 
 
 ###  http://example.org/ontologies/atkis#WaterLineAxis
-:WaterLineAxis rdf:type owl:Class .
-
-
-###  http://example.org/ontologies/atkis#buildings_near_a_historical_building
-:buildings_near_a_historical_building rdf:type owl:Class .
+:WaterLineAxis rdf:type owl:Class ;
+               rdfs:subClassOf :WaterBody .
 
 
 ###  http://www.opengis.net/ont/geosparql#geometry
