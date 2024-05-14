@@ -16,8 +16,7 @@
                                         owl:imports <http://www.opengis.net/ont/gml> ,
                                                     <http://www.opengis.net/ont/geosparql/1.1> ,
                                                     <http://www.opengis.net/ont/sf/1.1> ,
-                                                    rdfs: ,
-                                                    <https://schema.org/version/latest/schemaorg-current-http.rdf> .
+                                                    rdfs: .
 
 #################################################################
 #    Annotation properties
