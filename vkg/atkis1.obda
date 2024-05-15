@@ -14,11 +14,11 @@ schema:		http://schema.org/
 
 [MappingDeclaration] @collection [[
 mappingId	Area for linestring_l, geographical areas
-target		:Administrative/l/{gid} a :Administrative ; geo:hasDefaultGeometry :Administrative/geo/l/{gid} . :Administrative/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		schema:AdministrativeArea/l/{gid} a schema:AdministrativeArea ; geo:hasDefaultGeometry schema:AdministrativeArea/geo/l/{gid} . schema:AdministrativeArea/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, st_astext(geom) as wkt from "geb01_l"
 
 mappingId	administrative polygon ?
-target		:Administrative/f/{gid} a :Administrative ; rdfs:label {bez_lan}@de ; geo:hasDefaultGeometry :Administrative/geo/f/{gid} . :Administrative/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		schema:AdministrativeArea/f/{gid} a schema:AdministrativeArea ; rdfs:label {bez_lan}@de ; geo:hasDefaultGeometry schema:AdministrativeArea/geo/f/{gid} . schema:AdministrativeArea/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, bez_lan, st_astext(geom) as wkt from "geb01_f"
 
 mappingId	Area, geographical areas polygon (f)
@@ -30,24 +30,24 @@ target		:Protected/f/{gid} a :Protected ; rdfs:label {nam} ; geo:hasDefaultGeome
 source		select gid, nam, st_astext(geom) as wkt from "geb03_f"
 
 mappingId	WaterBody polygon_f
-target		:WaterBodyCourse/f/{id} a :WaterBodyCourse ; rdfs:label {nam} ; :objart_txt {objart_txt} ; geo:hasDefaultGeometry :WaterBodyCourse/geo/f/{id} . :WaterBodyCourse/geo/f/{id} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		schema:RiverBodyOfWater/f/{id} a schema:RiverBodyOfWater ; rdfs:label {nam} ; :objart_txt {objart_txt} ; geo:hasDefaultGeometry schema:RiverBodyOfWater/geo/f/{id} . schema:RiverBodyOfWater/geo/f/{id} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select id, nam, objart_txt, st_astext(st_transform(geom,4326)) as wkt from "gew01_f"
 
 mappingId	WaterBody linestrings_l
-target		:WaterBodyCourse/l/{gid} a :WaterBodyCourse ; rdfs:label {nam} ; geo:hasDefaultGeometry :WaterBodyCourse/geo/l/{gid} . :WaterBodyCourse/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		schema:RiverBodyOfWater/l/{gid} a schema:RiverBodyOfWater ; rdfs:label {nam} ; geo:hasDefaultGeometry schema:RiverBodyOfWater/geo/l/{gid} . schema:RiverBodyOfWater/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, st_astext(st_transform(geom,4326)) as wkt from "gew01_l"
 
 mappingId	WaterBodyChar polygon_f
 target		:WaterBodyChar/f/{gid} a :WaterBodyChar ; rdfs:label {nam} ; geo:hasDefaultGeometry :WaterBodyChar/geo/f/{gid} . :WaterBodyChar/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select gid, nam, st_astext(geom) as wkt from "gew02_f"
+source		select gid, nam, st_astext(st_transform(geom,4326)) as wkt from "gew02_f"
 
 mappingId	WaterBodyChar point_p
 target		:WaterBodyChar/p/{gid} a :WaterBodyChar ; rdfs:label {nam} ; geo:hasDefaultGeometry :WaterBodyChar/geo/p/{gid} . :WaterBodyChar/geo/p/{gid} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select gid, nam, st_astext(geom) as wkt from "gew02_p"
+source		select gid, nam, st_astext(st_transform(geom,4326)) as wkt from "gew02_p"
 
 mappingId	WaterLineAxis linestring_l
 target		:WaterLineAxis/l/{gid} a :WaterLineAxis ; rdfs:label {nam} ; geo:hasDefaultGeometry :WaterLineAxis/geo/l/{gid} . :WaterLineAxis/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select gid, nam, st_astext(geom) as wkt from "gew03_l"
+source		select gid, nam, st_astext(st_transform(geom,4326)) as wkt from "gew03_l"
 
 mappingId	VerticalRelation- no geom, relation between feature in traffic(ver)
 target		:VerticalRelation/{gid} a :VerticalRelation . 
@@ -66,11 +66,11 @@ target		:MeasurementData/p/{id} a :MeasurementData ; geo:hasDefaultGeometry :Mea
 source		select id, st_astext(st_transform(geom, 4326)) as wkt from rel02_p
 
 mappingId	Settlement, named location polygon_f
-target		:Location/f/{gid} a :Location ; rdfs:label {nam} ; geo:hasDefaultGeometry :Location/geo/f/{gid} . :Location/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		schema:City/f/{gid} a schema:City ; rdfs:label {nam} ; geo:hasDefaultGeometry schema:City/geo/f/{gid} . schema:City/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, st_astext(st_transform(geom, 4326)) as wkt from "sie01_f"
 
 mappingId	Settlement, named location point_p
-target		:Location/p/{gid} a :Location ; rdfs:label {nam} ; geo:hasDefaultGeometry :Location/geo/p/{gid} . :Location/geo/p/{gid} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		schema:City/p/{gid} a schema:City ; rdfs:label {nam} ; geo:hasDefaultGeometry schema:City/geo/p/{gid} . schema:City/geo/p/{gid} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, st_astext(st_transform(geom,4326)) as wkt from "sie01_p"
 
 mappingId	areas dominated by buildings, polygon f
@@ -130,19 +130,15 @@ target		:Paths/l/{gid} a :Path ; rdfs:label {nam} ; geo:hasMetricLength {length}
 source		select gid, nam ,st_astext(st_transform(geom, 4326)) as wkt, st_length(geom) as length from "ver02_l"
 
 mappingId	RailwayTraffic polygon_f
-target		:RailwayTraffic/f/{gid} a :Path ; geo:hasDefaultGeometry :RailwayTraffic/geo/f/{gid} . :RailwayTraffic/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select gid ,st_astext(geom) as wkt from "ver03_f"
+target		:RailwayTraffic/f/{gid} a :RailwayTraffic ; geo:hasDefaultGeometry :RailwayTraffic/geo/f/{gid} . :RailwayTraffic/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+source		select gid ,st_astext(st_transform(geom,4326)) as wkt, objart_txt from "ver03_f"
 
-mappingId	RailwayTraffic linestring_l
-target		:RailwayTraffic/l/{gid} a :RailwayTraffic ; rdfs:label {nam} ; geo:hasDefaultGeometry :RailwayTraffic/geo/f/{gid} . :RailwayTraffic/geo/f/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select gid, nam ,st_astext(geom) as wkt from "ver03_l"
-
-mappingId	AirTraffic polygon_f
-target		:AirTraffic/f/{gid} a :AirTraffic ; rdfs:label {nam} ; :bez {bez} ; geo:hasDefaultGeometry :AirTraffic/geo/f/{gid} . :AirTraffic/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select gid, nam, bez ,st_astext(geom) as wkt from "ver04_f"
+mappingId	airports and airfields
+target		schema:Airport/f/{gid} a schema:Airport ; rdfs:label {nam} ; :bez {bez} ; geo:hasDefaultGeometry schema:Airport/geo/f/{gid} . schema:Airport/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+source		select gid, nam, bez ,st_astext(st_transform(geom,4326)) as wkt from "ver04_f"
 
 mappingId	ShippingTraffic linestring_l
-target		:ShippingTraffic/l/{gid} a :ShippingTraffic ; rdfs:label {nam} ; geo:hasDefaultGeometry :ShippingTraffic/geo/l/{gid} . :ShippingTraffic/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		schema:BoatTrip/l/{gid} a schema:BoatTrip ; rdfs:label {nam} ; geo:hasDefaultGeometry :ShippingTraffic/geo/l/{gid} . schema:BoatTrip/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, st_astext(st_transform(geom, 4326)) as wkt from "ver05_l"
 
 mappingId	Transport_b_f polygon_f
@@ -168,49 +164,58 @@ source		select * from "GN250_b"
 			ON "GN250_b".name = sie01_f.nam
 
 mappingId	sie02 inside settlements
-target		:Location/f/{gid1} geo:sfContains :Areas_d_b/f/{gid2} . 
+target		schema:City/f/{gid1} geo:sfContains :Areas_d_b/f/{gid2} . 
 source		SELECT h.gid as gid1, m.gid as gid2
 			FROM sie01_f h join sie02_f m
 			on st_contains(h.geom, m.geom)
 
 mappingId	building facility in municipality
-target		:BuildingFacility/f/{id} geo:ehInside :Location/f/{gid} . 
+target		:BuildingFacility/f/{id} geo:ehInside schema:City/f/{gid} . 
 source		select a.gid, b.id from
 			sie01_f a join sie03_f b on st_within(b.geom, a.geom)
 
 mappingId	special facility within a municipality
-target		:SpecialFacility/f/{gid} geo:ehInside :Location/f/{gid2} . 
+target		:SpecialFacility/f/{gid} geo:ehInside schema:City/f/{gid2} . 
 source		select a.gid as gid2, b.gid from
 			sie01_f a join sie04_f b on st_contains(a.geom, b.geom)
 
 mappingId	settlement f inside admin areaas
-target		:Location/f/{gid} geo:ehInside :Administrative/f/{gid2} . 
+target		schema:City/f/{gid} geo:ehInside schema:AdministrativeArea/f/{gid2} . 
 source		select * from city_in_area
 
 mappingId	building inside settlement
-target		:Building/p/{id} geo:ehInside :Location/f/{gid} . 
+target		:Building/p/{id} geo:ehInside schema:City/f/{gid} . 
 source		select * from building_in_city
 
 mappingId	river through settlement
-target		:WaterBodyCourse/f/{id} geo:sfIntersects :Location/f/{gid} . 
+target		schema:RiverBodyOfWater/f/{id} geo:sfIntersects schema:City/f/{gid} . 
 source		select * from wbcourse_in_loc
 
 mappingId	WaterBody linestrings_length
-target		:WaterBodyCourse/geo/l/{gid} geo:hasMetricLength {length}^^xsd:double . 
+target		schema:RiverBodyOfWater/geo/l/{gid} geo:hasMetricLength {length}^^xsd:double . 
 source		select gid, st_length(geom) as length from "gew01_l"
 
 mappingId	roadtraffic across sie
-target		:RoadTraffic/l/{id} geo:sfCrosses :Location/f/{gid} . 
+target		:RoadTraffic/l/{id} geo:sfCrosses schema:City/f/{gid} . 
 source		select a.id, b.gid from ver01_l a join sie01_f b on st_intersects(a.geom, b.geom)
 
 mappingId	waterbody through vegetation
-target		:Agricultural/f/{gid2} a :Agricultural ; geo:sfContains :WaterBodyCourse/l/{gid1} . 
+target		:Agricultural/f/{gid2} a :Agricultural ; geo:sfContains schema:RiverBodyOfWater/l/{gid1} . 
 source		select a.gid as gid1, b.gid as gid2 from gew01_l a
 			join veg01_f b on st_contains(b.geom, a.geom)
 
 mappingId	traffic connected to areas
-target		:Paths/l/{gid1} geo:sfContains :Location/f/{gid2} . 
+target		:Paths/l/{gid1} geo:sfContains schema:City/f/{gid2} . 
 source		select a.gid as gid1, b.gid as gid2 from ver02_l a
 			join sie01_f b on st_contains(b.geom, a.geom)
+
+mappingId	traffical railway linestrings
+target		schema:TrainTrip/l/{gid} a schema:TrainTrip ; rdfs:label {nam} ; geo:hasDefaultGeometry schema:TrainTrip/geo/l/{gid} . schema:TrainTrip/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
+source		select gid, nam, st_astext(st_transform(geom, 4326)) as wkt from ver03_l
+
+mappingId	railway inside city
+target		schema:City/f/{gid1} geo:sfContains schema:TrainTrip/l/{gid2} . 
+source		select a.gid as gid1, b.gid as gid2 from sie01_f a
+			join ver03_l b on st_contains(a.geom, b.geom)
 ]]
 

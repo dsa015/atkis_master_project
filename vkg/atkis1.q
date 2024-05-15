@@ -17,6 +17,7 @@ select ?name where {
 }
 [QueryGroup="newMappingQueries"] @collection [[
 [QueryItem="Administrative polygon"]
+PREFIX schema: <http://schema.org/>
 PREFIX : <http://example.org/ontologies/atkis#>
 PREFIX sf: <http://www.opengis.net/ont/sf#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
@@ -32,7 +33,7 @@ PREFIX geoname: <https://www.geonames.org/ontology/ontology_v3.3.rdf>
 
 SELECT ?gid ?bez_lan ?wkt
 WHERE {
-  ?f a :Administrative ;
+  ?f a schema:AdministrativeArea ;
      rdfs:label ?bez_lan ;
      geo:hasDefaultGeometry ?geo .
   
@@ -43,6 +44,7 @@ WHERE {
 }
 limit 5
 [QueryItem="Administrative dist Linestring"]
+PREFIX schema: <http://schema.org/>
 PREFIX : <http://example.org/ontologies/atkis#>
 PREFIX sf: <http://www.opengis.net/ont/sf#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
@@ -59,7 +61,7 @@ PREFIX geoname: <https://www.geonames.org/ontology/ontology_v3.3.rdf>
 #:Administrative/l/{gid} a :Administrative ; geo:hasDefaultGeometry :Administrative/geo/l/{gid} . :Administrative/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT #{wkt}^^geo:wktLiteral . 
 
 SELECT * WHERE {
-  ?f a :Administrative ;
+  ?f a schema:AdministrativeArea ;
      geo:hasDefaultGeometry ?geo .
   
   ?geo a geo:Geometry, sf:LineString ;
@@ -69,6 +71,7 @@ SELECT * WHERE {
 }
 limit 50
 [QueryItem="get municipalities, their county and state they are in"]
+PREFIX schema: <http://schema.org/>
 PREFIX : <http://example.org/ontologies/atkis#>
 PREFIX sf: <http://www.opengis.net/ont/sf#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
@@ -80,16 +83,17 @@ PREFIX xml: <http://www.w3.org/XML/1998/namespace>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX obda: <https://w3id.org/obda/vocabulary#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX geoname: <https://www.geonames.org/ontology/ontology_v3.3.rdf>
 
 #this is using the GN250 dataset refered in dlm docs
 
 SELECT ?s ?state ?county ?o ?settlement WHERE {
-?s a :GN250 ; rdfs:label ?county ; :area ?state ; geo:sfWithin ?o.
-?o a :Settlement ; rdfs:label ?settlement . 
+?s a :GN250 ; rdfs:label ?county ; :area ?state .
 }
 ]]
 [QueryGroup="Settlement"] @collection [[
 [QueryItem="leisuire, place within municipality"]
+PREFIX schema: <http://schema.org/>
 PREFIX : <http://example.org/ontologies/atkis#>
 PREFIX sf: <http://www.opengis.net/ont/sf#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
@@ -104,14 +108,15 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 # fkt identifier for type of building (sportsbar, adventure park, golfcourse etc). it is an optional value
 select * where {
-?s a :Location ; rdfs:label ?n ; geo:hasDefaultGeometry/geo:asWKT ?bfgeo ; geo:sfContains ?p .
-?p a :Areas_d_b ; rdfs:label ?n2 ; geo:hasDefaultGeometry/geo:asWKT ?bfgeo2 .
+?s a schema:City; rdfs:label ?n ; geo:hasDefaultGeometry/geo:asWKT ?bfgeo ; geo:sfContains ?p .
+?p a :AreaDominatedByBuilding ; rdfs:label ?n2 ; geo:hasDefaultGeometry/geo:asWKT ?bfgeo2 .
 OPTIONAL {?p :fkt ?fkt .}
 #filter (?n != ?n2)
 #filter (?n = 'Rust')
 }
 #limit 10
 [QueryItem="municipality"]
+PREFIX schema: <http://schema.org/>
 PREFIX : <http://example.org/ontologies/atkis#>
 PREFIX sf: <http://www.opengis.net/ont/sf#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
@@ -124,12 +129,12 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX obda: <https://w3id.org/obda/vocabulary#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
+
 select * where {
-?s a :Settlement ; rdfs:label ?p ; geo:hasDefaultGeometry ?o .
-?o a geo:Geometry, sf:Polygon ; geo:asWKT ?geo .
- BIND(STRAFTER(str(?o), "/f/") AS ?gid)
+?s a schema:City ; rdfs:label ?city ; geo:hasDefaultGeometry/geo:asWKT ?wkt .
+BIND(STRAFTER(str(?o), "/f/") AS ?gid)
 }
-limit 10
+#limit 10
 [QueryItem="leisure place"]
 PREFIX : <http://example.org/ontologies/atkis#>
 PREFIX sf: <http://www.opengis.net/ont/sf#>
@@ -204,6 +209,8 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 #}
 Describe <http://example.org/ontologies/atkis#Building/p/2>
 [QueryItem="municipality contained in state"]
+PREFIX schema: <http://schema.org/>
+
 PREFIX : <http://example.org/ontologies/atkis#>
 PREFIX sf: <http://www.opengis.net/ont/sf#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
@@ -219,12 +226,11 @@ PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
 PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>
 
 SELECT * Where {
-?s a :Location ; rdfs:label ?n ; geo:hasDefaultGeometry ?geo ;geo:ehInside ?p .
-?geo a geo:Geometry, sf:Polygon ; geo:asWKT ?ngeo .
-?p a :Administrative ; rdfs:label ?a .
-#filter (?n = 'Rust')
+?a a schema:City ; rdfs:label ?city ; geo:hasDefaultGeometry/geo:asWKT ?citywkt ; geo:ehInside ?p .
+?p a schema:AdministrativeArea ; rdfs:label ?state .
+#filter (?city = 'Rust')
 }
-limit 10
+#limit 5
 [QueryItem="building within settlement"]
 PREFIX : <http://example.org/ontologies/atkis#>
 PREFIX sf: <http://www.opengis.net/ont/sf#>
@@ -366,6 +372,27 @@ select *  {
   BIND(geof:buffer(?bfgeo, 300, uom:metre) AS ?bufferedgeom)
   BIND("red" as ?bufferedgeomColor)
 }
+[QueryItem="railrout in city"]
+PREFIX : <http://example.org/ontologies/atkis#>
+PREFIX sf: <http://www.opengis.net/ont/sf#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX gml: <http://www.opengis.net/ont/gml#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX obda: <https://w3id.org/obda/vocabulary#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <http://schema.org/>
+
+SELECT * WHERE {
+?a a schema:City ; rdfs:label ?city ; geo:sfContains ?p .
+  ?p a schema:TrainTrip .
+  OPTIONAL { ?p rdfs:label ?routeName . }
+}
+[QueryGroup="air"] @collection [[
+]]
 ]]
 [QueryItem="traffiuc"]
 PREFIX : <http://example.org/ontologies/atkis#>
@@ -521,3 +548,22 @@ SELECT ?tLabel (COUNT(?length) as ?totalLength) WHERE {
 }
 group by ?tLabel
 #ORDER BY DESC (?totalLength)
+[QueryItem="train stuff"]
+PREFIX schema: <http://schema.org/>
+
+PREFIX : <http://example.org/ontologies/atkis#>
+PREFIX sf: <http://www.opengis.net/ont/sf#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX gml: <http://www.opengis.net/ont/gml#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX obda: <https://w3id.org/obda/vocabulary#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT * WHERE {
+?a a :RailwayTraffic ; geo:sfContains ?p .
+?p a schema:TrainTrip ; rdfs:label ?route .
+}
