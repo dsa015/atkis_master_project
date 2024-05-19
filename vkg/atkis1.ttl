@@ -499,6 +499,11 @@ schema:Landform rdf:type owl:Class ;
                 rdfs:comment "A landform or physical feature. Landform elements include mountains, plains, lakes, rivers, seascape and oceanic waterbody interface features such as bays, peninsulas, seas and so forth, including sub-aqueous terrain features such as submersed mountain ranges, volcanoes, and the great ocean basins." .
 
 
+###  http://schema.org/LandmarkOrHistoricalBuilding
+schema:LandmarkOrHistoricalBuilding rdf:type owl:Class ;
+                                    rdfs:subClassOf schema:Place .
+
+
 ###  http://schema.org/Place
 schema:Place rdf:type owl:Class ;
              rdfs:comment "Entities that have a somewhat fixed, physical extension."@en .
