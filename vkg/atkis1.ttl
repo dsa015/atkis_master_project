@@ -504,6 +504,11 @@ schema:LandmarkOrHistoricalBuilding rdf:type owl:Class ;
                                     rdfs:subClassOf schema:Place .
 
 
+###  http://schema.org/LocalBusiness
+schema:LocalBusiness rdf:type owl:Class ;
+                     rdfs:subClassOf schema:Place .
+
+
 ###  http://schema.org/Place
 schema:Place rdf:type owl:Class ;
              rdfs:comment "Entities that have a somewhat fixed, physical extension."@en .

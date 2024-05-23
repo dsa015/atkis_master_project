@@ -110,9 +110,8 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 select * where {
 ?s a schema:City; rdfs:label ?n ; geo:hasDefaultGeometry/geo:asWKT ?bfgeo ; geo:sfContains ?p .
 ?p a :AreaDominatedByBuilding ; rdfs:label ?n2 ; geo:hasDefaultGeometry/geo:asWKT ?bfgeo2 .
-OPTIONAL {?p :fkt ?fkt .}
-#filter (?n != ?n2)
 #filter (?n = 'Rust')
+filter(?n != ?n2)
 }
 #limit 10
 [QueryItem="municipality"]
@@ -232,6 +231,7 @@ SELECT * Where {
 }
 #limit 5
 [QueryItem="building within settlement"]
+PREFIX schema: <http://schema.org/>
 PREFIX : <http://example.org/ontologies/atkis#>
 PREFIX sf: <http://www.opengis.net/ont/sf#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
@@ -246,13 +246,9 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 # buildings for said settlement
 SELECT ?loclabel  ?blabel(COUNT(?b) AS ?count) ?geo WHERE {
-  ?b a :Building ;
-     rdfs:label ?blabel ;
-     geo:asWKT ?geo ;
-     geo:ehInside ?loc .
+  ?b a :Building ; rdfs:label ?blabel ; geo:hasDefaultGeometry/geo:asWKT ?geo ; geo:ehInside ?loc .
 
-  ?loc a :Location ;
-       rdfs:label ?loclabel .
+ ?loc a schema:City ; rdfs:label ?loclabel .
   #FILTER (?loclabel = "Berlin")
 }
 GROUP BY ?loclabel ?geo ?blabel
@@ -306,6 +302,8 @@ SELECT ?loclabel (COUNT(?b) AS ?count) (GROUP_CONCAT(?blabel; separator=", ") AS
 GROUP BY ?loclabel
 ORDER BY DESC(?count)
 [QueryItem="all instances of superclass settlement"]
+PREFIX schema: <http://schema.org/>
+
 PREFIX : <http://example.org/ontologies/atkis#>
 PREFIX sf: <http://www.opengis.net/ont/sf#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
@@ -320,7 +318,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 
 SELECT * WHERE {
-?s a :Settlement .
+?s a schema:City .
 }
 [QueryItem="given settlement, give me x type of building based on given radius"]
 PREFIX : <http://example.org/ontologies/atkis#>
@@ -345,7 +343,7 @@ select * where {
 filter(?objart = "41008")
 }
 #limit 5
-[QueryItem="buildings"]
+[QueryItem="building buffer"]
 PREFIX : <http://example.org/ontologies/atkis#>
 PREFIX sf: <http://www.opengis.net/ont/sf#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
@@ -367,9 +365,10 @@ select *  {
     BIND("red" as ?bfgeoColor)
   
   ?a a :Building ; rdfs:label ?ageoLabel ; geo:hasDefaultGeometry/geo:asWKT ?ageo .
-  filter(geof:distance(?bfgeo, ?ageo, uom:metre) < 300)
+ filter(geof:distance(?bfgeo, ?ageo, uom:metre) < 300)
+
   
-  BIND(geof:buffer(?bfgeo, 300, uom:metre) AS ?bufferedgeom)
+  BIND(geof:buffer(?bfgeo, 10000, uom:metre) AS ?bufferedgeom)
   BIND("red" as ?bufferedgeomColor)
 }
 [QueryItem="railrout in city"]
@@ -387,12 +386,148 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX schema: <http://schema.org/>
 
 SELECT * WHERE {
-?a a schema:City ; rdfs:label ?city ; geo:sfContains ?p .
+?a a schema:City ; rdfs:label ?city ; geo:sfContains ?p ; rdfs:label ?routename .
   ?p a schema:TrainTrip .
-  OPTIONAL { ?p rdfs:label ?routeName . }
+#Filter (?city = 'Leinefelde')
 }
-[QueryGroup="air"] @collection [[
-]]
+[QueryItem="road trffic and stuff"]
+PREFIX : <http://example.org/ontologies/atkis#>
+PREFIX sf: <http://www.opengis.net/ont/sf#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX gml: <http://www.opengis.net/ont/gml#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX obda: <https://w3id.org/obda/vocabulary#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <http://schema.org/>
+
+select * where {
+?s a :RoadTraffic ; rdfs:label ?trafficLabel ; geo:hasDefaultGeometry/geo:asWKT ?trafficWkt ; geo:sfCrosses ?a .
+?a a schema:City ; rdfs:label ?cityLabel ; geo:hasDefaultGeometry/geo:asWKT ?cityWkt .
+Filter (?cityLabel = 'Binzen')
+}
+[QueryItem="test area domi"]
+PREFIX : <http://example.org/ontologies/atkis#>
+PREFIX sf: <http://www.opengis.net/ont/sf#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX gml: <http://www.opengis.net/ont/gml#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX obda: <https://w3id.org/obda/vocabulary#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <http://schema.org/>
+
+select * where {
+?s a :AreaDominatedByBuilding ; rdfs:label ?name ; :objart ?t .
+}
+[QueryItem="buildings buffered within settlement"]
+PREFIX : <http://example.org/ontologies/atkis#>
+PREFIX sf: <http://www.opengis.net/ont/sf#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX gml: <http://www.opengis.net/ont/gml#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX obda: <https://w3id.org/obda/vocabulary#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <http://schema.org/>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>
+
+SELECT * WHERE {
+  ?state a schema:City ;
+         rdfs:label ?statename ;
+         geo:hasDefaultGeometry/geo:asWKT ?stateGeo .
+filter(?statename ='Mitteltal')
+
+BIND(geof:buffer(?stateGeo, 300, uom:metre) AS ?bufferArea)
+  
+  ?city a :AreaDominatedByBuilding ;
+       rdfs:label ?cityLabel ;
+        geo:hasDefaultGeometry/geo:asWKT ?cityGeo .
+        
+  FILTER(geof:sfIntersects(?cityGeo, ?stateGeo))
+
+ #BIND("red" AS ?bufferColor)
+}
+[QueryItem="testitest"]
+PREFIX : <http://example.org/ontologies/atkis#>
+PREFIX sf: <http://www.opengis.net/ont/sf#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX gml: <http://www.opengis.net/ont/gml#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX obda: <https://w3id.org/obda/vocabulary#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <http://schema.org/>
+
+# fkt identifier for type of building (sportsbar, adventure park, golfcourse etc). it is an optional value
+SELECT * WHERE {
+  ?s a schema:City; 
+     rdfs:label ?n; 
+     geo:hasDefaultGeometry/geo:asWKT ?bfgeo; 
+     geo:sfContains ?p .
+     
+  {
+    ?p a :AreaDominatedByBuilding; 
+       rdfs:label ?n2; 
+       geo:hasDefaultGeometry/geo:asWKT ?bfgeo2 .
+  }
+  UNION
+  {
+    ?p a :SpecialFacility; 
+       rdfs:label ?n2; 
+       geo:hasDefaultGeometry/geo:asWKT ?bfgeo2 .
+  }
+  UNION
+  {
+    ?p a :Building; 
+       rdfs:label ?n2; 
+       geo:hasDefaultGeometry/geo:asWKT ?bfgeo2 .
+  }
+  UNION
+  {
+    ?p a :BuildingFacility; 
+       rdfs:label ?n2; 
+       geo:hasDefaultGeometry/geo:asWKT ?bfgeo2 .
+  }
+  
+  FILTER(?n != ?n2)
+}
+#LIMIT 10
+[QueryItem="find entities of class that intersect polygon"]
+PREFIX : <http://example.org/ontologies/atkis#>
+PREFIX sf: <http://www.opengis.net/ont/sf#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX gml: <http://www.opengis.net/ont/gml#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX obda: <https://w3id.org/obda/vocabulary#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <http://schema.org/>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>
+
+select ?a ?v  ?cityLabel where {
+?a a schema:City ; geo:hasDefaultGeometry/geo:asWKT ?wkt ; rdfs:label ?cityLabel .
+<http://schema.org/AdministrativeArea/f/21> a ?t ; geo:hasDefaultGeometry/geo:asWKT ?wkt2 ; rdfs:label ?v .
+filter(geof:sfContains(?wkt2, ?wkt))
+Filter(?v ='Ortenau')
+}
 ]]
 [QueryItem="traffiuc"]
 PREFIX : <http://example.org/ontologies/atkis#>
@@ -479,10 +614,12 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX schema: <http://schema.org/>
 
 SELECT * WHERE {
-?a a :VegetationArea ; rdfs:label ?veg ; geo:hasDefaultGeometry/geo:asWKT ?veggeo ; geo:sfContains ?b .
-?b a :WaterBodyCourse ; rdfs:label ?water ; geo:hasDefaultGeometry/geo:asWKT ?wategeo .
+?a a :Agricultural ; rdfs:label ?veg ; geo:hasDefaultGeometry/geo:asWKT ?veggeo ; geo:sfContains ?b .
+?b a schema:RiverBodyOfWater ; rdfs:label ?water ; geo:hasDefaultGeometry/geo:asWKT ?wategeo .
 }
 [QueryItem="waterbody course through city"]
+PREFIX schema: <http://schema.org/>
+
 PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>
 PREFIX go: <http://purl.org/obo/owl/GO#>
 PREFIX : <http://example.org/ontologies/atkis#>
@@ -501,14 +638,14 @@ PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
 # see which river passes through city
 # the river starts from Nederland, but ATKIS has data only about Germany
 SELECT * WHERE {
-?a a :WaterBodyCourse ; rdfs:label ?waterLabel ; geo:hasDefaultGeometry ?g ; geo:sfIntersects ?loc .	
+?a a schema:RiverBodyOfWater ; rdfs:label ?waterLabel ; geo:hasDefaultGeometry ?g ; geo:sfIntersects ?loc .	
 ?g a sf:Polygon ; geo:asWKT ?water .
  BIND("red" as ?waterColor)
-?loc a :Location ; rdfs:label ?locationLabel ; geo:hasDefaultGeometry ?locgeo .
+?loc a schema:City; rdfs:label ?locationLabel ; geo:hasDefaultGeometry ?locgeo .
 ?locgeo a geo:Geometry, sf:Polygon ; geo:asWKT ?location .
   BIND("blue" as ?locationColor)
 FILTER(?waterLabel = "Rhein")
-}
+} 
 #limit 1
 ]]
 [QueryItem="traffically connected areas"]
@@ -526,8 +663,8 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX schema: <http://schema.org/>
 
 select * where {
-?t a :Paths ; geo:hasDefaultGeometry/geo:asWKT ?wkt ; geo:sfContains ?s .
-?s a :Location ; geo:hasDefaultGeometry/geo:asWKT ?wkt2 ; rdfs:label ?cityLabel .
+?t a :Path ; geo:hasDefaultGeometry/geo:asWKT ?wkt ; geo:sfContains ?s .
+?s a schema:City ; geo:hasDefaultGeometry/geo:asWKT ?wkt2 ; rdfs:label ?cityLabel .
 }
 [QueryItem="count traffic paths on each settlement"]
 PREFIX : <http://example.org/ontologies/atkis#>
