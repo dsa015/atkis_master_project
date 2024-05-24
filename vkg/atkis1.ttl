@@ -350,7 +350,8 @@ rdfs:label rdf:type owl:DatatypeProperty .
 
 
 ###  http://example.org/ontologies/atkis#GN250
-:GN250 rdf:type owl:Class .
+:GN250 rdf:type owl:Class ;
+       rdfs:subClassOf geo:Feature .
 
 
 ###  http://example.org/ontologies/atkis#Geographical
@@ -390,6 +391,7 @@ rdfs:label rdf:type owl:DatatypeProperty .
 
 ###  http://example.org/ontologies/atkis#Relief
 :Relief rdf:type owl:Class ;
+        rdfs:subClassOf geo:Feature ;
         rdfs:comment "Mountain elevation, clips" .
 
 
@@ -405,6 +407,7 @@ rdfs:label rdf:type owl:DatatypeProperty .
 
 ###  http://example.org/ontologies/atkis#Settlement
 :Settlement rdf:type owl:Class ;
+            rdfs:subClassOf geo:Feature ;
             rdfs:comment "Settlements are towns." .
 
 
@@ -415,6 +418,7 @@ rdfs:label rdf:type owl:DatatypeProperty .
 
 ###  http://example.org/ontologies/atkis#Traffic
 :Traffic rdf:type owl:Class ;
+         rdfs:subClassOf geo:Feature ;
          rdfs:comment "Ranging from pathways, air, shipping, railway traffic and transporting facilities" .
 
 
@@ -441,6 +445,7 @@ rdfs:label rdf:type owl:DatatypeProperty .
 
 ###  http://example.org/ontologies/atkis#VerticalRelation
 :VerticalRelation rdf:type owl:Class ;
+                  rdfs:subClassOf geo:Feature ;
                   rdfs:comment "what feature types has a vertical relation" .
 
 

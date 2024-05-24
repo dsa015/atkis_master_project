@@ -704,3 +704,23 @@ SELECT * WHERE {
 ?a a :RailwayTraffic ; geo:sfContains ?p .
 ?p a schema:TrainTrip ; rdfs:label ?route .
 }
+[QueryItem="asdadsda"]
+PREFIX : <http://example.org/ontologies/atkis#>
+PREFIX sf: <http://www.opengis.net/ont/sf#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX gml: <http://www.opengis.net/ont/gml#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX obda: <https://w3id.org/obda/vocabulary#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <http://schema.org/>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>
+
+select (geof:distance(?wkt, ?wkt2, uom:metre) as ?distance) where {
+?s a schema:City ; geo:hasDefaultGeometry/geo:asWKT ?wkt .
+<http://schema.org/f/2> a ?g ; geo:hasDefaultGeometry/geo:asWKT ?wkt2 .
+}
