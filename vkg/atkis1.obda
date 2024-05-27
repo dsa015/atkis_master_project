@@ -5,9 +5,11 @@ geo:		http://www.opengis.net/ont/geosparql#
 gml:		http://www.opengis.net/ont/gml#
 owl:		http://www.w3.org/2002/07/owl#
 rdf:		http://www.w3.org/1999/02/22-rdf-syntax-ns#
+uom:		http://www.opengis.net/def/uom/OGC/1.0/
 wgs:		http://www.w3.org/2003/01/geo/wgs84_pos#
 xml:		http://www.w3.org/XML/1998/namespace
 xsd:		http://www.w3.org/2001/XMLSchema#
+geof:		http://www.opengis.net/def/function/geosparql/
 obda:		https://w3id.org/obda/vocabulary#
 rdfs:		http://www.w3.org/2000/01/rdf-schema#
 schema:		http://schema.org/
@@ -15,11 +17,11 @@ schema:		http://schema.org/
 [MappingDeclaration] @collection [[
 mappingId	Area for linestring_l, geographical areas
 target		schema:AdministrativeArea/l/{gid} a schema:AdministrativeArea ; geo:hasDefaultGeometry schema:AdministrativeArea/geo/l/{gid} . schema:AdministrativeArea/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select gid, st_astext(st_transform(geom,4326)) as wkt from "geb01_l"
+source		select gid, st_astext(geom) as wkt from "geb01_l"
 
 mappingId	administrative polygon ?
 target		schema:AdministrativeArea/f/{gid} a schema:AdministrativeArea ; rdfs:label {bez_lan} ; geo:hasDefaultGeometry schema:AdministrativeArea/geo/f/{gid} . schema:AdministrativeArea/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select gid, bez_lan, st_astext(st_transform(geom,4326)) as wkt from "geb01_f"
+source		select gid, bez_lan, st_astext(geom) as wkt from "geb01_f"
 
 mappingId	Area, geographical areas polygon (f)
 target		:Geographical/f/{gid} a :Geographical ; rdfs:label {nam} ; geo:hasDefaultGeometry :Geographical/geo/f/{gid} . :Geographical/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
@@ -30,12 +32,12 @@ target		:Protected/f/{gid} a :Protected ; rdfs:label {nam} ; geo:hasDefaultGeome
 source		select gid, nam, st_astext(geom) as wkt from "geb03_f"
 
 mappingId	WaterBody polygon_f
-target		schema:RiverBodyOfWater/f/{id} a schema:RiverBodyOfWater ; rdfs:label {nam} ; :objart_txt {objart_txt} ; geo:hasDefaultGeometry schema:RiverBodyOfWater/geo/f/{id} . schema:RiverBodyOfWater/geo/f/{id} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select id, nam, objart_txt, st_astext(st_transform(geom,4326)) as wkt from "gew01_f"
+target		schema:RiverBodyOfWater/f/{id} a schema:RiverBodyOfWater ; rdfs:label {nam} ; :objart_txt {objart_txt} ; geo:hasDefaultGeometry schema:RiverBodyOfWater/geo/f/{id} . schema:RiverBodyOfWater/geo/f/{id} a geo:Geometry , sf:Polygon ; geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/31467>{wkt}"^^geo:wktLiteral . 
+source		select id, nam, objart_txt, st_astext(geom) as wkt from "gew01_f"
 
 mappingId	WaterBody linestrings_l
-target		schema:RiverBodyOfWater/l/{gid} a schema:RiverBodyOfWater ; rdfs:label {nam} ; geo:hasDefaultGeometry schema:RiverBodyOfWater/geo/l/{gid} . schema:RiverBodyOfWater/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select gid, nam, st_astext(st_transform(geom,4326)) as wkt from "gew01_l"
+target		schema:RiverBodyOfWater/l/{gid} a schema:RiverBodyOfWater ; rdfs:label {nam} ; geo:hasDefaultGeometry schema:RiverBodyOfWater/geo/l/{gid} . schema:RiverBodyOfWater/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/31467>{wkt}"^^geo:wktLiteral . 
+source		select gid, nam, st_astext(geom) as wkt from "gew01_l"
 
 mappingId	WaterBodyChar polygon_f
 target		:WaterBodyChar/f/{gid} a :WaterBodyChar ; rdfs:label {nam} ; geo:hasDefaultGeometry :WaterBodyChar/geo/f/{gid} . :WaterBodyChar/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
@@ -67,11 +69,11 @@ source		select id, st_astext(st_transform(geom, 4326)) as wkt from rel02_p
 
 mappingId	Settlement, named location polygon_f
 target		schema:City/f/{gid} a schema:City ; rdfs:label {nam} ; geo:hasDefaultGeometry schema:City/geo/f/{gid} . schema:City/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select gid, nam, st_astext(st_transform(geom, 4326)) as wkt from "sie01_f"
+source		select gid, nam, st_astext(geom) as wkt from "sie01_f"
 
 mappingId	Settlement, named location point_p
 target		schema:City/p/{gid} a schema:City ; rdfs:label {nam} ; geo:hasDefaultGeometry schema:City/geo/p/{gid} . schema:City/geo/p/{gid} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select gid, nam, st_astext(st_transform(geom,4326)) as wkt from "sie01_p"
+source		select gid, nam, st_astext(geom) as wkt from "sie01_p"
 
 mappingId	areas dominated by buildings, polygon f
 target		:AreaDominatedByBuilding/f/{gid} a :AreaDominatedByBuilding ; :objart {objart} ; rdfs:label {nam} ; :fkt {fkt} ; geo:hasDefaultGeometry :AreaDominatedByBuilding/geo/f/{gid} . :AreaDominatedByBuilding/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
@@ -90,15 +92,15 @@ target		:BuildingFacility/p/{id} a :BuildingFacility ; rdfs:label {nam} ; geo:ha
 source		select id, nam, hho, bwf, st_astext(st_transform(geom, 4326)) as wkt from "sie03_p"
 
 mappingId	SpecialFacility polygon_f
-target		:SpecialFacility/f/{gid} a :SpecialFacility ; rdfs:label {nam} ; geo:hasDefaultGeometry :SpecialFacilitiy/geo/f/{gid} . :SpecialFacilitiy/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:SpecialFacility/f/{gid} a :SpecialFacility ; rdfs:label {nam} ; geo:hasDefaultGeometry :SpecialFacilitiy/geo/f/{gid} . :SpecialFacilitiy/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/31467>{wkt}"^^geo:wktLiteral . 
 source		select gid, nam ,st_astext(geom) as wkt from "sie04_f"
 
 mappingId	SpecialFacility linestring_l
-target		:SpecialFacility/l/{gid} a :SpecialFacility ; rdfs:label {nam} ; geo:hasDefaultGeometry :SpecialFacilitiy/geo/l/{gid} . :SpecialFacilitiy/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:SpecialFacility/l/{gid} a :SpecialFacility ; rdfs:label {nam} ; geo:hasDefaultGeometry :SpecialFacilitiy/geo/l/{gid} . :SpecialFacilitiy/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/31467>{wkt}"^^geo:wktLiteral . 
 source		select gid, nam ,st_astext(geom) as wkt from "sie04_l"
 
 mappingId	SpecialFacility point_p
-target		:SpecialFacility/p/{gid} a :SpecialFacility ; rdfs:label {nam} ; geo:hasDefaultGeometry :SpecialFacilitiy/geo/p/{gid} . :SpecialFacilitiy/geo/p/{gid} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:SpecialFacility/p/{gid} a :SpecialFacility ; rdfs:label {nam} ; geo:hasDefaultGeometry :SpecialFacilitiy/geo/p/{gid} . :SpecialFacilitiy/geo/p/{gid} a geo:Geometry , sf:Point ; geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/31467>{wkt}"^^geo:wktLiteral . 
 source		select gid, nam, st_astext(geom) as wkt from "sie04_p"
 
 mappingId	Building point_p
@@ -211,7 +213,7 @@ source		select a.gid as gid1, b.gid as gid2 from ver02_l a
 
 mappingId	traffical railway linestrings
 target		schema:TrainTrip/l/{gid} a schema:TrainTrip ; rdfs:label {nam} ; geo:hasDefaultGeometry schema:TrainTrip/geo/l/{gid} . schema:TrainTrip/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select gid, nam, st_astext(st_transform(geom, 4326)) as wkt from ver03_l
+source		select gid, nam, st_astext(geom) as wkt from ver03_l
 
 mappingId	railway inside city
 target		schema:City/f/{gid1} geo:sfContains schema:TrainTrip/l/{gid2} . 
@@ -222,5 +224,9 @@ mappingId	areas dominated by building in within cities
 target		schema:City/f/{gid1} geo:sfContains :AreaDominatedByBuilding/f/{gid2} . 
 source		select a.gid as gid1, b.gid as gid2 from sie01_f a
 			join sie02_f b on st_contains(a.geom, b.geom)
+
+mappingId	asdd
+target		:Location/p/{gid} a :Location ; rdfs:label {nam} ; geo:hasDefaultGeometry :Location/geo/p/{gid} . :Location/geo/p/{gid} a geo:Geometry , sf:Point ; geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/31467> {wkt}"^^geo:wktLiteral . 
+source		select gid, nam, st_astext(geom) as wkt from sie01_p
 ]]
 

@@ -344,6 +344,9 @@ filter(?objart = "41008")
 }
 #limit 5
 [QueryItem="building buffer"]
+PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+
 PREFIX : <http://example.org/ontologies/atkis#>
 PREFIX sf: <http://www.opengis.net/ont/sf#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
@@ -355,8 +358,7 @@ PREFIX xml: <http://www.w3.org/XML/1998/namespace>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX obda: <https://w3id.org/obda/vocabulary#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
-PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>
+
 
 # give buildings around X building facility
 select *  {
@@ -638,15 +640,36 @@ PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
 # see which river passes through city
 # the river starts from Nederland, but ATKIS has data only about Germany
 SELECT * WHERE {
-?a a schema:RiverBodyOfWater ; rdfs:label ?waterLabel ; geo:hasDefaultGeometry ?g ; geo:sfIntersects ?loc .	
-?g a sf:Polygon ; geo:asWKT ?water .
+?a a schema:RiverBodyOfWater ; rdfs:label ?waterLabel ; geo:hasDefaultGeometry/geo:asWKT ?water ; geo:sfIntersects ?loc .	
+#?g a sf:Polygon ; geo:asWKT ?water .
  BIND("red" as ?waterColor)
-?loc a schema:City; rdfs:label ?locationLabel ; geo:hasDefaultGeometry ?locgeo .
-?locgeo a geo:Geometry, sf:Polygon ; geo:asWKT ?location .
+?loc a schema:City; rdfs:label ?locationLabel ; geo:hasDefaultGeometry/geo:asWKT ?location .
+#?locgeo a geo:Geometry, sf:Polygon ; geo:asWKT ?location .
   BIND("blue" as ?locationColor)
 FILTER(?waterLabel = "Rhein")
 } 
 #limit 1
+[QueryItem="waterbtest"]
+PREFIX : <http://example.org/ontologies/atkis#>
+PREFIX sf: <http://www.opengis.net/ont/sf#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX gml: <http://www.opengis.net/ont/gml#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX obda: <https://w3id.org/obda/vocabulary#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <http://schema.org/>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+
+SELECT * WHERE {
+?a a :Agricultural ; rdfs:label ?veg ; geo:hasDefaultGeometry/geo:asWKT ?veggeo ; geo:sfContains ?b .
+?b a schema:RiverBodyOfWater; rdfs:label ?water ; geo:hasDefaultGeometry/geo:asWKT ?wategeo .
+
+}
+limit 1
 ]]
 [QueryItem="traffically connected areas"]
 PREFIX : <http://example.org/ontologies/atkis#>
@@ -706,21 +729,58 @@ SELECT * WHERE {
 }
 [QueryItem="asdadsda"]
 PREFIX : <http://example.org/ontologies/atkis#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sf: <http://www.opengis.net/ont/sf#>
+PREFIX schema: <http://schema.org/>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>
+
+
+SELECT * WHERE {
+
+?a a :Location ; geo:hasDefaultGeometry/geo:asWKT ?wkt ; rdfs:label ?label .
+filter(?label ='Birndorf') 
+
+?a1 a :Location ; geo:hasDefaultGeometry/geo:asWKT ?wkt1 ; rdfs:label ?label1 .
+
+BIND(geof:distance(?wkt, ?wkt1, uom:metre) AS ?distance )
+
+}
+#limit 10
+[QueryItem="instersect"]
+PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX : <http://example.org/ontologies/atkis#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <http://schema.org/>
+
+SELECT * WHERE {
+?b a schema:City ; rdfs:label ?label ; geo:hasDefaultGeometry/geo:asWKT ?wkt .
+
+?c a schema:AdministrativeArea; rdfs:label ?label1 ; geo:hasDefaultGeometry/geo:asWKT ?wkt1 .
+FILTER(geof:sfWithin(?wkt, ?wkt1))
+}
+[QueryItem="railroads that intersects with eachother"]
+PREFIX : <http://example.org/ontologies/atkis#>
 PREFIX sf: <http://www.opengis.net/ont/sf#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX gml: <http://www.opengis.net/ont/gml#>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>
 PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
 PREFIX xml: <http://www.w3.org/XML/1998/namespace>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
 PREFIX obda: <https://w3id.org/obda/vocabulary#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX schema: <http://schema.org/>
-PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
-PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>
 
-select (geof:distance(?wkt, ?wkt2, uom:metre) as ?distance) where {
-?s a schema:City ; geo:hasDefaultGeometry/geo:asWKT ?wkt .
-<http://schema.org/f/2> a ?g ; geo:hasDefaultGeometry/geo:asWKT ?wkt2 .
+SELECT * WHERE{
+?t a schema:TrainTrip ; geo:hasDefaultGeometry/geo:asWKT ?wkt ; rdfs:label ?name .
+?t1 a schema:TrainTrip ; geo:hasDefaultGeometry/geo:asWKT ?wkt1  .
+FILTER(geof:sfIntersects(?wkt, ?wkt1))
 }
+limit 10000
