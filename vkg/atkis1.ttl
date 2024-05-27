@@ -1,17 +1,22 @@
 @prefix : <http://example.org/ontologies/atkis#> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
 @prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix gml: <http://www.opengis.net/ont/gml#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix uom: <http://www.opengis.net/def/uom/OGC/1.0/> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix obda: <https://w3id.org/obda/vocabulary#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <http://schema.org/> .
 @base <http://example.org/ontologies/atkis#> .
 
 <http://example.org/ontologies/atkis#> rdf:type owl:Ontology ;
-                                        owl:imports <http://www.opengis.net/ont/geosparql/1.1> ,
+                                        owl:imports <http://www.opengis.net/ont/gml> ,
+                                                    <http://www.opengis.net/ont/geosparql/1.1> ,
+                                                    <http://www.opengis.net/ont/sf/1.1> ,
                                                     rdfs: .
 
 #################################################################
