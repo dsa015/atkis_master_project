@@ -1,23 +1,17 @@
 @prefix : <http://example.org/ontologies/atkis#> .
-@prefix sf: <http://www.opengis.net/ont/sf#> .
 @prefix geo: <http://www.opengis.net/ont/geosparql#> .
-@prefix gml: <http://www.opengis.net/ont/gml#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix uom: <http://www.opengis.net/def/uom/OGC/1.0/> .
-@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix geof: <http://www.opengis.net/def/function/geosparql/> .
-@prefix obda: <https://w3id.org/obda/vocabulary#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <http://schema.org/> .
 @base <http://example.org/ontologies/atkis#> .
 
 <http://example.org/ontologies/atkis#> rdf:type owl:Ontology ;
-                                        owl:imports <http://www.opengis.net/ont/gml> ,
-                                                    <http://www.opengis.net/ont/geosparql/1.1> ,
-                                                    <http://www.opengis.net/ont/sf/1.1> ,
+                                        owl:imports <http://www.opengis.net/ont/geosparql/1.1> ,
                                                     rdfs: .
 
 #################################################################
@@ -997,24 +991,24 @@ rdf:type rdf:type owl:AnnotationProperty .
 
 
 ###  http://www.w3.org/2003/01/geo/wgs84_pos#alt
-wgs:alt rdf:type owl:AnnotationProperty ;
-        rdfs:domain wgs:SpatialThing .
+<http://www.w3.org/2003/01/geo/wgs84_pos#alt> rdf:type owl:AnnotationProperty ;
+                                              rdfs:domain <http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> .
 
 
 ###  http://www.w3.org/2003/01/geo/wgs84_pos#lat
-wgs:lat rdf:type owl:AnnotationProperty ;
-        rdfs:domain wgs:SpatialThing .
+<http://www.w3.org/2003/01/geo/wgs84_pos#lat> rdf:type owl:AnnotationProperty ;
+                                              rdfs:domain <http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> .
 
 
 ###  http://www.w3.org/2003/01/geo/wgs84_pos#location
-wgs:location rdf:type owl:AnnotationProperty ;
-             rdfs:subPropertyOf <http://xmlns.com/foaf/0.1/based_near> ;
-             rdfs:range wgs:SpatialThing .
+<http://www.w3.org/2003/01/geo/wgs84_pos#location> rdf:type owl:AnnotationProperty ;
+                                                   rdfs:subPropertyOf <http://xmlns.com/foaf/0.1/based_near> ;
+                                                   rdfs:range <http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> .
 
 
 ###  http://www.w3.org/2003/01/geo/wgs84_pos#long
-wgs:long rdf:type owl:AnnotationProperty ;
-         rdfs:domain wgs:SpatialThing .
+<http://www.w3.org/2003/01/geo/wgs84_pos#long> rdf:type owl:AnnotationProperty ;
+                                               rdfs:domain <http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> .
 
 
 ###  http://www.w3.org/2004/02/skos/core#closeMatch
@@ -1087,7 +1081,7 @@ geo:hasPolygonGeometry rdf:type owl:ObjectProperty ;
 
 
 ###  http://www.w3.org/2003/01/geo/wgs84_pos#location
-wgs:location rdf:type owl:ObjectProperty .
+<http://www.w3.org/2003/01/geo/wgs84_pos#location> rdf:type owl:ObjectProperty .
 
 
 #################################################################
@@ -23932,14 +23926,14 @@ schema:yield rdf:type owl:NamedIndividual ;
 
 
 ###  http://www.w3.org/2003/01/geo/wgs84_pos#
-wgs: rdf:type owl:NamedIndividual ;
-     rdfs:label "geo" ;
-     <http://purl.org/dc/elements/1.1/date> "$Date: 2009/04/20 15:00:30 $" ;
-     <http://purl.org/dc/elements/1.1/description> """A vocabulary for representing latitude, longitude and 
+<http://www.w3.org/2003/01/geo/wgs84_pos#> rdf:type owl:NamedIndividual ;
+                                           rdfs:label "geo" ;
+                                           <http://purl.org/dc/elements/1.1/date> "$Date: 2009/04/20 15:00:30 $" ;
+                                           <http://purl.org/dc/elements/1.1/description> """A vocabulary for representing latitude, longitude and 
  altitude information in the WGS84 geodetic reference datum. 
  Version $Id: wgs84_pos.rdf,v 1.22 2009/04/20 15:00:30 timbl Exp $. See http://www.w3.org/2003/01/geo/ for more details.""" ;
-     <http://purl.org/dc/elements/1.1/title> "WGS84 Geo Positioning: an RDF vocabulary" ;
-     rdfs:comment """
+                                           <http://purl.org/dc/elements/1.1/title> "WGS84 Geo Positioning: an RDF vocabulary" ;
+                                           rdfs:comment """
 Recent changes to this namespace:
 $Log: wgs84_pos.rdf,v $
 Revision 1.22  2009/04/20 15:00:30  timbl
@@ -24023,7 +24017,7 @@ date: 2003/01/10 10:53:23;  author: danbri;  state: Exp;
 basic geo vocab
 
 """ ,
-                  """
+                                                        """
 Recent changes to this namespace:
 $Log: wgs84_pos.rdf,v $
 Revision 1.22  2009/04/20 15:00:30  timbl
@@ -24110,39 +24104,39 @@ basic geo vocab
 
 
 ###  http://www.w3.org/2003/01/geo/wgs84_pos#Point
-wgs:Point rdf:type owl:NamedIndividual ;
-          rdfs:label "point" .
+<http://www.w3.org/2003/01/geo/wgs84_pos#Point> rdf:type owl:NamedIndividual ;
+                                                rdfs:label "point" .
 
 
 ###  http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing
-wgs:SpatialThing rdf:type owl:NamedIndividual ;
-                 rdfs:label "SpatialThing" .
+<http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> rdf:type owl:NamedIndividual ;
+                                                       rdfs:label "SpatialThing" .
 
 
 ###  http://www.w3.org/2003/01/geo/wgs84_pos#alt
-wgs:alt rdf:type owl:NamedIndividual ;
-        rdfs:label "altitude" .
+<http://www.w3.org/2003/01/geo/wgs84_pos#alt> rdf:type owl:NamedIndividual ;
+                                              rdfs:label "altitude" .
 
 
 ###  http://www.w3.org/2003/01/geo/wgs84_pos#lat
-wgs:lat rdf:type owl:NamedIndividual ;
-        rdfs:label "latitude" .
+<http://www.w3.org/2003/01/geo/wgs84_pos#lat> rdf:type owl:NamedIndividual ;
+                                              rdfs:label "latitude" .
 
 
 ###  http://www.w3.org/2003/01/geo/wgs84_pos#lat_long
-wgs:lat_long rdf:type owl:NamedIndividual ;
-             rdfs:label "lat/long" ;
-             rdfs:comment "A comma-separated representation of a latitude, longitude coordinate." .
+<http://www.w3.org/2003/01/geo/wgs84_pos#lat_long> rdf:type owl:NamedIndividual ;
+                                                   rdfs:label "lat/long" ;
+                                                   rdfs:comment "A comma-separated representation of a latitude, longitude coordinate." .
 
 
 ###  http://www.w3.org/2003/01/geo/wgs84_pos#location
-wgs:location rdf:type owl:NamedIndividual ;
-             rdfs:label "location" .
+<http://www.w3.org/2003/01/geo/wgs84_pos#location> rdf:type owl:NamedIndividual ;
+                                                   rdfs:label "location" .
 
 
 ###  http://www.w3.org/2003/01/geo/wgs84_pos#long
-wgs:long rdf:type owl:NamedIndividual ;
-         rdfs:label "longitude" .
+<http://www.w3.org/2003/01/geo/wgs84_pos#long> rdf:type owl:NamedIndividual ;
+                                               rdfs:label "longitude" .
 
 
 #################################################################
@@ -27166,14 +27160,14 @@ schema:yield schema:rangeIncludes schema:QuantitativeValue ;
              rdfs:comment "The quantity that results by performing instructions. For example, a paper airplane, 10 personalized candles." .
 
 
-wgs:alt rdfs:comment """The WGS84 altitude of a SpatialThing (decimal meters 
+<http://www.w3.org/2003/01/geo/wgs84_pos#alt> rdfs:comment """The WGS84 altitude of a SpatialThing (decimal meters 
 above the local reference ellipsoid).""" .
 
 
-wgs:lat rdfs:comment "The WGS84 latitude of a SpatialThing (decimal degrees)." .
+<http://www.w3.org/2003/01/geo/wgs84_pos#lat> rdfs:comment "The WGS84 latitude of a SpatialThing (decimal degrees)." .
 
 
-wgs:location rdfs:comment """The relation between something and the point, 
+<http://www.w3.org/2003/01/geo/wgs84_pos#location> rdfs:comment """The relation between something and the point, 
  or other geometrical thing in space, where it is.  For example, the realtionship between
  a radio tower and a Point with a given lat and long.
  Or a relationship between a park and its outline as a closed arc of points, or a road and
@@ -27181,7 +27175,7 @@ wgs:location rdfs:comment """The relation between something and the point,
  Clearly in practice there will be limit to the accuracy of any such statement, but one would expect
  an accuracy appropriate for the size of the object and uses such as mapping .
  """ ,
-                          """The relation between something and the point, 
+                                                                """The relation between something and the point, 
  or other geometrical thing in space, where it is.  For example, the realtionship between
  a radio tower and a Point with a given lat and long.
  Or a relationship between a park and its outline as a closed arc of points, or a road and
@@ -27191,7 +27185,7 @@ wgs:location rdfs:comment """The relation between something and the point,
         """ .
 
 
-wgs:long rdfs:comment "The WGS84 longitude of a SpatialThing (decimal degrees)." .
+<http://www.w3.org/2003/01/geo/wgs84_pos#long> rdfs:comment "The WGS84 longitude of a SpatialThing (decimal degrees)." .
 
 
 ###  Generated by the OWL API (version 4.5.25.2023-02-15T19:15:49Z) https://github.com/owlcs/owlapi

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+<catalog prefer="public"
+    xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
     <uri id="Imports Wizard Entry" name="https://schema.org/version/latest/schemaorg-current-http.rdf" uri="ontologies/schema.owl"/>
     <uri id="Imports Wizard Entry" name="http://www.opengis.net/ont/sf/1.1" uri="ontologies/sf.ttl"/>
     <uri id="Imports Wizard Entry" name="http://www.opengis.net/ont/geosparql/1.1" uri="ontologies/geosparql.ttl"/>

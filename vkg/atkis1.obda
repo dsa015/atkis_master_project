@@ -1,54 +1,50 @@
 [PrefixDeclaration]
 :		http://example.org/ontologies/atkis#
-sf:		http://www.opengis.net/ont/sf#
 geo:		http://www.opengis.net/ont/geosparql#
-gml:		http://www.opengis.net/ont/gml#
 owl:		http://www.w3.org/2002/07/owl#
 rdf:		http://www.w3.org/1999/02/22-rdf-syntax-ns#
 uom:		http://www.opengis.net/def/uom/OGC/1.0/
-wgs:		http://www.w3.org/2003/01/geo/wgs84_pos#
 xml:		http://www.w3.org/XML/1998/namespace
 xsd:		http://www.w3.org/2001/XMLSchema#
 geof:		http://www.opengis.net/def/function/geosparql/
-obda:		https://w3id.org/obda/vocabulary#
 rdfs:		http://www.w3.org/2000/01/rdf-schema#
 schema:		http://schema.org/
 
 [MappingDeclaration] @collection [[
 mappingId	Area for linestring_l, geographical areas
-target		:Administrative/l/{gid} a :Administrative ; geo:hasDefaultGeometry :Administrative/geo/l/{gid} . :Administrative/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Administrative/l/{gid} a :Administrative ; geo:hasDefaultGeometry :Administrative/geo/l/{gid} . :Administrative/geo/l/{gid} a geo:Geometry , <http://www.opengis.net/ont/sf#LineString> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, st_astext(geom) as wkt from "geb01_l"
 
 mappingId	administrative polygon ?
-target		:Administrative/f/{gid} a :Administrative ; rdfs:label {bez_lan}@de ; geo:hasDefaultGeometry :Administrative/geo/f/{gid} . :Administrative/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Administrative/f/{gid} a :Administrative ; rdfs:label {bez_lan}@de ; geo:hasDefaultGeometry :Administrative/geo/f/{gid} . :Administrative/geo/f/{gid} a geo:Geometry , <http://www.opengis.net/ont/sf#Polygon> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, bez_lan, st_astext(geom) as wkt from "geb01_f"
 
 mappingId	Area, geographical areas polygon (f)
-target		:Geographical/f/{gid} a :Geographical ; rdfs:label {nam} ; geo:hasDefaultGeometry :Geographical/geo/f/{gid} . :Geographical/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Geographical/f/{gid} a :Geographical ; rdfs:label {nam} ; geo:hasDefaultGeometry :Geographical/geo/f/{gid} . :Geographical/geo/f/{gid} a geo:Geometry , <http://www.opengis.net/ont/sf#Polygon> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, st_astext(geom) as wkt from "geb02_f"
 
 mappingId	Protected areas polygons_f
-target		:Protected/f/{gid} a :Protected ; rdfs:label {nam} ; geo:hasDefaultGeometry :Protected/geo/f{gid} . :Protected/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Protected/f/{gid} a :Protected ; rdfs:label {nam} ; geo:hasDefaultGeometry :Protected/geo/f{gid} . :Protected/geo/f/{gid} a geo:Geometry , <http://www.opengis.net/ont/sf#Polygon> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, st_astext(geom) as wkt from "geb03_f"
 
 mappingId	WaterBody polygon_f
-target		:WaterBodyCourse/f/{id} a :WaterBodyCourse ; rdfs:label {nam} ; :objart_txt {objart_txt} ; geo:hasDefaultGeometry :WaterBodyCourse/geo/f/{id} . :WaterBodyCourse/geo/f/{id} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:WaterBodyCourse/f/{id} a :WaterBodyCourse ; rdfs:label {nam} ; :objart_txt {objart_txt} ; geo:hasDefaultGeometry :WaterBodyCourse/geo/f/{id} . :WaterBodyCourse/geo/f/{id} a geo:Geometry , <http://www.opengis.net/ont/sf#Polygon> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select id, nam, objart_txt, st_astext(st_transform(geom,4326)) as wkt from "gew01_f"
 
 mappingId	WaterBody linestrings_l
-target		:WaterBodyCourse/l/{gid} a :WaterBodyCourse ; rdfs:label {nam} ; geo:hasDefaultGeometry :WaterBodyCourse/geo/l/{gid} . :WaterBodyCourse/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:WaterBodyCourse/l/{gid} a :WaterBodyCourse ; rdfs:label {nam} ; geo:hasDefaultGeometry :WaterBodyCourse/geo/l/{gid} . :WaterBodyCourse/geo/l/{gid} a geo:Geometry , <http://www.opengis.net/ont/sf#LineString> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, st_astext(st_transform(geom,4326)) as wkt from "gew01_l"
 
 mappingId	WaterBodyChar polygon_f
-target		:WaterBodyChar/f/{gid} a :WaterBodyChar ; rdfs:label {nam} ; geo:hasDefaultGeometry :WaterBodyChar/geo/f/{gid} . :WaterBodyChar/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:WaterBodyChar/f/{gid} a :WaterBodyChar ; rdfs:label {nam} ; geo:hasDefaultGeometry :WaterBodyChar/geo/f/{gid} . :WaterBodyChar/geo/f/{gid} a geo:Geometry , <http://www.opengis.net/ont/sf#Polygon> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, st_astext(geom) as wkt from "gew02_f"
 
 mappingId	WaterBodyChar point_p
-target		:WaterBodyChar/p/{gid} a :WaterBodyChar ; rdfs:label {nam} ; geo:hasDefaultGeometry :WaterBodyChar/geo/p/{gid} . :WaterBodyChar/geo/p/{gid} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:WaterBodyChar/p/{gid} a :WaterBodyChar ; rdfs:label {nam} ; geo:hasDefaultGeometry :WaterBodyChar/geo/p/{gid} . :WaterBodyChar/geo/p/{gid} a geo:Geometry , <http://www.opengis.net/ont/sf#Point> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, st_astext(geom) as wkt from "gew02_p"
 
 mappingId	WaterLineAxis linestring_l
-target		:WaterLineAxis/l/{gid} a :WaterLineAxis ; rdfs:label {nam} ; geo:hasDefaultGeometry :WaterLineAxis/geo/l/{gid} . :WaterLineAxis/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:WaterLineAxis/l/{gid} a :WaterLineAxis ; rdfs:label {nam} ; geo:hasDefaultGeometry :WaterLineAxis/geo/l/{gid} . :WaterLineAxis/geo/l/{gid} a geo:Geometry , <http://www.opengis.net/ont/sf#LineString> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, st_astext(geom) as wkt from "gew03_l"
 
 mappingId	VerticalRelation- no geom, relation between feature in traffic(ver)
@@ -56,107 +52,107 @@ target		:VerticalRelation/{gid} a :VerticalRelation .
 source		select gid, ebene_1, ebene_2 from "hdu01_b"
 
 mappingId	Relief linestring_l
-target		:Relief/l/{id} a :Relief ; rdfs:label {nam} ; geo:hasDefaultGeometry :Relief/geo/l/{id} . :Relief/geo/l/{id} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Relief/l/{id} a :Relief ; rdfs:label {nam} ; geo:hasDefaultGeometry :Relief/geo/l/{id} . :Relief/geo/l/{id} a geo:Geometry , <http://www.opengis.net/ont/sf#LineString> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select id, nam, st_astext(st_transform(geom, 4326)) as wkt from "rel01_l"
 
 mappingId	Relief point_p
-target		:Relief/p/{gid} a :Relief ; rdfs:label {nam} ; geo:hasDefaultGeometry :Relief/geo/p/{gid} . :Relief/geo/p/{gid} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Relief/p/{gid} a :Relief ; rdfs:label {nam} ; geo:hasDefaultGeometry :Relief/geo/p/{gid} . :Relief/geo/p/{gid} a geo:Geometry , <http://www.opengis.net/ont/sf#Point> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, st_astext(geom) as wkt from "rel01_p"
 
 mappingId	Relief MeasurementData point_p
-target		:MeasurementData/p/{id} a :MeasurementData ; geo:hasDefaultGeometry :MeasurementData/geo/p/{id} . :MeasurementData/geo/p/{id} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:MeasurementData/p/{id} a :MeasurementData ; geo:hasDefaultGeometry :MeasurementData/geo/p/{id} . :MeasurementData/geo/p/{id} a geo:Geometry , <http://www.opengis.net/ont/sf#Point> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select id, st_astext(st_transform(geom, 4326)) as wkt from rel02_p
 
 mappingId	Settlement, named location polygon_f
-target		:Location/f/{gid} a :Location ; rdfs:label {nam} ; geo:hasDefaultGeometry :Location/geo/f/{gid} . :Location/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Location/f/{gid} a :Location ; rdfs:label {nam} ; geo:hasDefaultGeometry :Location/geo/f/{gid} . :Location/geo/f/{gid} a geo:Geometry , <http://www.opengis.net/ont/sf#Polygon> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, st_astext(st_transform(geom, 4326)) as wkt from "sie01_f"
 
 mappingId	Settlement, named location point_p
-target		:Location/p/{gid} a :Location ; rdfs:label {nam} ; geo:hasDefaultGeometry :Location/geo/p/{gid} . :Location/geo/p/{gid} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Location/p/{gid} a :Location ; rdfs:label {nam} ; geo:hasDefaultGeometry :Location/geo/p/{gid} . :Location/geo/p/{gid} a geo:Geometry , <http://www.opengis.net/ont/sf#Point> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, st_astext(st_transform(geom,4326)) as wkt from "sie01_p"
 
 mappingId	areas dominated by buildings, polygon f
-target		:Areas_d_b/f/{gid} a :AreaDominatedByBuilding ; :objart {objart} ; rdfs:label {nam} ; :fkt {fkt} ; geo:hasDefaultGeometry :Areas_d_b/geo/f/{gid} . :Areas_d_b/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Areas_d_b/f/{gid} a :AreaDominatedByBuilding ; :objart {objart} ; rdfs:label {nam} ; :fkt {fkt} ; geo:hasDefaultGeometry :Areas_d_b/geo/f/{gid} . :Areas_d_b/geo/f/{gid} a geo:Geometry , <http://www.opengis.net/ont/sf#Polygon> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, fkt, objart, st_astext(st_transform(geom,4326)) as wkt from "sie02_f"
 
 mappingId	Building/facilityes polygon_f
-target		:BuildingFacility/f/{id} a :BuildingFacility ; rdfs:label {nam} ; geo:hasDefaultGeometry :BuildingFacility/geo/f/{id} . :BuildingFacility/geo/f/{id} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:BuildingFacility/f/{id} a :BuildingFacility ; rdfs:label {nam} ; geo:hasDefaultGeometry :BuildingFacility/geo/f/{id} . :BuildingFacility/geo/f/{id} a geo:Geometry , <http://www.opengis.net/ont/sf#Polygon> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select id, nam, bwf, st_astext(geom) as wkt from "sie03_f"
 
 mappingId	Building/facilityes linestring_l
-target		:BuildingFacility/l/{gid} a :BuildingFacility ; geo:hasDefaultGeometry :BuildingFacility/geo/l/{gid} . :BuildingFacility/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:BuildingFacility/l/{gid} a :BuildingFacility ; geo:hasDefaultGeometry :BuildingFacility/geo/l/{gid} . :BuildingFacility/geo/l/{gid} a geo:Geometry , <http://www.opengis.net/ont/sf#LineString> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, st_astext(geom) as wkt from "sie03_l"
 
 mappingId	Building/facilityes point_p
-target		:BuildingFacility/p/{id} a :BuildingFacility ; rdfs:label {nam} ; geo:hasMetricLength {hho} ; geo:hasDefaultGeometry :BuildingFacility/geo/p/{id} . :BuildingFacility/geo/p/{id} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:BuildingFacility/p/{id} a :BuildingFacility ; rdfs:label {nam} ; geo:hasMetricLength {hho} ; geo:hasDefaultGeometry :BuildingFacility/geo/p/{id} . :BuildingFacility/geo/p/{id} a geo:Geometry , <http://www.opengis.net/ont/sf#Point> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select id, nam, hho, bwf, st_astext(st_transform(geom, 4326)) as wkt from "sie03_p"
 
 mappingId	SpecialFacility polygon_f
-target		:SpecialFacility/f/{gid} a :SpecialFacility ; rdfs:label {nam} ; geo:hasDefaultGeometry :SpecialFacilitiy/geo/f/{gid} . :SpecialFacilitiy/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select gid, nam ,st_astext(geom) as wkt from "sie04_f"
+target		:SpecialFacility/f/{gid} a :SpecialFacility ; rdfs:label {nam} ; :objart_txt {objart_txt} ; geo:hasDefaultGeometry :SpecialFacilitiy/geo/f/{gid} . :SpecialFacilitiy/geo/f/{gid} a geo:Geometry , <http://www.opengis.net/ont/sf#Polygon> ; geo:asWKT {wkt}^^geo:wktLiteral . 
+source		select gid, nam ,st_astext(geom) as wkt, objart_txt from "sie04_f"
 
 mappingId	SpecialFacility linestring_l
-target		:SpecialFacility/l/{gid} a :SpecialFacility ; rdfs:label {nam} ; geo:hasDefaultGeometry :SpecialFacilitiy/geo/l/{gid} . :SpecialFacilitiy/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select gid, nam ,st_astext(geom) as wkt from "sie04_l"
+target		:SpecialFacility/l/{gid} a :SpecialFacility ; rdfs:label {nam} ; :objart_txt {objart_txt} ; geo:hasDefaultGeometry :SpecialFacilitiy/geo/l/{gid} . :SpecialFacilitiy/geo/l/{gid} a geo:Geometry , <http://www.opengis.net/ont/sf#LineString> ; geo:asWKT {wkt}^^geo:wktLiteral . 
+source		select gid, nam ,st_astext(geom) as wkt, objart_txt from "sie04_l"
 
 mappingId	SpecialFacility point_p
-target		:SpecialFacility/p/{gid} a :SpecialFacility ; rdfs:label {nam} ; geo:hasDefaultGeometry :SpecialFacilitiy/geo/p/{gid} . :SpecialFacilitiy/geo/p/{gid} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select gid, nam, st_astext(geom) as wkt from "sie04_p"
+target		:SpecialFacility/p/{gid} a :SpecialFacility ; rdfs:label {nam} ; :objart_txt {objart_txt} ; geo:hasDefaultGeometry :SpecialFacilitiy/geo/p/{gid} . :SpecialFacilitiy/geo/p/{gid} a geo:Geometry , <http://www.opengis.net/ont/sf#Point> ; geo:asWKT {wkt}^^geo:wktLiteral ; :objart_txt {objart_txt} . 
+source		select gid, nam, st_astext(geom) as wkt, objart_txt from "sie04_p"
 
 mappingId	Building point_p
-target		:Building/p/{id} a :Building ; rdfs:label {nam} ; :gfk {gfk} ; geo:hasDefaultGeometry :Building/geo/p/{id} . :Building/geo/p/{id} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Building/p/{id} a :Building ; rdfs:label {nam} ; :gfk {gfk} ; geo:hasDefaultGeometry :Building/geo/p/{id} . :Building/geo/p/{id} a geo:Geometry , <http://www.opengis.net/ont/sf#Point> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select id, nam, bwf, gfk ,st_astext(st_transform(geom, 4326)) as wkt from "sie05_p"
 
 mappingId	Agricultural polygon_f
-target		:Agricultural/f/{gid} a :Agricultural ; rdfs:label {nam} ; geo:hasDefaultGeometry :Agricultural/geo/f/{gid} . :Agricultural/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Agricultural/f/{gid} a :Agricultural ; rdfs:label {nam} ; geo:hasDefaultGeometry :Agricultural/geo/f/{gid} . :Agricultural/geo/f/{gid} a geo:Geometry , <http://www.opengis.net/ont/sf#Polygon> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam ,st_astext(st_transform(geom,4326)) as wkt from "veg01_f"
 
 mappingId	Forestry polygon_f
-target		:Forestry/f/{gid} a :Forestry ; rdfs:label {nam} ; geo:hasDefaultGeometry :Forestry/geo/f/{gid} . :Forestry/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Forestry/f/{gid} a :Forestry ; rdfs:label {nam} ; geo:hasDefaultGeometry :Forestry/geo/f/{gid} . :Forestry/geo/f/{gid} a geo:Geometry , <http://www.opengis.net/ont/sf#Polygon> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam ,st_astext(geom) as wkt from "veg02_f"
 
 mappingId	VegetationArea polygon_f
-target		:VegetationArea/f/{gid} a :VegetationArea ; rdfs:label {nam} ; geo:hasDefaultGeometry :Vegetation/geo/f/{gid} . :Vegetation/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:VegetationArea/f/{gid} a :VegetationArea ; rdfs:label {nam} ; geo:hasDefaultGeometry :Vegetation/geo/f/{gid} . :Vegetation/geo/f/{gid} a geo:Geometry , <http://www.opengis.net/ont/sf#Polygon> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam ,st_astext(st_transform(geom, 4326)) as wkt from "veg03_f"
 
 mappingId	vegetation_characteristics polygon_f
-target		:VegChar/f/{gid} a :VegChar ; rdfs:label {nam} ; geo:hasDefaultGeometry :VegChar/geo/f/{gid} . :VegChar/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:VegChar/f/{gid} a :VegChar ; rdfs:label {nam} ; geo:hasDefaultGeometry :VegChar/geo/f/{gid} . :VegChar/geo/f/{gid} a geo:Geometry , <http://www.opengis.net/ont/sf#Polygon> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam ,st_astext(geom) as wkt from "veg04_f"
 
 mappingId	Road traffic linestring_l
-target		:RoadTraffic/l/{id} a :RoadTraffic ; rdfs:label {bez} ; :znm {znm} ; geo:hasDefaultGeometry :RoadTraffic/geo/l/{id} . :RoadTraffic/geo/l/{id} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:RoadTraffic/l/{id} a :RoadTraffic ; rdfs:label {bez} ; :znm {znm} ; geo:hasDefaultGeometry :RoadTraffic/geo/l/{id} . :RoadTraffic/geo/l/{id} a geo:Geometry , <http://www.opengis.net/ont/sf#LineString> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select id, bez, znm, st_astext(st_transform(geom,4326)) as wkt from "ver01_l"
 
 mappingId	Road paths linestring_l
-target		:Paths/l/{gid} a :Path ; rdfs:label {nam} ; geo:hasMetricLength {length}^^xsd:double ; geo:hasDefaultGeometry :Paths/geo/l/{gid} . :Paths/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Paths/l/{gid} a :Path ; rdfs:label {nam} ; geo:hasMetricLength {length}^^xsd:double ; geo:hasDefaultGeometry :Paths/geo/l/{gid} . :Paths/geo/l/{gid} a geo:Geometry , <http://www.opengis.net/ont/sf#LineString> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam ,st_astext(st_transform(geom, 4326)) as wkt, st_length(geom) as length from "ver02_l"
 
 mappingId	RailwayTraffic polygon_f
-target		:RailwayTraffic/f/{gid} a :Path ; geo:hasDefaultGeometry :RailwayTraffic/geo/f/{gid} . :RailwayTraffic/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:RailwayTraffic/f/{gid} a :Path ; geo:hasDefaultGeometry :RailwayTraffic/geo/f/{gid} . :RailwayTraffic/geo/f/{gid} a geo:Geometry , <http://www.opengis.net/ont/sf#Polygon> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid ,st_astext(geom) as wkt from "ver03_f"
 
 mappingId	RailwayTraffic linestring_l
-target		:RailwayTraffic/l/{gid} a :RailwayTraffic ; rdfs:label {nam} ; geo:hasDefaultGeometry :RailwayTraffic/geo/f/{gid} . :RailwayTraffic/geo/f/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:RailwayTraffic/l/{gid} a :RailwayTraffic ; rdfs:label {nam} ; geo:hasDefaultGeometry :RailwayTraffic/geo/f/{gid} . :RailwayTraffic/geo/f/{gid} a geo:Geometry , <http://www.opengis.net/ont/sf#LineString> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam ,st_astext(geom) as wkt from "ver03_l"
 
 mappingId	AirTraffic polygon_f
-target		:AirTraffic/f/{gid} a :AirTraffic ; rdfs:label {nam} ; :bez {bez} ; geo:hasDefaultGeometry :AirTraffic/geo/f/{gid} . :AirTraffic/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:AirTraffic/f/{gid} a :AirTraffic ; rdfs:label {nam} ; :bez {bez} ; geo:hasDefaultGeometry :AirTraffic/geo/f/{gid} . :AirTraffic/geo/f/{gid} a geo:Geometry , <http://www.opengis.net/ont/sf#Polygon> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, bez ,st_astext(geom) as wkt from "ver04_f"
 
 mappingId	ShippingTraffic linestring_l
-target		:ShippingTraffic/l/{gid} a :ShippingTraffic ; rdfs:label {nam} ; geo:hasDefaultGeometry :ShippingTraffic/geo/l/{gid} . :ShippingTraffic/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:ShippingTraffic/l/{gid} a :ShippingTraffic ; rdfs:label {nam} ; geo:hasDefaultGeometry :ShippingTraffic/geo/l/{gid} . :ShippingTraffic/geo/l/{gid} a geo:Geometry , <http://www.opengis.net/ont/sf#LineString> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, st_astext(st_transform(geom, 4326)) as wkt from "ver05_l"
 
 mappingId	Transport_b_f polygon_f
-target		:Transport_b_f/f/{gid} a :TransportBuildingAndFacility ; rdfs:label {nam} ; geo:hasDefaultGeometry :Transport_b_f/geo/f/{gid} . :Transport_b_f/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Transport_b_f/f/{gid} a :TransportBuildingAndFacility ; rdfs:label {nam} ; geo:hasDefaultGeometry :Transport_b_f/geo/f/{gid} . :Transport_b_f/geo/f/{gid} a geo:Geometry , <http://www.opengis.net/ont/sf#Polygon> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, st_astext(geom) as wkt from "ver06_f"
 
 mappingId	Transport_b_f linestring_l
-target		:Transport_b_f/l/{id} a :TransportBuildingAndFacility ; rdfs:label {nam} ; :bez {bez} ; geo:hasDefaultGeometry :Transport_b_f/geo/l/{id} . :Transport_b_f/geo/l/{id} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Transport_b_f/l/{id} a :TransportBuildingAndFacility ; rdfs:label {nam} ; :bez {bez} ; geo:hasDefaultGeometry :Transport_b_f/geo/l/{id} . :Transport_b_f/geo/l/{id} a geo:Geometry , <http://www.opengis.net/ont/sf#LineString> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select id, nam, bez ,st_astext(geom) as wkt from "ver06_l"
 
 mappingId	Transport_b_f point_p
-target		:Transport_b_f/p/{id} a :TransportBuildingAndFacility ; rdfs:label {nam} ; :bez {bez} ; geo:hasDefaultGeometry :Transport_b_f/geo/p/{id} . :Transport_b_f/geo/p/{id} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Transport_b_f/p/{id} a :TransportBuildingAndFacility ; rdfs:label {nam} ; :bez {bez} ; geo:hasDefaultGeometry :Transport_b_f/geo/p/{id} . :Transport_b_f/geo/p/{id} a geo:Geometry , <http://www.opengis.net/ont/sf#Point> ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select id, nam, bez, st_astext(geom) as wkt from "ver06_p"
 
 mappingId	Transport_b_f polygon and point?
