@@ -5,9 +5,11 @@ geo:		http://www.opengis.net/ont/geosparql#
 gml:		http://www.opengis.net/ont/gml#
 owl:		http://www.w3.org/2002/07/owl#
 rdf:		http://www.w3.org/1999/02/22-rdf-syntax-ns#
+uom:		http://www.opengis.net/def/uom/OGC/1.0/
 wgs:		http://www.w3.org/2003/01/geo/wgs84_pos#
 xml:		http://www.w3.org/XML/1998/namespace
 xsd:		http://www.w3.org/2001/XMLSchema#
+geof:		http://www.opengis.net/def/function/geosparql/
 obda:		https://w3id.org/obda/vocabulary#
 rdfs:		http://www.w3.org/2000/01/rdf-schema#
 schema:		http://schema.org/
