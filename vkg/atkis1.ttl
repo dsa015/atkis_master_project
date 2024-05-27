@@ -1884,12 +1884,6 @@ schema:CivicStructure rdf:type owl:Class ;
                       rdfs:subClassOf schema:Place .
 
 
-###  http://schema.org/Class
-schema:Class rdf:type owl:Class ;
-             owl:equivalentClass rdfs:Class ;
-             rdfs:subClassOf schema:Intangible .
-
-
 ###  http://schema.org/ClothingStore
 schema:ClothingStore rdf:type owl:Class ;
                      rdfs:subClassOf schema:Store .
@@ -1999,11 +1993,6 @@ schema:DanceGroup rdf:type owl:Class ;
 ###  http://schema.org/DataFeedItem
 schema:DataFeedItem rdf:type owl:Class ;
                     rdfs:subClassOf schema:Intangible .
-
-
-###  http://schema.org/DataType
-schema:DataType rdf:type owl:Class ;
-                rdfs:subClassOf rdfs:Class .
 
 
 ###  http://schema.org/DatedMoneySpecification
@@ -4788,8 +4777,7 @@ schema:BookmarkAction rdf:type owl:NamedIndividual ;
 
 
 ###  http://schema.org/Boolean
-schema:Boolean rdf:type owl:NamedIndividual ,
-                        schema:DataType ;
+schema:Boolean rdf:type owl:NamedIndividual ;
                rdfs:label "Boolean" .
 
 
@@ -5619,14 +5607,12 @@ schema:Dataset rdf:type owl:NamedIndividual ;
 
 
 ###  http://schema.org/Date
-schema:Date rdf:type owl:NamedIndividual ,
-                     schema:DataType ;
+schema:Date rdf:type owl:NamedIndividual ;
             rdfs:label "Date" .
 
 
 ###  http://schema.org/DateTime
-schema:DateTime rdf:type owl:NamedIndividual ,
-                         schema:DataType ;
+schema:DateTime rdf:type owl:NamedIndividual ;
                 rdfs:label "DateTime" .
 
 
@@ -8964,8 +8950,7 @@ schema:NoteDigitalDocument rdf:type owl:NamedIndividual ;
 
 
 ###  http://schema.org/Number
-schema:Number rdf:type owl:NamedIndividual ,
-                       schema:DataType ;
+schema:Number rdf:type owl:NamedIndividual ;
               rdfs:label "Number" .
 
 
@@ -11384,8 +11369,7 @@ schema:Terminated rdf:type owl:NamedIndividual ,
 
 
 ###  http://schema.org/Text
-schema:Text rdf:type owl:NamedIndividual ,
-                     schema:DataType ;
+schema:Text rdf:type owl:NamedIndividual ;
             rdfs:label "Text" .
 
 
@@ -11458,8 +11442,7 @@ schema:TieAction rdf:type owl:NamedIndividual ;
 
 
 ###  http://schema.org/Time
-schema:Time rdf:type owl:NamedIndividual ,
-                     schema:DataType ;
+schema:Time rdf:type owl:NamedIndividual ;
             rdfs:label "Time" .
 
 
@@ -20439,7 +20422,6 @@ schema:populationType rdf:type owl:NamedIndividual ;
                       schema:domainIncludes schema:StatisticalPopulation ,
                                             schema:StatisticalVariable ;
                       schema:isPartOf <http://pending.schema.org> ;
-                      schema:rangeIncludes schema:Class ;
                       schema:source <https://github.com/schemaorg/schemaorg/issues/2291> ;
                       rdfs:comment "Indicates the populationType common to all members of a [[StatisticalPopulation]] or all cases within the scope of a [[StatisticalVariable]]." .
 
@@ -24477,10 +24459,6 @@ schema:CityHall rdfs:comment "A city hall." .
 schema:CivicStructure rdfs:comment "A public structure, such as a town hall or concert hall." .
 
 
-schema:Class schema:isPartOf <http://meta.schema.org> ;
-             rdfs:comment "A class, also often called a 'Type'; equivalent to rdfs:Class." .
-
-
 schema:ClothingStore rdfs:comment "A clothing store." .
 
 
@@ -24563,9 +24541,6 @@ schema:DanceGroup rdfs:comment "A dance group&#x2014;for example, the Alvin Aile
 
 
 schema:DataFeedItem rdfs:comment "A single item within a larger data feed." .
-
-
-schema:DataType rdfs:comment "The basic data types such as Integers, Strings, etc." .
 
 
 schema:DatedMoneySpecification schema:supersededBy schema:MonetaryAmount ;
@@ -26402,7 +26377,6 @@ schema:diversityStaffingReport schema:contributor <http://schema.org/docs/collab
 
 schema:domainIncludes schema:domainIncludes schema:Property ;
                       schema:isPartOf <http://meta.schema.org> ;
-                      schema:rangeIncludes schema:Class ;
                       rdfs:comment "Relates a property to a class that is (one of) the type(s) the property is expected to be used on." .
 
 
@@ -26930,7 +26904,6 @@ schema:question rdfs:comment "A sub property of object. A question." .
 
 schema:rangeIncludes schema:domainIncludes schema:Property ;
                      schema:isPartOf <http://meta.schema.org> ;
-                     schema:rangeIncludes schema:Class ;
                      rdfs:comment "Relates a property to a class that constitutes (one of) the expected type(s) for values of the property." .
 
 
@@ -27064,12 +27037,10 @@ schema:suggestedAnswer schema:rangeIncludes schema:ItemList ;
                        rdfs:comment "An answer (possibly one of several, possibly incorrect) to a Question, e.g. on a Question/Answer site." .
 
 
-schema:supersededBy schema:domainIncludes schema:Class ,
-                                          schema:Enumeration ,
+schema:supersededBy schema:domainIncludes schema:Enumeration ,
                                           schema:Property ;
                     schema:isPartOf <http://meta.schema.org> ;
-                    schema:rangeIncludes schema:Class ,
-                                         schema:Enumeration ,
+                    schema:rangeIncludes schema:Enumeration ,
                                          schema:Property ;
                     rdfs:comment "Relates a term (i.e. a property, class or enumeration) to one that supersedes it." .
 
