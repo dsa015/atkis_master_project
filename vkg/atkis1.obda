@@ -6,6 +6,7 @@ gml:		http://www.opengis.net/ont/gml#
 owl:		http://www.w3.org/2002/07/owl#
 rdf:		http://www.w3.org/1999/02/22-rdf-syntax-ns#
 uom:		http://www.opengis.net/def/uom/OGC/1.0/
+wgs:		http://www.w3.org/2003/01/geo/wgs84_pos#
 xml:		http://www.w3.org/XML/1998/namespace
 xsd:		http://www.w3.org/2001/XMLSchema#
 geof:		http://www.opengis.net/def/function/geosparql/
@@ -14,13 +15,13 @@ rdfs:		http://www.w3.org/2000/01/rdf-schema#
 schema:		http://schema.org/
 
 [MappingDeclaration] @collection [[
-mappingId	Area for linestring_l, geographical areas
+mappingId	Area for linestring_l
 target		:Administrative/l/{gid} a :Administrative ; geo:hasDefaultGeometry :Administrative/geo/l/{gid} . :Administrative/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, st_astext(geom) as wkt from "geb01_l"
 
-mappingId	administrative polygon ?
-target		:Administrative/f/{gid} a :Administrative ; rdfs:label {bez_lan}@de ; geo:hasDefaultGeometry :Administrative/geo/f/{gid} . :Administrative/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select gid, bez_lan, st_astext(geom) as wkt from "geb01_f"
+mappingId	administrative polygon
+target		:Administrative/f/{gid} a :Administrative ; rdfs:label {bez_lan} ; :bez {bez_krs} ; geo:hasDefaultGeometry :Administrative/geo/f/{gid} . :Administrative/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+source		select gid, bez_lan, bez_krs,st_astext(geom) as wkt from "geb01_f"
 
 mappingId	Area, geographical areas polygon (f)
 target		:Geographical/f/{gid} a :Geographical ; rdfs:label {nam} ; geo:hasDefaultGeometry :Geographical/geo/f/{gid} . :Geographical/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
@@ -32,18 +33,18 @@ source		select gid, nam, st_astext(geom) as wkt from "geb03_f"
 
 mappingId	WaterBody polygon_f
 target		:WaterBodyCourse/f/{id} a :WaterBodyCourse ; rdfs:label {nam} ; :objart_txt {objart_txt} ; geo:hasDefaultGeometry :WaterBodyCourse/geo/f/{id} . :WaterBodyCourse/geo/f/{id} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select id, nam, objart_txt, st_astext(st_transform(geom,4326)) as wkt from "gew01_f"
+source		select id, nam, objart_txt, st_astext(geom) as wkt from "gew01_f"
 
 mappingId	WaterBody linestrings_l
 target		:WaterBodyCourse/l/{gid} a :WaterBodyCourse ; rdfs:label {nam} ; geo:hasDefaultGeometry :WaterBodyCourse/geo/l/{gid} . :WaterBodyCourse/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select gid, nam, st_astext(st_transform(geom,4326)) as wkt from "gew01_l"
+source		select gid, nam, st_astext(geom) as wkt from "gew01_l"
 
 mappingId	WaterBodyChar polygon_f
-target		:WaterBodyChar/f/{gid} a :WaterBodyChar ; rdfs:label {nam} ; geo:hasDefaultGeometry :WaterBodyChar/geo/f/{gid} . :WaterBodyChar/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:WaterBodyChar/f/{gid} a :WaterBodyCharacteristic ; rdfs:label {nam} ; geo:hasDefaultGeometry :WaterBodyChar/geo/f/{gid} . :WaterBodyChar/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, st_astext(geom) as wkt from "gew02_f"
 
 mappingId	WaterBodyChar point_p
-target		:WaterBodyChar/p/{gid} a :WaterBodyChar ; rdfs:label {nam} ; geo:hasDefaultGeometry :WaterBodyChar/geo/p/{gid} . :WaterBodyChar/geo/p/{gid} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:WaterBodyChar/p/{gid} a :WaterBodyCharacteristic ; rdfs:label {nam} ; geo:hasDefaultGeometry :WaterBodyChar/geo/p/{gid} . :WaterBodyChar/geo/p/{gid} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, st_astext(geom) as wkt from "gew02_p"
 
 mappingId	WaterLineAxis linestring_l
@@ -55,11 +56,11 @@ target		:VerticalRelation/{gid} a :VerticalRelation .
 source		select gid, ebene_1, ebene_2 from "hdu01_b"
 
 mappingId	Relief linestring_l
-target		:Relief/l/{id} a :Relief ; rdfs:label {nam} ; geo:hasDefaultGeometry :Relief/geo/l/{id} . :Relief/geo/l/{id} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select id, nam, st_astext(st_transform(geom, 4326)) as wkt from "rel01_l"
+target		:ReliefForm/l/{id} a :Relief ; rdfs:label {nam} ; geo:hasDefaultGeometry :ReliefForm/geo/l/{id} . :ReliefForm/geo/l/{id} a geo:Geometry , sf:LineString ; geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/31467>{wkt}"^^geo:wktLiteral . 
+source		select id, nam, st_astext(geom) as wkt from "rel01_l"
 
 mappingId	Relief point_p
-target		:Relief/p/{gid} a :Relief ; rdfs:label {nam} ; geo:hasDefaultGeometry :Relief/geo/p/{gid} . :Relief/geo/p/{gid} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:ReliefForm/p/{gid} a :Relief ; rdfs:label {nam} ; geo:hasDefaultGeometry :ReliefForm/geo/p/{gid} . :ReliefForm/geo/p/{gid} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, st_astext(geom) as wkt from "rel01_p"
 
 mappingId	Relief MeasurementData point_p
@@ -68,14 +69,14 @@ source		select id, st_astext(st_transform(geom, 4326)) as wkt from rel02_p
 
 mappingId	Settlement, named location polygon_f
 target		:Location/f/{gid} a :Location ; rdfs:label {nam} ; geo:hasDefaultGeometry :Location/geo/f/{gid} . :Location/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select gid, nam, st_astext(st_transform(geom, 4326)) as wkt from "sie01_f"
+source		select gid, nam, st_astext(geom) as wkt from "sie01_f"
 
 mappingId	Settlement, named location point_p
 target		:Location/p/{gid} a :Location ; rdfs:label {nam} ; geo:hasDefaultGeometry :Location/geo/p/{gid} . :Location/geo/p/{gid} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select gid, nam, st_astext(st_transform(geom,4326)) as wkt from "sie01_p"
+source		select gid, nam, st_astext(geom4326) as wkt  from "sie01_p"
 
 mappingId	areas dominated by buildings, polygon f
-target		:Areas_d_b/f/{gid} a :AreaDominatedByBuilding ; :objart {objart} ; rdfs:label {nam} ; :fkt {fkt} ; geo:hasDefaultGeometry :Areas_d_b/geo/f/{gid} . :Areas_d_b/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:AreaDominatedByBuilding/f/{gid} a :AreaDominatedByBuilding ; :objart {objart} ; rdfs:label {nam} ; :fkt {fkt} ; geo:hasDefaultGeometry :AreaDominatedByBuilding/geo/f/{gid} . :AreaDominatedByBuilding/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, fkt, objart, st_astext(st_transform(geom,4326)) as wkt from "sie02_f"
 
 mappingId	Building/facilityes polygon_f
@@ -88,7 +89,7 @@ source		select gid, st_astext(geom) as wkt from "sie03_l"
 
 mappingId	Building/facilityes point_p
 target		:BuildingFacility/p/{id} a :BuildingFacility ; rdfs:label {nam} ; geo:hasMetricLength {hho} ; geo:hasDefaultGeometry :BuildingFacility/geo/p/{id} . :BuildingFacility/geo/p/{id} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select id, nam, hho, bwf, st_astext(st_transform(geom, 4326)) as wkt from "sie03_p"
+source		select id, nam, hho, st_astext(geom4326) as wkt from "sie03_p"
 
 mappingId	SpecialFacility polygon_f
 target		:SpecialFacility/f/{gid} a :SpecialFacility ; rdfs:label {nam} ; :objart_txt {objart_txt} ; geo:hasDefaultGeometry :SpecialFacilitiy/geo/f/{gid} . :SpecialFacilitiy/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
@@ -104,11 +105,11 @@ source		select gid, nam, st_astext(geom) as wkt, objart_txt from "sie04_p"
 
 mappingId	Building point_p
 target		:Building/p/{id} a :Building ; rdfs:label {nam} ; :gfk {gfk} ; geo:hasDefaultGeometry :Building/geo/p/{id} . :Building/geo/p/{id} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select id, nam, bwf, gfk ,st_astext(st_transform(geom, 4326)) as wkt from "sie05_p"
+source		select id, nam, bwf, gfk ,st_astext(geom) as wkt from "sie05_p"
 
 mappingId	Agricultural polygon_f
 target		:Agricultural/f/{gid} a :Agricultural ; rdfs:label {nam} ; geo:hasDefaultGeometry :Agricultural/geo/f/{gid} . :Agricultural/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select gid, nam ,st_astext(st_transform(geom,4326)) as wkt from "veg01_f"
+source		select gid, nam ,st_astext(geom) as wkt from "veg01_f"
 
 mappingId	Forestry polygon_f
 target		:Forestry/f/{gid} a :Forestry ; rdfs:label {nam} ; geo:hasDefaultGeometry :Forestry/geo/f/{gid} . :Forestry/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
@@ -119,7 +120,7 @@ target		:VegetationArea/f/{gid} a :VegetationArea ; rdfs:label {nam} ; geo:hasDe
 source		select gid, nam ,st_astext(st_transform(geom, 4326)) as wkt from "veg03_f"
 
 mappingId	vegetation_characteristics polygon_f
-target		:VegChar/f/{gid} a :VegChar ; rdfs:label {nam} ; geo:hasDefaultGeometry :VegChar/geo/f/{gid} . :VegChar/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:VegChar/f/{gid} a :VegetationCharacteristic ; rdfs:label {nam} ; geo:hasDefaultGeometry :VegChar/geo/f/{gid} . :VegChar/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam ,st_astext(geom) as wkt from "veg04_f"
 
 mappingId	Road traffic linestring_l
@@ -127,11 +128,11 @@ target		:RoadTraffic/l/{id} a :RoadTraffic ; rdfs:label {bez} ; :znm {znm} ; geo
 source		select id, bez, znm, st_astext(st_transform(geom,4326)) as wkt from "ver01_l"
 
 mappingId	Road paths linestring_l
-target		:Paths/l/{gid} a :Path ; rdfs:label {nam} ; geo:hasMetricLength {length}^^xsd:double ; geo:hasDefaultGeometry :Paths/geo/l/{gid} . :Paths/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:Path/l/{gid} a :Path ; rdfs:label {nam} ; geo:hasMetricLength {length}^^xsd:double ; geo:hasDefaultGeometry :Path/geo/l/{gid} . :Path/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam ,st_astext(st_transform(geom, 4326)) as wkt, st_length(geom) as length from "ver02_l"
 
 mappingId	RailwayTraffic polygon_f
-target		:RailwayTraffic/f/{gid} a :Path ; geo:hasDefaultGeometry :RailwayTraffic/geo/f/{gid} . :RailwayTraffic/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:RailwayTraffic/f/{gid} a :RailwayTraffic ; geo:hasDefaultGeometry :RailwayTraffic/geo/f/{gid} . :RailwayTraffic/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid ,st_astext(geom) as wkt from "ver03_f"
 
 mappingId	RailwayTraffic linestring_l
@@ -158,18 +159,8 @@ mappingId	Transport_b_f point_p
 target		:Transport_b_f/p/{id} a :TransportBuildingAndFacility ; rdfs:label {nam} ; :bez {bez} ; geo:hasDefaultGeometry :Transport_b_f/geo/p/{id} . :Transport_b_f/geo/p/{id} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select id, nam, bez, st_astext(geom) as wkt from "ver06_p"
 
-mappingId	Transport_b_f polygon and point?
-target		:Transport_b_f/f/{gid} a :TransportBuildingAndFacility ; rdfs:label {f_name} , {p_name} ; :hasTraffic :Transport_b_f/p/{id} . 
-source		SELECT ver06_f.gid AS gid, ver06_f.nam AS f_name, ver06_p.id AS id, ver06_p.nam AS p_name FROM "ver06_f" INNER JOIN "ver06_p" ON ver06_f.gid = ver06_p.id;
-
-mappingId	obj settlement, see spatially within obj areas (admin districts)
-target		:GN250/{id} a :GN250 ; rdfs:label {kreis}^^xsd:string ; :area {bundesland}^^xsd:string ; geo:sfWithin :Settlement/f/{gid} . 
-source		select * from "GN250_b"
-			INNER JOIN sie01_f
-			ON "GN250_b".name = sie01_f.nam
-
 mappingId	sie02 inside settlements
-target		:Location/f/{gid1} geo:sfContains :Areas_d_b/f/{gid2} . 
+target		:Location/f/{gid1} geo:sfContains :AreaDominatedByBuilding/f/{gid2} . 
 source		SELECT h.gid as gid1, m.gid as gid2
 			FROM sie01_f h join sie02_f m
 			on st_contains(h.geom, m.geom)
@@ -185,8 +176,9 @@ source		select a.gid as gid2, b.gid from
 			sie01_f a join sie04_f b on st_contains(a.geom, b.geom)
 
 mappingId	settlement f inside admin areaas
-target		:Location/f/{gid} geo:ehInside :Administrative/f/{gid2} . 
-source		select * from city_in_area
+target		:Location/f/{gid1} geo:sfWithin :Administrative/f/{gid2} . 
+source		select a.gid as gid1, b.gid as gid2 from sie01_f a
+			join geb01_f b on st_within(a.geom, b.geom)
 
 mappingId	building inside settlement
 target		:Building/p/{id} geo:ehInside :Location/f/{gid} . 
@@ -204,14 +196,256 @@ mappingId	roadtraffic across sie
 target		:RoadTraffic/l/{id} geo:sfCrosses :Location/f/{gid} . 
 source		select a.id, b.gid from ver01_l a join sie01_f b on st_intersects(a.geom, b.geom)
 
-mappingId	waterbody through vegetation
-target		:Agricultural/f/{gid2} a :Agricultural ; geo:sfContains :WaterBodyCourse/l/{gid1} . 
-source		select a.gid as gid1, b.gid as gid2 from gew01_l a
-			join veg01_f b on st_contains(b.geom, a.geom)
+mappingId	waterbody linestring through vegetation
+target		:WaterBodyCourse/l/{gid2} geo:sfIntersects :Agricultural/f/{gid} . 
+source		select a.gid, b.gid as gid2 from veg01_f a
+			join gew01_l b on st_intersects(a.geom, b.geom)
 
 mappingId	traffic connected to areas
-target		:Paths/l/{gid1} geo:sfContains :Location/f/{gid2} . 
+target		:Path/l/{gid1} geo:sfContains :Location/f/{gid2} . 
 source		select a.gid as gid1, b.gid as gid2 from ver02_l a
 			join sie01_f b on st_contains(b.geom, a.geom)
+
+mappingId	schema city
+target		schema:City/p/{gid} a schema:City ; rdfs:label {nam} ; geo:hasDefaultGeometry schema:City/geo/p/{gid} . schema:City/geo/p/{gid} a geo:Geometry , sf:Point ; geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/31467>{wkt}"^^geo:wktLiteral . 
+source		select gid, nam, st_astext(geom) as wkt from sie01_p
+
+mappingId	special facility - Feature TestArea
+target		:SpecialFacility/f/{gid} a :TestSite . 
+source		select gid, nam from sie04_f
+			where objart = '52005'
+
+mappingId	waterbody polygons through veg
+target		:WaterBodyCourse/f/{id} geo:sfIntersects :Agricultural/f/{gid} . 
+source		select a.id, b.gid from gew01_f a
+			join veg01_f b on st_intersects(a.geom, b.geom)
+
+mappingId	schema airport
+target		schema:Airport/f/{gid} a schema:Airport ; rdfs:label {nam} ; geo:hasDefaultGeometry schema:Airport/geo/f/{gid} . schema:Airport/geo/f/{gid} a geo:geometry , sf:Polygon ; geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/31467>{wkt}"^^xsd:string . 
+source		select gid, nam, st_astext(geom) as wkt, objart_txt from ver04_f
+
+mappingId	Feature - SportAndRecreationAndLeisureArea
+target		:AreaDominatedByBuilding/f/{gid} a :SportRecreationAndLeisureArea . 
+source		select gid from sie02_f where objart='41008'
+
+mappingId	Feature - IndustryAndCommercialArea
+target		:AreaDominatedByBuilding/f/{gid} a :IndustryAndCommercialArea . 
+source		select gid from sie02_f where objart='41002'
+
+mappingId	Feature - Spoil Heap
+target		:AreaDominatedByBuilding/f/{gid} a :SpoilHeap . 
+source		select gid from sie02_f where objart ='41003'
+
+mappingId	Feature - OpenPitMineQuarry
+target		:AreaDominatedByBuilding/f/{gid} a :OpenPitMineQuarry . 
+source		select gid from sie02_f where objart = '41005'
+
+mappingId	Feature - AreaOfSpecialFunctionalCharacter
+target		:AreaDominatedByBuilding/f/{gid} a :AreaOfSpecialFunctionalCharacter . 
+source		select gid from sie02_f where objart = '41007'
+
+mappingId	Feature - Cemetary
+target		:AreaDominatedByBuilding/f/{gid} a :Cemetary . 
+source		select gid from sie02_f where objart = '41009'
+
+mappingId	Feature - SettlementArea
+target		:AreaDominatedByBuilding/f/{gid} a :SettlementArea . 
+source		select gid from sie02_f where objart = '41010'
+
+mappingId	Feature - StructureOrFacilityForIndustryAndCommerce, polygon
+target		:BuildingFacility/f/{id} a :StructureOrFacilityForIndustryAndCommerce . 
+source		select id from sie03_f where objart = '51002'
+
+mappingId	Feature - StructureOrFacilityForIndustryAndCommerce, point
+target		:BuildingFacility/p/{id} a :StructureOrFacilityForIndustryAndCommerce . 
+source		select id from sie03_p where objart = '51002'
+
+mappingId	Feature - TransportFacility
+target		:BuildingFacility/l/{gid} a :TransportFacility . 
+source		select gid from sie03_l where objart = '51004'
+
+mappingId	Feature - Pipeline
+target		:BuildingFacility/l/{gid} a :Pipeline . 
+source		select gid from sie03_l where objart = '51005'
+
+mappingId	Feature - StructureOrFacilityForSportsRecreationAndLeisure
+target		:BuildingFacility/p/{id} a :StructureOrFacilityForSportsRecreationAndLeisure . 
+source		select id from sie03_p where objart = '51006'
+
+mappingId	Feature - HistoricStructureOrFacility
+target		:BuildingFacility/p/{id} a :HistoricStructureOrFacility . 
+source		select id from sie03_p where objart = '51007'
+
+mappingId	Feature - OtherStructureOrFacility
+target		:BuildingFacility/p/{id} a :OtherStructureOrFacility . 
+source		select id from sie03_p where objart = '51009'
+
+mappingId	Feature - WaterWayLock Linestring
+target		:SpecialFacility/l/{gid} a :WaterwayLock . 
+source		select gid from sie04_f where objart = '52003'
+
+mappingId	Feature - WaterWayLock Point
+target		:SpecialFacility/p/{gid} a :WaterwayLock . 
+source		select gid from sie04_p where objart = '52003'
+
+mappingId	Feature - Port polygon
+target		:SpecialFacility/f/{gid} a :Port . 
+source		select gid from sie04_f where objart = '52002'
+
+mappingId	Feature - Port point
+target		:SpecialFacility/p/{gid} a :Port . 
+source		select gid from sie04_p where objart = '52002'
+
+mappingId	Feature - RoadAxis
+target		:Path/l/{gid} a :RoadAxis . 
+source		select gid from ver02_l where objart = '42008'
+
+mappingId	Feature - PathTrackTrail
+target		:Path/l/{gid} a :PathTrackTrail . 
+source		select gid from ver02_l where objart = '53003'
+
+mappingId	Feature - CableOrSuspensionRailway
+target		:RailwayTraffic/l/{gid} a :CableOrSuspensionRailway . 
+source		select gid from ver03_l where objart = '53005'
+
+mappingId	Feature - RailwayLine
+target		:RailwayTraffic/l/{gid} a :RailwayLine . 
+source		select gid from ver03_l where objart = '42014'
+
+mappingId	Feature - TransportStructure
+target		:TransportBuildingAndFacility/f/{gid} a :TransportStructure . 
+source		select gid from ver06_f where objart = '53001'
+
+mappingId	Feature - RoadTrafficFacility
+target		:TransportBuildingAndFacility/p/{id} a :RoadTrafficFacility . 
+source		select id from ver06_p where objart = '53002'
+
+mappingId	Feature - RailwayTrafficFacility
+target		:TransportBuildingAndFacility/p/{id} a :RailwayTrafficFacility . 
+source		select id from ver06_p where objart = '53004'
+
+mappingId	Feature - AirTrafficFacility. Linestring
+target		:TransportBuildingAndFacility/l/{id} a :AirTrafficFacility . 
+source		select id from ver06_l where objart = '53007'
+
+mappingId	Feature - AirTrafficFacility Point
+target		:TransportBuildingAndFacility/p/{id} a :AirTrafficFacility . 
+source		select id from ver06_p where objart = '53007'
+
+mappingId	Feature - ShippingTrafficFacility
+target		:TransportBuildingAndFacility/p/{id} a :ShippingTrafficFacility . 
+source		select id from ver06_p where objart = '53008'
+
+mappingId	Feature - WaterWayStructure. Polygon
+target		:TransportBuildingAndFacility/f/{gid} a :WaterWayStructure . 
+source		select gid from ver06_f where objart = '53009'
+
+mappingId	Feature - WaterWayStructure. Linestring
+target		:TransportBuildingAndFacility/l/{id} a :WaterWayStructure . 
+source		select id from ver06_l where objart = '53009'
+
+mappingId	Feature - WaterWayStructure. Point
+target		:TransportBuildingAndFacility/p/{id} a :WaterWayStructure . 
+source		select id from ver06_p where objart = '53009'
+
+mappingId	Feature - Heathland
+target		:VegetationArea/f/{gid} a :HeathLand . 
+source		select gid from veg03_f where objart = '43004'
+
+mappingId	Feature  - Bog
+target		:VegetationArea/f/{gid} a :Bog . 
+source		select gid from veg03_f where objart = '43005'
+
+mappingId	Feature - Swamp
+target		:VegetationArea/f/{gid} a :Swamp . 
+source		select gid from veg03_f where objart = '43006'
+
+mappingId	Feature - BarrenLand
+target		:VegetationArea/f/{gid} a :BarrenLand . 
+source		select gid from veg03_f where objart = '43007'
+
+mappingId	Feature - FlowingWaterBody
+target		:WaterBodyCourse/f/{id} a :FlowingWaterBody . 
+source		select id from gew01_f where objart = '44001'
+
+mappingId	Feature - WaterBodyAxis
+target		:WaterBodyCourse/l/{gid} a :WaterBodyAxis . 
+source		select gid from gew01_l where objart = '44004'
+
+mappingId	Feature - HarborBasin
+target		:WaterBodyCourse/f/{id} a :HarborBasin . 
+source		select id from gew01_f where objart = '44005'
+
+mappingId	Feature - StandingWaterBody
+target		:WaterBodyCourse/f/{id} a :StandingWaterBody . 
+source		select id from gew01_f where objart = '44006'
+
+mappingId	Feature - Sea
+target		:WaterBodyCourse/f/{id} a :Sea . 
+source		select id from gew01_f where objart = '44007'
+
+mappingId	Feature - MunicipalArea
+target		:Administrative/f/{gid} a :MunicipalArea . 
+source		select gid from geb01_f where objart = '75003'
+
+mappingId	Feature - NationalArea
+target		:Administrative/f/{gid} a :NationalArea . 
+source		select gid from geb01_f where objart = '75004'
+
+mappingId	Feature - StateArea
+target		:Administrative/f/{gid} a :StateArea . 
+source		select gid from geb01_f where objart = '75005'
+
+mappingId	Feature - GovernmentDistrictArea
+target		:Administrative/f/{gid} a :GovernmentDistrictArea . 
+source		select gid from geb01_f where objart = '75006'
+
+mappingId	Feature - DistrictArea
+target		:Administrative/f/{gid} a :DistrictArea . 
+source		select gid from geb01_f where objart = '75007'
+
+mappingId	Feature - AdministrativeBoundary
+target		:Administrative/f/{gid} a :AdministrativeBoundary . 
+source		select gid from geb01_l where objart = '75009'
+
+mappingId	Feature - AdministrativeCommunityArea
+target		:Administrative/f/{gid} a :AdministrativeCommunityArea . 
+source		select gid from geb01_f where objart = '75011'
+
+mappingId	Feature - Landscape
+target		:Geographical/f/{gid} a :Landscape . 
+source		select gid from geb02_f where objart = '74001'
+
+mappingId	Feature - Island
+target		:Geographical/f/{gid} a :Island . 
+source		select gid from geb02_f where objart = '74004'
+
+mappingId	Feature - NatureEnvironmentOrSoilProtectionLaw
+target		:Protected/f/{gid} a :NatureEnvironmentOrSoilProtectionLaw . 
+source		select gid from geb03_f where objart = '71006'
+
+mappingId	Feature - OtherLaw
+target		:Protected/f/{gid} a :OtherLaw . 
+source		select gid from geb03_f where objart = '71011'
+
+mappingId	Feature - ProtectionZone
+target		:Protected/f/{gid} a :ProtectionZone . 
+source		select gid from geb03_f where objart = '71012'
+
+mappingId	Feature  - ReliefForm
+target		:ReliefForm/l/{id} a :DamWallDike . 
+source		select id from rel01_l where objart = '61003'
+
+mappingId	Feature - CaveEntrance
+target		:ReliefForm/l/{gid} a :CaveEntrance . 
+source		select gid from rel01_p where objart = '61005'
+
+mappingId	Feature - ContourLine
+target		:ReliefForm/l/{id} a :ContourLine . 
+source		select id from rel01_l where objart = '61008'
+
+mappingId	Feature - StructuralLine
+target		:ReliefForm/l/{id} a :StructuralLine . 
+source		select id from rel01_l where objart = '62030'
 ]]
 
