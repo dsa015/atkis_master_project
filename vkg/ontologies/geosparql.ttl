@@ -259,8 +259,6 @@ _:genid1 a sdo:Person;
   sdo:email "matthew.perry@oracle.com"^^xsd:anyURI;
   sdo:affiliation "Oracle Corporation" .
 
-sdo:Person a owl:Class .
-
 _:genid2 a sdo:Person;
   sdo:name "John Herring";
   sdo:email "john.herring@oracle.com"^^xsd:anyURI;
@@ -304,8 +302,6 @@ _:genid8 a sdo:Person;
 _:genid9 a sdo:Organization;
   sdo:url "https://www.ogc.org"^^xsd:anyURI;
   sdo:name "Open Geospatial Consortium" .
-
-sdo:Organization a owl:Class .
 
 dcterms:contributor a owl:AnnotationProperty .
 
@@ -881,7 +877,6 @@ rdfs:member a owl:ObjectProperty .
 
 :Feature a owl:Class;
   rdfs:subClassOf :SpatialObject;
-  owl:disjointWith :Geometry;
   rdfs:isDefinedBy <#>, </spec/geosparql/1.0/req/core/feature-class>, </spec/geosparql/1.1/req/core/feature-class>;
   skos:definition "A discrete spatial phenomenon in a universe of discourse."@en;
   skos:example spec11:B.1.1.2.1, spec11:B.1.1.2.2, spec11:B.1.1.2.3, spec11:B.1.1.2.4,
@@ -937,8 +932,12 @@ _:genid11 a owl:Restriction;
   skos:note "This is the superclass of Feature Collection and Geometry Collection."@en;
   skos:prefLabel "Spatial Object Collection"@en .
 
-rdfs:Container a owl:Class .
-
 _:genid12 a owl:Restriction;
   owl:allValuesFrom :SpatialObject;
   owl:onProperty rdfs:member .
+
+rdfs:Container a owl:Class .
+
+sdo:Organization a owl:Class .
+
+sdo:Person a owl:Class .

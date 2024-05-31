@@ -39,12 +39,12 @@ mappingId	WaterBody linestrings_l
 target		:WaterBodyCourse/l/{gid} a :WaterBodyCourse ; rdfs:label {nam} ; geo:hasDefaultGeometry :WaterBodyCourse/geo/l/{gid} . :WaterBodyCourse/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, st_astext(geom) as wkt from "gew01_l"
 
-mappingId	WaterBodyChar polygon_f
-target		:WaterBodyChar/f/{gid} a :WaterBodyCharacteristic ; rdfs:label {nam} ; geo:hasDefaultGeometry :WaterBodyChar/geo/f/{gid} . :WaterBodyChar/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+mappingId	WaterBodyCharacteristic polygon_f
+target		:WaterBodyCharacteristic/f/{gid} a :WaterBodyCharacteristic ; rdfs:label {nam} ; geo:hasDefaultGeometry :WaterBodyCharacteristic/geo/f/{gid} . :WaterBodyCharacteristic/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, st_astext(geom) as wkt from "gew02_f"
 
-mappingId	WaterBodyChar point_p
-target		:WaterBodyChar/p/{gid} a :WaterBodyCharacteristic ; rdfs:label {nam} ; geo:hasDefaultGeometry :WaterBodyChar/geo/p/{gid} . :WaterBodyChar/geo/p/{gid} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
+mappingId	WaterBodyCharacteristic point_p
+target		:WaterBodyCharacteristic/p/{gid} a :WaterBodyCharacteristic ; rdfs:label {nam} ; geo:hasDefaultGeometry :WaterBodyCharacteristic/geo/p/{gid} . :WaterBodyCharacteristic/geo/p/{gid} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, st_astext(geom) as wkt from "gew02_p"
 
 mappingId	WaterLineAxis linestring_l
@@ -56,7 +56,7 @@ target		:VerticalRelation/{gid} a :VerticalRelation .
 source		select gid, ebene_1, ebene_2 from "hdu01_b"
 
 mappingId	Relief linestring_l
-target		:ReliefForm/l/{id} a :Relief ; rdfs:label {nam} ; geo:hasDefaultGeometry :ReliefForm/geo/l/{id} . :ReliefForm/geo/l/{id} a geo:Geometry , sf:LineString ; geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/31467>{wkt}"^^geo:wktLiteral . 
+target		:ReliefForm/l/{id} a :Relief ; rdfs:label {nam} ; geo:hasDefaultGeometry :ReliefForm/geo/l/{id} . :ReliefForm/geo/l/{id} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select id, nam, st_astext(geom) as wkt from "rel01_l"
 
 mappingId	Relief point_p
@@ -65,7 +65,7 @@ source		select gid, nam, st_astext(geom) as wkt from "rel01_p"
 
 mappingId	Relief MeasurementData point_p
 target		:MeasurementData/p/{id} a :MeasurementData ; geo:hasDefaultGeometry :MeasurementData/geo/p/{id} . :MeasurementData/geo/p/{id} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select id, st_astext(st_transform(geom, 4326)) as wkt from rel02_p
+source		select id, st_astext(geom) as wkt from "rel02_p"
 
 mappingId	Settlement, named location polygon_f
 target		:Location/f/{gid} a :Location ; rdfs:label {nam} ; geo:hasDefaultGeometry :Location/geo/f/{gid} . :Location/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
@@ -77,7 +77,7 @@ source		select gid, nam, st_astext(geom4326) as wkt  from "sie01_p"
 
 mappingId	areas dominated by buildings, polygon f
 target		:AreaDominatedByBuilding/f/{gid} a :AreaDominatedByBuilding ; :objart {objart} ; rdfs:label {nam} ; :fkt {fkt} ; geo:hasDefaultGeometry :AreaDominatedByBuilding/geo/f/{gid} . :AreaDominatedByBuilding/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select gid, nam, fkt, objart, st_astext(st_transform(geom,4326)) as wkt from "sie02_f"
+source		select gid, nam, fkt, objart, st_astext(geom) as wkt from "sie02_f"
 
 mappingId	Building/facilityes polygon_f
 target		:BuildingFacility/f/{id} a :BuildingFacility ; rdfs:label {nam} ; geo:hasDefaultGeometry :BuildingFacility/geo/f/{id} . :BuildingFacility/geo/f/{id} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
@@ -87,7 +87,7 @@ mappingId	Building/facilityes linestring_l
 target		:BuildingFacility/l/{gid} a :BuildingFacility ; geo:hasDefaultGeometry :BuildingFacility/geo/l/{gid} . :BuildingFacility/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, st_astext(geom) as wkt from "sie03_l"
 
-mappingId	Building/facilityes point_p
+mappingId	Building/facilityes point_p, using the geom4326 column for visualisation
 target		:BuildingFacility/p/{id} a :BuildingFacility ; rdfs:label {nam} ; geo:hasMetricLength {hho} ; geo:hasDefaultGeometry :BuildingFacility/geo/p/{id} . :BuildingFacility/geo/p/{id} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select id, nam, hho, st_astext(geom4326) as wkt from "sie03_p"
 
@@ -117,19 +117,19 @@ source		select gid, nam ,st_astext(geom) as wkt from "veg02_f"
 
 mappingId	VegetationArea polygon_f
 target		:VegetationArea/f/{gid} a :VegetationArea ; rdfs:label {nam} ; geo:hasDefaultGeometry :Vegetation/geo/f/{gid} . :Vegetation/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select gid, nam ,st_astext(st_transform(geom, 4326)) as wkt from "veg03_f"
+source		select gid, nam ,st_astext(geom) as wkt from "veg03_f"
 
 mappingId	vegetation_characteristics polygon_f
-target		:VegChar/f/{gid} a :VegetationCharacteristic ; rdfs:label {nam} ; geo:hasDefaultGeometry :VegChar/geo/f/{gid} . :VegChar/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+target		:VegetationCharacteristic/f/{gid} a :VegetationCharacteristic ; rdfs:label {nam} ; geo:hasDefaultGeometry :VegetationCharacteristic/geo/f/{gid} . :VegetationCharacteristic/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam ,st_astext(geom) as wkt from "veg04_f"
 
 mappingId	Road traffic linestring_l
 target		:RoadTraffic/l/{id} a :RoadTraffic ; rdfs:label {bez} ; :znm {znm} ; geo:hasDefaultGeometry :RoadTraffic/geo/l/{id} . :RoadTraffic/geo/l/{id} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select id, bez, znm, st_astext(st_transform(geom,4326)) as wkt from "ver01_l"
+source		select id, bez, znm, st_astext(geom) as wkt from "ver01_l"
 
 mappingId	Road paths linestring_l
 target		:Path/l/{gid} a :Path ; rdfs:label {nam} ; geo:hasMetricLength {length}^^xsd:double ; geo:hasDefaultGeometry :Path/geo/l/{gid} . :Path/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select gid, nam ,st_astext(st_transform(geom, 4326)) as wkt, st_length(geom) as length from "ver02_l"
+source		select gid, nam ,st_astext(geom) as wkt, st_length(geom) as length from "ver02_l"
 
 mappingId	RailwayTraffic polygon_f
 target		:RailwayTraffic/f/{gid} a :RailwayTraffic ; geo:hasDefaultGeometry :RailwayTraffic/geo/f/{gid} . :RailwayTraffic/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
@@ -145,18 +145,18 @@ source		select gid, nam, bez ,st_astext(geom) as wkt from "ver04_f"
 
 mappingId	ShippingTraffic linestring_l
 target		:ShippingTraffic/l/{gid} a :ShippingTraffic ; rdfs:label {nam} ; geo:hasDefaultGeometry :ShippingTraffic/geo/l/{gid} . :ShippingTraffic/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select gid, nam, st_astext(st_transform(geom, 4326)) as wkt from "ver05_l"
+source		select gid, nam, st_astext(geom) as wkt from "ver05_l"
 
-mappingId	Transport_b_f polygon_f
-target		:Transport_b_f/f/{gid} a :TransportBuildingAndFacility ; rdfs:label {nam} ; geo:hasDefaultGeometry :Transport_b_f/geo/f/{gid} . :Transport_b_f/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
+mappingId	TransportBuildingAndFacility polygon_f
+target		:TransportBuildingAndFacility/f/{gid} a :TransportBuildingAndFacility ; rdfs:label {nam} ; geo:hasDefaultGeometry :TransportBuildingAndFacility/geo/f/{gid} . :TransportBuildingAndFacility/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select gid, nam, st_astext(geom) as wkt from "ver06_f"
 
-mappingId	Transport_b_f linestring_l
-target		:Transport_b_f/l/{id} a :TransportBuildingAndFacility ; rdfs:label {nam} ; :bez {bez} ; geo:hasDefaultGeometry :Transport_b_f/geo/l/{id} . :Transport_b_f/geo/l/{id} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
+mappingId	TransportBuildingAndFacility linestring_l
+target		:TransportBuildingAndFacility/l/{id} a :TransportBuildingAndFacility ; rdfs:label {nam} ; :bez {bez} ; geo:hasDefaultGeometry :TransportBuildingAndFacility/geo/l/{id} . :TransportBuildingAndFacility/geo/l/{id} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select id, nam, bez ,st_astext(geom) as wkt from "ver06_l"
 
-mappingId	Transport_b_f point_p
-target		:Transport_b_f/p/{id} a :TransportBuildingAndFacility ; rdfs:label {nam} ; :bez {bez} ; geo:hasDefaultGeometry :Transport_b_f/geo/p/{id} . :Transport_b_f/geo/p/{id} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
+mappingId	TransportBuildingAndFacility Point
+target		:TransportBuildingAndFacility/p/{id} a :TransportBuildingAndFacility ; rdfs:label {nam} ; :bez {bez} ; geo:hasDefaultGeometry :TransportBuildingAndFacility/geo/p/{id} . :TransportBuildingAndFacility/geo/p/{id} a geo:Geometry , sf:Point ; geo:asWKT {wkt}^^geo:wktLiteral . 
 source		select id, nam, bez, st_astext(geom) as wkt from "ver06_p"
 
 mappingId	sie02 inside settlements
@@ -281,7 +281,7 @@ target		:BuildingFacility/p/{id} a :OtherStructureOrFacility .
 source		select id from sie03_p where objart = '51009'
 
 mappingId	Feature - WaterWayLock Linestring
-target		:SpecialFacility/l/{gid} a :WaterwayLock . 
+target		:SpecialFacility/f/{gid} a :WaterwayLock . 
 source		select gid from sie04_f where objart = '52003'
 
 mappingId	Feature - WaterWayLock Point
@@ -437,7 +437,7 @@ target		:ReliefForm/l/{id} a :DamWallDike .
 source		select id from rel01_l where objart = '61003'
 
 mappingId	Feature - CaveEntrance
-target		:ReliefForm/l/{gid} a :CaveEntrance . 
+target		:ReliefForm/p/{gid} a :CaveEntrance . 
 source		select gid from rel01_p where objart = '61005'
 
 mappingId	Feature - ContourLine
