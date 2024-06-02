@@ -16,8 +16,8 @@ schema:		http://schema.org/
 
 [MappingDeclaration] @collection [[
 mappingId	Area for linestring_l
-target		:Administrative/l/{gid} a :Administrative ; geo:hasDefaultGeometry :Administrative/geo/l/{gid} . :Administrative/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
-source		select gid, st_astext(geom) as wkt from "geb01_l"
+target		:Administrative/l/{gid} a :Administrative ; :land {land}^^xsd:string ; :objart {objart}^^xsd:integer ; :beginn {beginn}^^xsd:timestamp ; geo:hasDefaultGeometry :Administrative/geo/l/{gid} . :Administrative/geo/l/{gid} a geo:Geometry , sf:LineString ; geo:asWKT {wkt}^^geo:wktLiteral . 
+source		select gid, st_astext(geom) as wkt, objart, beginn, land from "geb01_l"
 
 mappingId	administrative polygon
 target		:Administrative/f/{gid} a :Administrative ; rdfs:label {bez_lan} ; :bez {bez_krs} ; geo:hasDefaultGeometry :Administrative/geo/f/{gid} . :Administrative/geo/f/{gid} a geo:Geometry , sf:Polygon ; geo:asWKT {wkt}^^geo:wktLiteral . 

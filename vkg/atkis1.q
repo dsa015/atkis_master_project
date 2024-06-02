@@ -450,8 +450,7 @@ LIMIT 10000
 [QueryItem="get all triples from graph"]
 PREFIX : <http://example.org/ontologies/atkis#>
 PREFIX sf: <http://www.opengis.net/ont/sf#>
-PREFIX geo: <http://www.opengis.net/ont/geosparql#>
-PREFIX gml: <http://www.opengis.net/ont/gml#>
+PREFIX geo: <http://ww.opengis.net/ont/gml#>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>
@@ -463,7 +462,10 @@ PREFIX obda: <https://w3id.org/obda/vocabulary#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX schema: <http://schema.org/>
 
-SELECT (COUNT(?s) AS ?triples) WHERE { ?s ?p ?o }
+SELECT * WHERE {
+?a a :Administrative ; rdfs:label ?name ; geo:hasDefaultGeometry ?g .
+}
+LIMIT 10000
 [QueryItem="asdas"]
 PREFIX : <http://example.org/ontologies/atkis#>
 PREFIX sf: <http://www.opengis.net/ont/sf#>
@@ -503,9 +505,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX schema: <http://schema.org/>
 
 
-SELECT * WHERE{
-        ?t a :Agricultural; geo:hasDefaultGeometry/geo:asWKT ?wkt ; rdfs:label ?name .
-        ?t1 a :WaterBodyCourse ; geo:hasDefaultGeometry/geo:asWKT ?wkt1  ; rdfs:label ?name1 .
-        FILTER(geof:sfContains(?wkt, ?wkt1))
-        }
-        LIMIT 10000
+SELECT * WHERE {
+?a a :Administrative ; rdfs:label ?name ; geo:hasDefaultGeometry ?geom .
+?geom a geo:Geometry, sf:LineString .
+}
