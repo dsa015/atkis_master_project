@@ -1,6 +1,6 @@
 # atkis_master_project
 
-My master thesis/project about the ATKIS dataset
+My master thesis/project about the ATKIS dataset. This project utilies the Virtual Knowledge Graph framework (VKG) for integrating the geospatial datasets of ATKIS (DLM250).
 
 # How to start?
 
