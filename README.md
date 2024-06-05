@@ -2,14 +2,31 @@
 
 My master thesis/project about the ATKIS dataset. This project utilies the Virtual Knowledge Graph framework (VKG) for integrating the geospatial datasets of ATKIS (DLM250).
 
-# How to start?
+# Useful tools
+Some tools which can be useful for starting this project:
+- PGAdmin
+- PostgreSQL
+- Docker (optional)
 
+# Dataset
+You can download the dataset from: https://gdz.bkg.bund.de/index.php/default/digitales-landschaftsmodell-1-250-000-ebenen-dlm250-ebenen.html
+Place dataset into a DB system (PostgreSQL for instance) with the PostGIS extension.
+- see `Dockerfile`and `docker.compose` file
+- To import data use the command: 
+
+# How to start?
+If using PostgreSQL:
+Start PostgreSQL
+Open PGAdmin and connect to the DB
+- If no existing DB, please create one:
+- Within PGAdmin, connect to PostgreSQL server -> create database
+- Then right click DB, select `Restore`. This way you can import the datasets
+  
+`TODO: Update the docker setup readme`
+If using Docker:
 - clone the repo with `git clone`
 - start the docker container `docker-compose up -d`
-- within the db,_(Optional)_ check to see if files were copied with simple query:
-
-  `select nam from sie01_f;` should get some city names beginning with _Rust_.
-
+  
 # Ontop container
 
 - on port 8080:8080, SPARQL endpoint
