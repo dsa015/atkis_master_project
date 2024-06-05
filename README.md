@@ -21,7 +21,10 @@ Open PGAdmin and connect to the DB
 - If no existing DB, please create one:
 - Within PGAdmin, connect to PostgreSQL server -> create database
 - Then right click DB, select `Restore`. This way you can import the datasets
-  
+
+## Connect Ontop to DB
+- In the mapping manager, you need to specify the DB URL: 
+
 `TODO: Update the docker setup readme`
 If using Docker:
 - clone the repo with `git clone`
